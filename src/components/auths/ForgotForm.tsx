@@ -7,9 +7,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi';
 import Image from 'next/image';
 import 'react-toastify/dist/ReactToastify.css';
-import { ForgotPword } from '@/app/api/forgot/route';
+import { Forgot } from '@/app/api/forgot/route';
 import { FormProps } from '..';
-import { UpdatePword } from '@/app/api/update/route';
+import { Update } from '@/app/api/update/route';
 
 const ForgotForm = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -55,7 +55,7 @@ const ForgotForm = () => {
 				return;
 			}
 
-			const response = await ForgotPword(formData, `$${token}`);
+			const response = await Forgot(formData, `$${token}`);
 			console.log(response.success);
 
 			if (response.success === false) {
@@ -93,7 +93,7 @@ const ForgotForm = () => {
 				return;
 			}
 
-			const response = await UpdatePword(pData, `$${token}`);
+			const response = await Update(pData, `$${token}`);
 			console.log(response.success);
 
 			if (response.success === false) {

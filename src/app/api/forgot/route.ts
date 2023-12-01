@@ -4,7 +4,7 @@ const endpoint = 'auth/forgetPword';
 const endpoint1 = 'auth/updatePword';
 const API_URL = process.env.NEXT_PUBLIC_ENV_VARIABLE;
 
-export const ForgotPword = async (
+export const Forgot = async (
 	userData: {
 		mail: string;
 	},

@@ -2,7 +2,7 @@ import axios, { AxiosRequestConfig } from 'axios';
 
 const endpoint = 'auth/updatePword';
 const API_URL = process.env.NEXT_PUBLIC_ENV_VARIABLE;
-export const UpdatePword = async (
+export const Update = async (
 	userData: {
 		usertoken: string;
 		fpword: string;
