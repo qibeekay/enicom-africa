@@ -2,7 +2,7 @@
 import react, { FormEvent, useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { VerifyMail } from '@/app/verify-mail/route';
+import { VerifyMail } from '@/app/verify-mails/route';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
