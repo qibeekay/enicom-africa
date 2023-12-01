@@ -70,6 +70,16 @@ import LoanFacility from './home/LoanFacility';
 import Categories from './home/Categories';
 import HomeCalculator from './home/HomeCalculator';
 import Footer from './home/Footer';
+import WalletModal from './accounts/wallet/WalletModal';
+import SellerPage from './sellers/SellerPage';
+import SellerMain from './sellers/SellerMain';
+import SellerNav from './sellers/SellerNav';
+import SellerMainPage from './sellers/SellerMainPage';
+import SellerTab from './sellers/SellerTab';
+import Tab1 from './sellers/Tab1';
+import Tab2 from './sellers/Tab2';
+import Tab3 from './sellers/Tab3';
+import ForgotForm from './auths/ForgotForm';
 
 export {
 	RegisterForm,
@@ -143,4 +153,14 @@ export {
 	Categories,
 	HomeCalculator,
 	Footer,
+	WalletModal,
+	SellerPage,
+	SellerNav,
+	SellerMain,
+	SellerMainPage,
+	SellerTab,
+	Tab1,
+	Tab2,
+	Tab3,
+	ForgotForm,
 };

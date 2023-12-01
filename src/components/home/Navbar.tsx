@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HiBars3 } from 'react-icons/hi2';
 import { HiX } from 'react-icons/hi';
 
@@ -16,6 +16,10 @@ const Navbar = () => {
 	const handleRegister = () => {
 		router.push('/register');
 	};
+
+	// Check if user is logged in based on your authentication mechanism
+	const userMail = localStorage.getItem('mail');
+	const isLoggedIn = !!userMail;
 
 	const [nav, setNav] = useState(false);
 	return (
@@ -48,11 +52,21 @@ const Navbar = () => {
 				</div>
 
 				{/* button */}
-				<div
-					className=' bg-greens rounded w-[10rem] sm:grid items-center justify-center text-white py-2 cursor-pointer hidden'
-					onClick={handleRegister}>
-					<p>Get Started</p>
-				</div>
+				{isLoggedIn ? (
+					<div className='w-[10rem]'>
+						<Link
+							href={'/dashboard'}
+							className='text-greens rounded sm:grid items-center justify-center py-2 cursor-pointer font-semibold'>
+							Dashboard
+						</Link>
+					</div>
+				) : (
+					<div
+						className='bg-greens rounded w-[10rem] sm:grid items-center justify-center text-white py-2 cursor-pointer'
+						onClick={handleRegister}>
+						<p>Get Started</p>
+					</div>
+				)}
 
 				<div className='lg:hidden cursor-pointer' onClick={() => setNav(true)}>
 					<HiBars3 size={30} />

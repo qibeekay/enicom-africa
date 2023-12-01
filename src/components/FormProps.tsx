@@ -1,7 +1,7 @@
 'use client';
 import { StaticImport } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
 interface InputProps {
 	label: string;
@@ -10,6 +10,11 @@ interface InputProps {
 	icon1?: string;
 	icon2?: string;
 	type: string;
+	name: string;
+	value: string;
+	onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+	showPassword?: boolean;
+	togglePassword?: () => void;
 }
 
 const FormProps: React.FC<InputProps> = ({
@@ -19,6 +24,11 @@ const FormProps: React.FC<InputProps> = ({
 	icon1,
 	icon2,
 	type,
+	value,
+	onChange,
+	name,
+	showPassword = false,
+	togglePassword,
 }) => {
 	useEffect(() => {
 		const inputElement = document.getElementById(id);
@@ -43,6 +53,8 @@ const FormProps: React.FC<InputProps> = ({
 			document.removeEventListener('mousedown', handleClickOutside);
 		};
 	}, []);
+
+	const inputType = showPassword ? 'text' : type;
 	return (
 		<div className='grid gap-1 w-full'>
 			<label
@@ -57,13 +69,17 @@ const FormProps: React.FC<InputProps> = ({
 			<div className='w-full relative'>
 				<input
 					className='border text-xs sm:text-base border-dark/50 py-2 px-5 rounded-lg outline-greens w-full text-greens placeholder:text-dark/50'
-					type={type}
+					type={inputType}
 					id={id}
-					name={id}
+					name={name}
 					placeholder={`Type here`}
+					value={value}
+					onChange={onChange}
 				/>
-				{icon2 && (
-					<div className='absolute right-2 top-[50%] -translate-y-[50%]'>
+				{icon2 && togglePassword && (
+					<div
+						onClick={togglePassword}
+						className='absolute right-2 top-[50%] -translate-y-[50%] cursor-pointer'>
 						<Image src={`/${icon2}`} width={20} height={20} alt='password' />
 					</div>
 				)}

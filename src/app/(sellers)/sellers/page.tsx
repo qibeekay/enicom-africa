@@ -1,12 +1,12 @@
 'use client';
-import { WalletPage } from '@/components';
+import { SellerPage } from '@/components';
 import { ThemeProvider } from '@material-tailwind/react';
 
-export default function Wallet() {
+export default function Seller() {
 	return (
 		<div>
 			<ThemeProvider>
-				<WalletPage />
+				<SellerPage />
 			</ThemeProvider>
 		</div>
 	);
