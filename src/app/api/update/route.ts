@@ -1,12 +1,12 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-const endpoint = 'auth/forgetPword';
-const endpoint1 = 'auth/updatePword';
+const endpoint = 'auth/updatePword';
 const API_URL = process.env.NEXT_PUBLIC_ENV_VARIABLE;
-
-export const ForgotPword = async (
+export const UpdatePword = async (
 	userData: {
-		mail: string;
+		usertoken: string;
+		fpword: string;
+		npword: string;
 	},
 	bearerToken: string
 ): Promise<{ success: boolean; message?: string }> => {
