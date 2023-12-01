@@ -1,5 +1,5 @@
 // route.ts
-
+'use client';
 // Import necessary libraries and dependencies
 import { useRouter } from 'next/navigation';
 
