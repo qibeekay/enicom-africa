@@ -9,7 +9,8 @@ import Image from 'next/image';
 import 'react-toastify/dist/ReactToastify.css';
 import { Forgot } from '@/app/forgot/route';
 import { FormProps } from '..';
-import { Update } from '@/app/api/update/route';
+import { Update } from '@/app/update/route';
+SS;
 
 const ForgotForm = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
