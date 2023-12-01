@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi';
 import Image from 'next/image';
 import 'react-toastify/dist/ReactToastify.css';
-import { ForgotPword, UpdatePword } from '@/app/api/forgot-pword/route';
+import { ForgotPword, UpdatePword } from '@/app/api/forgot/route';
 import { FormProps } from '..';
 
 const ForgotForm = () => {
