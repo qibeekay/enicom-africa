@@ -1,15 +1,14 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
 const endpoint = 'auth/forgetPword';
-const endpoint1 = 'auth/updatePword';
 const API_URL = process.env.NEXT_PUBLIC_ENV_VARIABLE;
 
-export const Forgot = async (
+export async function Forgot(
 	userData: {
 		mail: string;
 	},
 	bearerToken: string
-): Promise<{ success: boolean; message?: string }> => {
+): Promise<{ success: boolean; message?: string }> {
 	try {
 		const config: AxiosRequestConfig = {
 			headers: {
@@ -27,4 +26,4 @@ export const Forgot = async (
 	} catch (error: any) {
 		throw new Error(error.response?.data?.message || 'Failed to register');
 	}
-};
+}
