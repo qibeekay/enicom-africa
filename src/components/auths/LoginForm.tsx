@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi';
 import Image from 'next/image';
 import 'react-toastify/dist/ReactToastify.css';
-import { Login } from '@/app/logins/route';
+import { Login } from '@/app/(api)/logins/route';
 
 const LoginForm = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);

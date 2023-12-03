@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi';
 import Image from 'next/image';
 import 'react-toastify/dist/ReactToastify.css';
-import { Register } from '@/app/registers/route';
+import { Register } from '@/app/(api)/registers/route';
 
 const RegisterForm = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);

@@ -7,10 +7,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi';
 import Image from 'next/image';
 import 'react-toastify/dist/ReactToastify.css';
-import { Forgot } from '@/app/forgot/route';
 import { FormProps } from '..';
-import { Update } from '@/app/update/route';
-SS;
+import { Forgot } from '@/app/(api)/forgot/route';
+import { Update } from '@/app/(api)/update/route';
 
 const ForgotForm = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
