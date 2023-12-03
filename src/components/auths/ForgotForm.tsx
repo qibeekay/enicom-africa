@@ -8,8 +8,7 @@ import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi';
 import Image from 'next/image';
 import 'react-toastify/dist/ReactToastify.css';
 import { FormProps } from '..';
-import { Forgot } from '@/app/(api)/forgot/route';
-import { Update } from '@/app/(api)/update/route';
+import { Forgot, Update } from '@/api/auth/api';
 
 const ForgotForm = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -23,7 +22,7 @@ const ForgotForm = () => {
 		mail: '',
 	});
 	const [pData, setPData] = useState({
-		usertoken: '',
+		email: '',
 		fpword: '',
 		npword: '',
 	});
@@ -172,6 +171,15 @@ const ForgotForm = () => {
 								{/* Form 1 */}
 								<form action='' onSubmit={handlePasswordChange}>
 									<FormProps
+										label='Email'
+										name='email'
+										id='email'
+										labelId='email'
+										type='text'
+										value={pData.email}
+										onChange={handlePChange}
+									/>
+									<FormProps
 										label='Reset Code'
 										name='fpword'
 										id='fpword'
@@ -189,6 +197,13 @@ const ForgotForm = () => {
 										value={pData.npword}
 										onChange={handlePChange}
 									/>
+									<div className='w-full xs:w-[70%] mx-auto mt-7'>
+										<button
+											className=' bg-greens w-full py-2 px-5 rounded-lg text-white'
+											disabled={isLoading}>
+											{isLoading ? 'Loading...' : 'Submit'}
+										</button>
+									</div>
 								</form>
 							</div>
 						)}

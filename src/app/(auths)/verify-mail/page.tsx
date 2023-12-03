@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/navigation';
-import { VerifyMail } from '@/app/(api)/verify-mails/route';
+import { VerifyMail } from '@/api/auth/api';
 
 export default function Verify() {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
