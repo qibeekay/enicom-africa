@@ -7,6 +7,7 @@ import { HiBars3 } from 'react-icons/hi2';
 import { HiX } from 'react-icons/hi';
 
 const Navbar = () => {
+	const [usermail, setUsermail] = useState('');
 	const router = useRouter();
 
 	const handleHome = () => {
@@ -18,8 +19,11 @@ const Navbar = () => {
 	};
 
 	// Check if user is logged in based on your authentication mechanism
-	const userMail = localStorage.getItem('mail');
-	const isLoggedIn = !!userMail;
+	useEffect(() => {
+		const userMail = localStorage.getItem('mail');
+		setUsermail(userMail || '');
+	});
+	const isLoggedIn = !!usermail;
 
 	const [nav, setNav] = useState(false);
 	return (
