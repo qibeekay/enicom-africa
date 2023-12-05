@@ -54,11 +54,11 @@ const RegisterForm = () => {
 			}
 
 			const response = await Register(formData, `$${token}`);
-			console.log(response.success);
 
 			if (response.success === false) {
 				toast.error(response.message || 'Failed to register');
 			} else {
+				console.log('success');
 				toast.success('Registration Successful');
 				router.push('/login');
 			}
@@ -69,8 +69,8 @@ const RegisterForm = () => {
 		}
 	};
 
-	console.log('token', token);
-	console.log('token', token);
+	// console.log('token', token);
+	// console.log('token', token);
 	return (
 		<div className='w-full min-h-screen bg-bgGreen py-10'>
 			<div className='bg-white w-[95%] sm:w-[80%] md:w-[60%] lg:w-[50%] py-7 px-4 sm:p-7 rounded-3xl mx-auto text-dark'>
