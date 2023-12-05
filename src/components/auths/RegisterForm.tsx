@@ -69,7 +69,6 @@ const RegisterForm = () => {
 		}
 	};
 
-	console.log(token);
 	console.log('token', token);
 	return (
 		<div className='w-full min-h-screen bg-bgGreen py-10'>
