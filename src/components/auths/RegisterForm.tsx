@@ -70,7 +70,7 @@ const RegisterForm = () => {
 	};
 
 	console.log(token);
-	console.log(token);
+	console.log('token', token);
 	return (
 		<div className='w-full min-h-screen bg-bgGreen py-10'>
 			<div className='bg-white w-[95%] sm:w-[80%] md:w-[60%] lg:w-[50%] py-7 px-4 sm:p-7 rounded-3xl mx-auto text-dark'>
