@@ -24,6 +24,10 @@ export default function Verify() {
 
 	const router = useRouter();
 
+	const handleHome = () => {
+		router.push('/');
+	};
+
 	const inputRefs = [
 		useRef<HTMLInputElement | null>(null),
 		useRef<HTMLInputElement | null>(null),
@@ -79,7 +83,7 @@ export default function Verify() {
 		<div className='w-full min-h-screen bg-bgGreen'>
 			<div>
 				{/* header */}
-				<div className='py-7 px-10'>
+				<div className='py-7 px-10 cursor-pointer' onClick={handleHome}>
 					<Image src={'/logo.png'} width={150} height={150} alt='logo' />
 				</div>
 

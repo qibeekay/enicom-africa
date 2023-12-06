@@ -26,6 +26,10 @@ const LoginForm = () => {
 
 	const router = useRouter();
 
+	const handleHome = () => {
+		router.push('/');
+	};
+
 	const handleChange = (event: any) => {
 		const { name, value } = event.target;
 		setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -57,16 +61,9 @@ const LoginForm = () => {
 			if (response.success === false) {
 				toast.error(response.message || 'Failed to login');
 			} else {
-				// Check if is_verified is true
-				if (response.data.is_verified === true) {
-					// Navigate to /dashboard
-					router.push('/dashboard');
-				} else {
-					// Navigate to /verify-mail
-					router.push('/verify-mail');
-				}
-
 				toast.success('Login Successful');
+				// Navigate to /dashboard
+				router.push('/dashboard');
 			}
 		} catch (error: any) {
 			toast.error(error.message || 'Failed to login');
@@ -84,7 +81,9 @@ const LoginForm = () => {
 					<div className='flex justify-between'>
 						{/* logo */}
 						{/* logo */}
-						<div className=' h-5 w-20 xs:h-6 xs:w-25 sm:w-28'>
+						<div
+							className=' h-5 w-20 xs:h-6 xs:w-25 sm:w-28 cursor-pointer'
+							onClick={handleHome}>
 							<Image
 								src={'/logo.png'}
 								width={100}

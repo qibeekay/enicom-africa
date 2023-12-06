@@ -13,6 +13,13 @@ import { Register } from '@/api/auth/api';
 const RegisterForm = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [showPassword, setShowPassword] = useState(false);
+
+	const router = useRouter();
+
+	const handleHome = () => {
+		router.push('/');
+	};
+
 	const togglePassword = () => {
 		setShowPassword(!showPassword);
 	};
@@ -26,7 +33,6 @@ const RegisterForm = () => {
 		mail: '',
 		pword: '',
 	});
-	const router = useRouter();
 
 	const handleChange = (event: any) => {
 		const { name, value } = event.target;
@@ -59,8 +65,9 @@ const RegisterForm = () => {
 				toast.error(response.message || 'Failed to register');
 			} else {
 				console.log('success');
+				// console.log('response');
 				toast.success('Registration Successful');
-				router.push('/login');
+				router.push('/verify-mail');
 			}
 		} catch (error: any) {
 			toast.error(error.message || 'Failed to register');
@@ -79,7 +86,9 @@ const RegisterForm = () => {
 					{/* header */}
 					<div className='flex justify-between'>
 						{/* logo */}
-						<div className=' h-5 w-20 xs:h-6 xs:w-25 sm:w-28'>
+						<div
+							className=' h-5 w-20 xs:h-6 xs:w-25 sm:w-28 cursor-pointer'
+							onClick={handleHome}>
 							<Image
 								src={'/logo.png'}
 								width={100}

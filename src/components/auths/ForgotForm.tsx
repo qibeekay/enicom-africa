@@ -27,6 +27,10 @@ const ForgotForm = () => {
 		npword: '',
 	});
 
+	const handleHome = () => {
+		router.push('/');
+	};
+
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = event.target;
 		setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -118,7 +122,9 @@ const ForgotForm = () => {
 					{/* header */}
 					<div className='flex justify-between'>
 						{/* logo */}
-						<div className=' h-5 w-20 xs:h-6 xs:w-25 sm:w-28'>
+						<div
+							className=' h-5 w-20 xs:h-6 xs:w-25 sm:w-28 cursor-pointer'
+							onClick={handleHome}>
 							<Image
 								src={'/logo.png'}
 								width={100}

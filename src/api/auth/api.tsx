@@ -38,6 +38,14 @@ export const Register = async (
 			config
 		);
 
+		// Assuming a successful response structure with user data
+		const responseData = response.data;
+
+		// Save user details to localStorage
+		if (responseData.success) {
+			localStorage.setItem('mail', responseData.data.mail);
+		}
+
 		// console.log('Registration successful', response.data);
 		return response.data;
 	} catch (error: any) {
