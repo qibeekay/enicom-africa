@@ -60,17 +60,20 @@ const RegisterForm = () => {
 			}
 
 			const response = await Register(formData, `$${token}`);
+			console.log('Registration response:', response);
 
-			if (response.success === false) {
-				toast.error(response.message || 'Failed to register');
-			} else {
-				console.log('success');
+			if (response.success === true) {
+				// console.log('success');
 				// console.log('response');
 				toast.success('Registration Successful');
 				router.push('/verify-mail');
+			} else {
+				toast.error(response.message || 'Failed to register');
+				// console.log('errrorrrr');
 			}
 		} catch (error: any) {
 			toast.error(error.message || 'Failed to register');
+			// console.error('Registration error in handleSubmit:', error);
 		} finally {
 			setIsLoading(false);
 		}

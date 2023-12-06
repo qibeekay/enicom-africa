@@ -42,13 +42,19 @@ export const Register = async (
 		const responseData = response.data;
 
 		// Save user details to localStorage
-		if (responseData.success) {
-			localStorage.setItem('mail', responseData.data.mail);
+		if (responseData.success && userData.mail) {
+			console.log('Setting email in localStorage:', userData.mail);
+			try {
+				localStorage.setItem('mail', userData.mail);
+			} catch (e) {
+				console.error('Error setting email in localStorage:', e);
+			}
 		}
 
 		// console.log('Registration successful', response.data);
 		return response.data;
 	} catch (error: any) {
+		console.error('Registration error:', error);
 		throw new Error(error.response?.data?.message || 'Failed to register');
 	}
 };
