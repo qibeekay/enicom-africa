@@ -56,21 +56,23 @@ const Navbar = () => {
 				</div>
 
 				{/* button */}
-				{isLoggedIn ? (
-					<div className='w-[10rem]'>
-						<Link
-							href={'/dashboard'}
-							className='text-greens rounded sm:grid items-center justify-center py-2 cursor-pointer font-semibold'>
-							Dashboard
-						</Link>
-					</div>
-				) : (
-					<div
-						className='bg-greens rounded w-[10rem] sm:grid items-center justify-center text-white py-2 cursor-pointer'
-						onClick={handleRegister}>
-						<p>Get Started</p>
-					</div>
-				)}
+				<div className='hidden sm:block'>
+					{isLoggedIn ? (
+						<div className='w-[10rem]'>
+							<Link
+								href={'/dashboard'}
+								className='text-greens rounded grid items-center justify-center py-2 cursor-pointer font-semibold'>
+								Dashboard
+							</Link>
+						</div>
+					) : (
+						<div
+							className='bg-greens rounded w-[10rem] grid items-center justify-center text-white py-2 cursor-pointer'
+							onClick={handleRegister}>
+							<p>Get Started</p>
+						</div>
+					)}
+				</div>
 
 				<div className='lg:hidden cursor-pointer' onClick={() => setNav(true)}>
 					<HiBars3 size={30} />
@@ -120,10 +122,22 @@ const Navbar = () => {
 
 					{/* button */}
 					<div className='grid items-center justify-center mt-8'>
-						<div
-							className=' bg-greens rounded w-[10rem] sm:hidden grid items-center justify-center text-white py-2 cursor-pointer'
-							onClick={handleRegister}>
-							<p>Get Started</p>
+						<div className=''>
+							{isLoggedIn ? (
+								<div className='w-[10rem]'>
+									<Link
+										href={'/dashboard'}
+										className='text-greens rounded grid items-center justify-center py-2 cursor-pointer font-semibold'>
+										Dashboard
+									</Link>
+								</div>
+							) : (
+								<div
+									className='bg-greens rounded w-[10rem] grid items-center justify-center text-white py-2 cursor-pointer'
+									onClick={handleRegister}>
+									<p>Get Started</p>
+								</div>
+							)}
 						</div>
 					</div>
 				</div>

@@ -1,7 +1,22 @@
-import React from 'react';
+'use client';
+import React, { useCallback, useState } from 'react';
+import { FileRejection, useDropzone } from 'react-dropzone';
 import { HiChevronDown } from 'react-icons/hi2';
 
 const Tab1 = () => {
+	const [file, setFile] = useState<File | null>(null);
+
+	const onDrop = useCallback((acceptedFiles: File[]) => {
+		// Assuming you are only handling one file
+		const selectedFile = acceptedFiles[0];
+		setFile(selectedFile);
+	}, []);
+
+	const { getRootProps, getInputProps } = useDropzone({
+		onDrop,
+		accept: ['image/*'] as any, // Specify the accepted file types
+		maxFiles: 1, // Limit the number of files to 1
+	});
 	return (
 		<div className='font-poppins text-dark'>
 			<div>
@@ -66,6 +81,67 @@ const Tab1 = () => {
 										/>
 									</div>
 								</div>
+							</div>
+
+							{/* image upload */}
+							<div className='max-w-xl'>
+								<label
+									{...getRootProps()}
+									className='flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none'>
+									<span className='flex items-center space-x-2'>
+										<svg
+											xmlns='http://www.w3.org/2000/svg'
+											className='w-6 h-6 text-gray-600'
+											fill='none'
+											viewBox='0 0 24 24'
+											stroke='currentColor'
+											strokeWidth='2'>
+											<path
+												strokeLinecap='round'
+												strokeLinejoin='round'
+												d='M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12'
+											/>
+										</svg>
+										{file ? (
+											<div className='flex items-center'>
+												<img
+													src={URL.createObjectURL(file)}
+													alt={file.name}
+													className='w-8 h-8 object-cover rounded-full'
+												/>
+												<span className='font-medium text-gray-600'>
+													{file.name} is selected.{' '}
+													<span
+														className='text-blue-600 underline cursor-pointer'
+														onClick={() => setFile(null)}>
+														Remove
+													</span>
+												</span>
+											</div>
+										) : (
+											<span className='font-medium text-gray-600'>
+												Drop files to Attach, or{' '}
+												<span className='text-blue-600 underline'>browse</span>
+											</span>
+										)}
+									</span>
+									<input
+										{...getInputProps()}
+										type='file'
+										name='file_upload'
+										className='hidden'
+									/>
+								</label>
+
+								{file && (
+									<div className=' w-[5rem] aspect-square overflow-hidden bg-orange-500'>
+										<img
+											src={URL.createObjectURL(file)}
+											alt={file.name}
+											className='w-full h-full'
+										/>
+									</div>
+								)}
 							</div>
 
 							{/* button */}

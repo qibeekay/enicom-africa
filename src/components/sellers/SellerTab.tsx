@@ -47,8 +47,8 @@ const SellerTab = () => {
 							style={{ width: `${progress}%` }}></div>
 					</div>
 
-					<div className='flex mt-5 mx-auto w-[85%] gap-[8rem]'>
-						<div className='flex flex-col gap-5 w-[18rem] font-medium text-dark/60 '>
+					<div className='flex flex-col md:flex-row mt-5 mx-auto w-full px-4 md:px-0 md:w-[85%] gap-y-4 md:gap-[8rem]'>
+						<div className='flex flex-wrap items-center justify-between md:items-start md:justify-start md:flex-col gap-5 w-full md:w-[18rem] font-medium text-dark/60 '>
 							<div>
 								{activeTab === '1' && <p>1/3</p>}
 								{activeTab === '2' && <p>2/3</p>}

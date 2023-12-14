@@ -21,7 +21,7 @@ const DasboardNav = () => {
 	const router = useRouter();
 
 	const handleHome = () => {
-		router.push('/');
+		router.push('/dashboard');
 	};
 
 	const closeNavigation = () => {

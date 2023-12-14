@@ -1,5 +1,6 @@
+'use client';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { GiBackwardTime } from 'react-icons/gi';
 import { FiPlus } from 'react-icons/fi';
 import { HiChevronDown } from 'react-icons/hi2';
@@ -8,6 +9,15 @@ import { AiOutlineEyeInvisible, AiOutlineSwap } from 'react-icons/ai';
 import { DashBoardItems } from '..';
 
 const DashboardBalance = () => {
+	const [kyc, setKyc] = useState('');
+
+	// Check if user is logged in based on your authentication mechanism
+	useEffect(() => {
+		const kycStatus = localStorage.getItem('mail');
+		setKyc(kyc || '');
+	});
+	const iskycStatus = !!kyc;
+
 	return (
 		<div className='w-full font-poppins'>
 			<div>
