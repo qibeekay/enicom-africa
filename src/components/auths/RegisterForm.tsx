@@ -32,6 +32,7 @@ const RegisterForm = () => {
 		lname: '',
 		mail: '',
 		pword: '',
+		phone: '',
 	});
 
 	const handleChange = (event: any) => {
@@ -155,6 +156,15 @@ const RegisterForm = () => {
 								labelId='emailLabel'
 								type='email'
 								value={formData.mail}
+								onChange={handleChange}
+							/>
+							<FormProps
+								label='Phone number'
+								name='phone'
+								id='phone'
+								labelId='phoneLabel'
+								type='text'
+								value={formData.phone}
 								onChange={handleChange}
 							/>
 

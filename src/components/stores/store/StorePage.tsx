@@ -1,14 +1,41 @@
 'use client';
+import { getAllProduct } from '@/api/products/products';
 import { DasboardNav, StoreBaterries } from '@/components';
 import LoanCalculatorModal from '@/components/LoanCalculatorModal';
 import { Dialog } from '@material-tailwind/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoIosCalculator } from 'react-icons/io';
 import { MdLiveHelp } from 'react-icons/md';
+
+// Define types for your data
+interface Product {
+	product_name: string;
+	product_price_th: string;
+	product_image: string;
+	// Add other properties as needed
+}
+
+interface Category {
+	category: string;
+	products: Product[];
+}
 
 const StorePage = () => {
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen((cur) => !cur);
+
+	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
+	const [categories, setCategories] = useState<Category[]>([]);
+
+	useEffect(() => {
+		const fetchCategories = async () => {
+			const fetchedCategories = (await getAllProduct(`$${token}`)) || [];
+			setCategories(fetchedCategories);
+		};
+
+		fetchCategories();
+	}, [token]);
+
 	return (
 		<div className='font-poppins relative'>
 			<DasboardNav />
@@ -29,21 +56,13 @@ const StorePage = () => {
 				</div>
 			</div>
 
-			<div className='max-w-6xl mx-auto px-4'>
-				<h1 className=' text-xl font-medium'>Batteries</h1>
-
-				<StoreBaterries />
-			</div>
-			<div className='max-w-6xl mx-auto px-4'>
-				<h1 className=' text-xl font-medium'>Panels</h1>
-
-				<StoreBaterries />
-			</div>
-			<div className='max-w-6xl mx-auto px-4'>
-				<h1 className=' text-xl font-medium'>Batteries</h1>
-
-				<StoreBaterries />
-			</div>
+			{/* Render sliders for all available categories */}
+			{categories.map((category, index) => (
+				<div key={index} className='max-w-6xl mx-auto px-4'>
+					<h1 className='text-xl font-medium'>{category.category}</h1>
+					<StoreBaterries category={category.category} />
+				</div>
+			))}
 
 			{/* absolute */}
 			<div className='fixed right-10 z-50 bottom-10 cursor-pointer text-greens '>

@@ -1,57 +1,39 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
 import { Arrow } from '@/components';
 import { CgQuote } from 'react-icons/cg';
 import { useRouter } from 'next/navigation';
+import { getAllProduct } from '@/api/products/products';
 
-const StoreBaterries = () => {
-	const Batteries = [
-		{
-			slide: 'keen-slider__slide number-slide1',
-			img: '/exterior2.jpg',
-		},
-		{
-			slide: 'keen-slider__slide number-slide2',
-			img: '/exterior2.jpg',
-		},
-		{
-			slide: 'keen-slider__slide number-slide3',
-			img: '/exterior2.jpg',
-		},
-		{
-			slide: 'keen-slider__slide number-slide4',
-			img: '/exterior2.jpg',
-		},
-		{
-			slide: 'keen-slider__slide number-slide5',
-			img: '/exterior2.jpg',
-		},
-		{
-			slide: 'keen-slider__slide number-slide6',
-			img: '/exterior2.jpg',
-		},
-		{
-			slide: 'keen-slider__slide number-slide7',
-			img: '/exterior2.jpg',
-		},
-		{
-			slide: 'keen-slider__slide number-slide8',
-			img: '/exterior2.jpg',
-		},
-		{
-			slide: 'keen-slider__slide number-slide9',
-			img: '/exterior2.jpg',
-		},
-		{
-			slide: 'keen-slider__slide number-slide10',
-			img: '/exterior2.jpg',
-		},
-	];
+interface Product {
+	// Define the structure of your product data
+	product_name: string;
+	product_price_th: string;
+	product_image: string;
+	// Add other properties as needed
+}
+
+interface Category {
+	category: string;
+	products: Product[];
+}
+
+// Use React.FC with the defined props
+interface StoreBaterriesProps {
+	category: string;
+}
+
+const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
+	// 		slide: 'keen-slider__slide number-slide1',
+
 	const [currentSlide, setCurrentSlide] = React.useState(0);
 	const [loaded, setLoaded] = useState(false);
+	const [categories, setCategories] = useState<Category[]>([]);
 	const router = useRouter();
+
+	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
 	const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
 		initial: 0,
@@ -104,6 +86,17 @@ const StoreBaterries = () => {
 	const handleNavigation = () => {
 		router.push('/details');
 	};
+
+	const fetchCategories = async () => {
+		const fetchedCategories = (await getAllProduct(`$${token}`)) || [];
+		setCategories(fetchedCategories);
+	};
+
+	useEffect(() => {
+		fetchCategories();
+	}, []);
+
+	console.log(categories);
 	return (
 		<div className='relative'>
 			<div>
@@ -121,34 +114,45 @@ const StoreBaterries = () => {
 								<div className='w-3 h-3 rounded-full bg-[#D5FFD3] animate-bounce [animation-delay:-.5s]'></div>
 							</div>
 						)}
-						{/* keen-slider__slide number-slide1 */}
-						{Batteries.map((battery, index) => (
-							<div
-								key={index}
-								className={`overflow-hidden rounded-xl w-[11rem] hover:shadow-lg hover:bg-white cursor-pointer px-2 ${battery.slide}`}
-								onClick={handleNavigation}>
-								{/* image */}
-								{loaded && (
-									<div>
-										<div className='w-full rounded-xl overflow-hidden h-[7rem]'>
-											<img
-												className='w-full h-full object-cover'
-												src={battery.img}
-												alt=''
-											/>
-										</div>
 
-										{/* text */}
-										<div className='px-2'>
-											<p className='my-2 text-dark'>Hvac Capacity</p>
-											<h1 className='mb-4 font-semibold text-lg text-dark'>
-												N200,000
-											</h1>
+						{/* keen-slider__slide number-slide1 */}
+						{categories
+							.filter((cat) => cat.category === category)
+							.map((cat, index) => (
+								<React.Fragment key={index}>
+									{cat.products.map((product, productIndex) => (
+										<div
+											key={productIndex}
+											className={`overflow-hidden rounded-xl w-[11rem] hover:shadow-lg hover:bg-white cursor-pointer px-2 keen-slider__slide number-slide${
+												index + 1
+											}`}
+											onClick={handleNavigation}>
+											{/* image */}
+											{loaded && (
+												<div>
+													<div className='w-full rounded-xl overflow-hidden h-[7rem]'>
+														<img
+															className='w-full h-full object-cover'
+															src={product.product_image}
+															alt=''
+														/>
+													</div>
+
+													{/* text */}
+													<div className='px-2'>
+														<p className='my-2 text-dark'>
+															{product.product_name}
+														</p>
+														<h1 className='mb-4 font-semibold text-lg text-dark'>
+															{product.product_price_th}
+														</h1>
+													</div>
+												</div>
+											)}
 										</div>
-									</div>
-								)}
-							</div>
-						))}
+									))}
+								</React.Fragment>
+							))}
 					</div>
 
 					{/* buttons */}

@@ -126,7 +126,7 @@ const Tab3 = () => {
 
 	const uploadedImageUrl = uploadResponse?.data?.image;
 	console.log(uploadedImageUrl);
-	// console.log('Categories:', categories);
+	console.log('Categories:', categories);
 
 	const router = useRouter();
 
@@ -145,6 +145,25 @@ const Tab3 = () => {
 		usertoken: usertoken,
 		product_category: [] as string[],
 	});
+
+	// Function to reset the form state
+	const resetForm = () => {
+		setFormData({
+			product_name: '',
+			product_price: '',
+			product_image: '',
+			product_desc: '',
+			product_condition: '',
+			product_capacity: '',
+			product_quantity: '',
+			usertoken: usertoken,
+			product_category: [] as string[],
+		});
+		setFile(null);
+		setSelectedCategories([]);
+		setUploadResponse(null);
+		setNewCategory('');
+	};
 
 	/* handling all form change */
 
@@ -179,7 +198,7 @@ const Tab3 = () => {
 
 			// Convert product_category to an array of strings
 			const productCategory = selectedCategories.map(
-				(category) => category.cat_name
+				(category) => category.cat_id
 			);
 
 			const response = await uploadProduct(
@@ -196,6 +215,7 @@ const Tab3 = () => {
 
 			if (response.success === true) {
 				toast.success('Product upload Successful');
+				resetForm();
 				// router.push('/verify-mail');
 			} else {
 				toast.error(response.message || 'Failed to upload');

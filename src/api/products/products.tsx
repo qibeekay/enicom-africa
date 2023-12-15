@@ -5,6 +5,7 @@ const endpoint = 'admin/category';
 const endpoint1 = 'admin/product';
 const API_URL = process.env.NEXT_PUBLIC_ENV_VARIABLE;
 
+// get all category
 export const getAllCategories = async (bearerToken: string) => {
 	try {
 		const response = await axios.get(
@@ -95,5 +96,20 @@ export const uploadProduct = async (
 	} catch (error: any) {
 		console.error('Upload error:', error);
 		throw new Error(error.response?.data?.message || 'Failed to upload');
+	}
+};
+
+export const getAllProduct = async (bearerToken: string) => {
+	try {
+		const response = await axios.get(`${API_URL}/fetch-all-product`, {
+			headers: {
+				Authorization: `Bearer ${bearerToken}`,
+			},
+		});
+		return response.data.data;
+	} catch (error) {
+		toast.error('Error fetching categories');
+		console.error('Error fetching categories:', error);
+		return [];
 	}
 };
