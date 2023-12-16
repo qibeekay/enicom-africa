@@ -113,3 +113,34 @@ export const getAllProduct = async (bearerToken: string) => {
 		return [];
 	}
 };
+
+// export const createBlog = async (userData: {
+// 	userid: number;
+// 	blog_title: string;
+// 	blog_desc: string;
+// 	blog_image: string;
+// }): Promise<{ success: boolean; message?: string }> => {
+// 	try {
+// 		const config: AxiosRequestConfig = {
+// 			// headers: {
+// 			// 	Authorization: `Bearer ${bearerToken}`,
+// 			// },
+// 		};
+// 		const response = await axios.post(
+// 			`https://havens.iccflifeskills.com.ng/v0.1/api/admin/blog/createBlog`,
+// 			userData,
+// 			config
+// 		);
+
+// 		// Assuming a successful response structure with user data
+// 		const responseData = response.data;
+
+// 		// Save user details to localStorage
+
+// 		// console.log('Registration successful', response.data);
+// 		return response.data;
+// 	} catch (error: any) {
+// 		console.error('KYC update error:', error);
+// 		throw new Error(error.response?.data?.message || 'Failed to update kyc');
+// 	}
+// };

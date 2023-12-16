@@ -23,6 +23,7 @@ export const Register = async (
 		lname: string;
 		mail: string;
 		pword: string;
+		phone: string;
 	},
 	bearerToken: string
 ): Promise<{ success: boolean; message?: string }> => {
@@ -224,3 +225,5 @@ export const UpdateKyc = async (
 		throw new Error(error.response?.data?.message || 'Failed to update kyc');
 	}
 };
+
+// Image
