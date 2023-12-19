@@ -20,7 +20,10 @@ const SalesTab1 = () => {
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
 	// Fetch mail from localStorage when the component mounts
-	const usertoken = localStorage.getItem('usertoken') || '';
+	const usertoken =
+		typeof window !== 'undefined'
+			? localStorage.getItem('usertoken') || ''
+			: '';
 
 	const fetchProducts = async () => {
 		try {
