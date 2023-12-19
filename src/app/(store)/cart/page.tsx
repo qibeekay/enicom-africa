@@ -1,5 +1,6 @@
 'use client';
 import { CartPage } from '@/components';
+import { CartProvider } from '@/components/CartContext';
 import { ThemeProvider } from '@material-tailwind/react';
 import React from 'react';
 
@@ -7,7 +8,9 @@ const page = () => {
 	return (
 		<div>
 			<ThemeProvider>
-				<CartPage />
+				<CartProvider>
+					<CartPage />
+				</CartProvider>
 			</ThemeProvider>
 		</div>
 	);
