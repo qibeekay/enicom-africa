@@ -1,17 +1,74 @@
 'use client';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsCart } from 'react-icons/bs';
 import { HiChevronRight, HiMiniStar, HiOutlineStar } from 'react-icons/hi2';
 import { Select, Option, Input, Typography } from '@material-tailwind/react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { getProductByToken } from '@/api/products/products';
+import { ToastContainer, toast } from 'react-toastify';
+import { addToCart } from '@/api/cart/cart';
+import { useCart } from '@/components/CartContext';
+
+interface Product {
+	// Define the structure of your product data
+	product_name: string;
+	product_price: string;
+	product_image: string;
+	product_token: string;
+	product_desc: string;
+	// Add other properties as needed
+}
 
 const DetailsItems = () => {
+	const [productsByToken, setProductsByToken] = useState<Product | null>(null);
+	const [loaded, setLoaded] = useState(false);
+	const [loading, setLoading] = useState(true);
 	const router = useRouter();
+	const { addToCart } = useCart();
+	const searchParams = useSearchParams();
+	// Access the query parameter
+	const productToken = searchParams.get('producttoken');
+	const usertoken = localStorage.getItem('usertoken');
 
 	const handlePurchase = () => {
 		router.push('/cart');
 	};
+
+	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
+
+	const fetchProducts = async () => {
+		try {
+			setLoading(true);
+			const fetchedProducts = await getProductByToken(
+				`$${token}`,
+				`${productToken}`
+			);
+			setProductsByToken(fetchedProducts);
+			setLoaded(true);
+		} catch (error) {
+			toast.error('Error fetching products');
+			console.error('Error fetching products:', error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		fetchProducts();
+	}, []);
+
+	console.log(productsByToken);
+
+	const handleAddToCart = async () => {
+		if (productsByToken) {
+			addToCart(productsByToken);
+		} else {
+			console.error('Product data is null. Unable to add to cart.');
+			// Optionally, you can provide user feedback here, such as displaying a message.
+		}
+	};
+
 	return (
 		<div className='font-poppins my-10'>
 			<div className='max-w-6xl px-4 mx-auto'>
@@ -28,7 +85,7 @@ const DetailsItems = () => {
 									<div className=' w-full rounded-lg h-[9rem] overflow-hidden'>
 										<img
 											className='w-full h-full object-cover'
-											src='/exterior2.jpg'
+											src={productsByToken?.product_image}
 											alt=''
 										/>
 									</div>
@@ -62,7 +119,9 @@ const DetailsItems = () => {
 
 									{/* Add to Cart */}
 									<div className='mt-5'>
-										<button className='py-2 bg-[#222222] w-full text-white rounded-md flex gap-4 items-center justify-center cursor-pointer'>
+										<button
+											className='py-2 bg-[#222222] w-full text-white rounded-md flex gap-4 items-center justify-center cursor-pointer'
+											onClick={handleAddToCart}>
 											<BsCart size='20' />
 											Add to Cart
 										</button>
@@ -71,17 +130,17 @@ const DetailsItems = () => {
 
 								<div className='w-full'>
 									<div>
-										<p className=' text-dark'>Timo Money Batteries</p>
-										<p className='text-dark text-xl font-semibold '>N300,000</p>
+										<p className=' text-dark'>
+											{productsByToken?.product_name}
+										</p>
+										<p className='text-dark text-xl font-semibold '>
+											{productsByToken?.product_price}
+										</p>
 									</div>
 									<div className='my-2 text-dark text-sm md:text-base'>
 										<p className='flex gap-4 text-sm md:text-base'>
-											Capacity:{' '}
-											<span>
-												Lorem ipsum dolor sit amet consectetur, adipisicing
-												elit. Voluptatum ullam nobis fugit consectetur debitis
-												similique.
-											</span>
+											Description:
+											<span>{productsByToken?.product_desc}</span>
 										</p>
 									</div>
 									<div className='text-sm md:text-base'>
@@ -322,6 +381,7 @@ const DetailsItems = () => {
 
 					<div className='hidden md:block w-[45%]'></div>
 				</div>
+				<ToastContainer />
 			</div>
 		</div>
 	);

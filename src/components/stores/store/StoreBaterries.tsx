@@ -12,6 +12,7 @@ interface Product {
 	product_name: string;
 	product_price_th: string;
 	product_image: string;
+	product_token: string;
 	// Add other properties as needed
 }
 
@@ -30,7 +31,7 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 
 	const [currentSlide, setCurrentSlide] = React.useState(0);
 	const [loaded, setLoaded] = useState(false);
-	const [categories, setCategories] = useState<Category[]>([]);
+	const [productsCategories, setProductsCategories] = useState<Category[]>([]);
 	const router = useRouter();
 
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
@@ -87,16 +88,21 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 		router.push('/details');
 	};
 
-	const fetchCategories = async () => {
-		const fetchedCategories = (await getAllProduct(`$${token}`)) || [];
-		setCategories(fetchedCategories);
+	const fetchProducts = async () => {
+		const fetchedProducts = (await getAllProduct(`$${token}`)) || [];
+		setProductsCategories(fetchedProducts);
 	};
 
 	useEffect(() => {
-		fetchCategories();
+		fetchProducts();
 	}, []);
 
-	console.log(categories);
+	const handleDetailsClick = (productToken: string | null) => {
+		// Programmatically navigate to the DetailsItems page with the product token as a query parameter
+		router.push(`/details?producttoken=${productToken}`);
+	};
+
+	console.log(productsCategories);
 	return (
 		<div className='relative'>
 			<div>
@@ -116,7 +122,7 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 						)}
 
 						{/* keen-slider__slide number-slide1 */}
-						{categories
+						{productsCategories
 							.filter((cat) => cat.category === category)
 							.map((cat, index) => (
 								<React.Fragment key={index}>
@@ -126,7 +132,7 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 											className={`overflow-hidden rounded-xl w-[11rem] hover:shadow-lg hover:bg-white cursor-pointer px-2 keen-slider__slide number-slide${
 												index + 1
 											}`}
-											onClick={handleNavigation}>
+											onClick={() => handleDetailsClick(product.product_token)}>
 											{/* image */}
 											{loaded && (
 												<div>

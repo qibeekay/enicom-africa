@@ -1,9 +1,17 @@
+'use client';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { HiChevronDown } from 'react-icons/hi2';
 import { LiaSearchSolid } from 'react-icons/lia';
+import SalesTab1 from './SalesTab1';
+import SalesTab2 from './SalesTab2';
+import SalesTab3 from './SalesTab3';
 
 const SalesMainDetails = () => {
+	const [activeTab, setActiveTab] = useState('1');
+	const handleTabClick = (tab: string) => {
+		setActiveTab(tab);
+	};
 	return (
 		<div className='w-full h-screen overflow-scroll text-dark no-scrollbar font-poppins'>
 			<div className='flex flex-col gap-y-7'>
@@ -11,7 +19,7 @@ const SalesMainDetails = () => {
 				<div className='bg-white w-full rounded-lg py-5 px-4 xs:px-7'>
 					{/* list */}
 					<div className='flex gap-4 flex-wrap md:gap-x-16 items-center'>
-						<p className='font-semibold text-lg'>All</p>
+						{/* <p className='font-semibold text-lg'>All</p>
 
 						<p>
 							Sold <span>(1)</span>
@@ -19,7 +27,28 @@ const SalesMainDetails = () => {
 
 						<p>
 							Posted <span>(1)</span>
-						</p>
+						</p> */}
+						<button
+							onClick={() => handleTabClick('1')}
+							className={` ${
+								activeTab === '1' ? 'font-semibold text-lg' : ''
+							}`}>
+							All
+						</button>
+						<button
+							onClick={() => handleTabClick('2')}
+							className={` ${
+								activeTab === '2' ? 'font-semibold text-lg' : ''
+							}`}>
+							Sold <span>(1)</span>
+						</button>
+						<button
+							onClick={() => handleTabClick('3')}
+							className={` ${
+								activeTab === '3' ? 'font-semibold text-lg' : ''
+							}`}>
+							Posted <span>(1)</span>
+						</button>
 					</div>
 
 					{/* search */}
@@ -45,63 +74,10 @@ const SalesMainDetails = () => {
 					</div>
 				</div>
 
-				{/* product */}
-				<div className='bg-white w-full rounded-lg py-5 px-4 xs:px-7'>
-					{/* order id */}
-					<div className='w-full flex justify-between'>
-						<p className='text-lg font-semibold'>Pending Payment</p>
-						<p>Order ID: sfdfdfhhfhfhfhfh</p>
-					</div>{' '}
-					<div className='mt-2'>
-						<div className='flex flex-col sm:flex-row gap-4 text-dark rounded-xl'>
-							{/* image */}
-							<div>
-								<div className='overflow-hidden w-[10rem] aspect-[2/1.5] rounded-xl'>
-									<img
-										className='w-full h-full object-cover'
-										src='/img.png'
-										alt=''
-									/>
-								</div>
-							</div>
-
-							{/* text */}
-							<div className='w-full'>
-								{/* name / order id*/}
-								<div className='flex justify-between'>
-									{/* name */}
-									<p>Timo Money Batteries</p>
-								</div>
-
-								{/* price */}
-								<div className='flex flex-col md:flex-row md:items-center justify-between'>
-									<h1 className='text-xl font-semibold'>N300,000</h1>
-									<div>
-										<Link href={''} className='underline text-dark'>
-											Rate Product
-										</Link>
-									</div>
-								</div>
-
-								{/* delivery status */}
-								<p className=' text-lg font-medium text-greens mt-4'>Sold</p>
-
-								{/* due date / details */}
-								<div className='flex flex-col md:flex-row justify-between md:items-center'>
-									<p className='text-sm font-medium text-dark/60'>
-										06/07/2022 <span> 03:10 PM</span>
-									</p>
-
-									{/* View Details */}
-									<div>
-										<Link href={''} className='underline text-dark'>
-											View Details
-										</Link>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+				<div className=' w-full'>
+					{activeTab === '1' && <SalesTab1 />}
+					{activeTab === '2' && <SalesTab2 />}
+					{activeTab === '3' && <SalesTab3 />}
 				</div>
 			</div>
 		</div>

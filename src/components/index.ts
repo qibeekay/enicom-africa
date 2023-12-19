@@ -81,6 +81,9 @@ import Tab2 from './sellers/Tab2';
 import Tab3 from './sellers/Tab3';
 import ForgotForm from './auths/ForgotForm';
 import CategoryModal from './sellers/CategoryModal';
+import SalesTab1 from './accounts/sales/SalesTab1';
+import SalesTab2 from './accounts/sales/SalesTab2';
+import SalesTab3 from './accounts/sales/SalesTab3';
 
 export {
 	RegisterForm,
@@ -165,4 +168,7 @@ export {
 	Tab3,
 	ForgotForm,
 	CategoryModal,
+	SalesTab1,
+	SalesTab2,
+	SalesTab3,
 };

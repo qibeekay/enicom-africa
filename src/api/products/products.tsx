@@ -99,6 +99,7 @@ export const uploadProduct = async (
 	}
 };
 
+// get all products users
 export const getAllProduct = async (bearerToken: string) => {
 	try {
 		const response = await axios.get(`${API_URL}/fetch-all-product`, {
@@ -114,33 +115,52 @@ export const getAllProduct = async (bearerToken: string) => {
 	}
 };
 
-// export const createBlog = async (userData: {
-// 	userid: number;
-// 	blog_title: string;
-// 	blog_desc: string;
-// 	blog_image: string;
-// }): Promise<{ success: boolean; message?: string }> => {
-// 	try {
-// 		const config: AxiosRequestConfig = {
-// 			// headers: {
-// 			// 	Authorization: `Bearer ${bearerToken}`,
-// 			// },
-// 		};
-// 		const response = await axios.post(
-// 			`https://havens.iccflifeskills.com.ng/v0.1/api/admin/blog/createBlog`,
-// 			userData,
-// 			config
-// 		);
+// get all products sellers
+export const getAllApprovedProduct = async (
+	bearerToken: string,
+	userToken: string | null
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/service-request/get-user-product`,
+			{
+				usertoken: userToken,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		toast.error('Error fetching products');
+		console.error('Error fetching products:', error);
+		return [];
+	}
+};
 
-// 		// Assuming a successful response structure with user data
-// 		const responseData = response.data;
-
-// 		// Save user details to localStorage
-
-// 		// console.log('Registration successful', response.data);
-// 		return response.data;
-// 	} catch (error: any) {
-// 		console.error('KYC update error:', error);
-// 		throw new Error(error.response?.data?.message || 'Failed to update kyc');
-// 	}
-// };
+// get product by token
+export const getProductByToken = async (
+	bearerToken: string,
+	productToken: string | null
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/admin/product/get-product-by-token`,
+			{
+				producttoken: productToken,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		toast.error('Error fetching product');
+		console.error('Error fetching product:', error);
+		return [];
+	}
+};

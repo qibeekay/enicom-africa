@@ -1,9 +1,12 @@
 import { DashboardPage } from '@/components';
+import { CartProvider } from '@/components/CartContext';
 
 export default function Dashboard() {
 	return (
 		<div>
-			<DashboardPage />
+			<CartProvider>
+				<DashboardPage />
+			</CartProvider>
 		</div>
 	);
 }
