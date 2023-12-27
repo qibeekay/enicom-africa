@@ -14,8 +14,15 @@ const Kyc1 = () => {
 	// auth token
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
-	const usertoken = localStorage.getItem('usertoken');
-	const renitoken = localStorage.getItem('renitoken');
+	const usertoken =
+		typeof window !== 'undefined'
+			? localStorage.getItem('usertoken') || ''
+			: '';
+
+	const renitoken =
+		typeof window !== 'undefined'
+			? localStorage.getItem('renitoken') || ''
+			: '';
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
