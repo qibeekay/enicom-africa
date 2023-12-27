@@ -11,6 +11,7 @@ import { PiShoppingBagOpenLight } from 'react-icons/pi';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '../CartContext';
+import { ToastContainer, toast } from 'react-toastify';
 
 const DasboardNav = () => {
 	const [nav, setNav] = useState(false);
@@ -59,6 +60,19 @@ const DasboardNav = () => {
 			searchInputRef.current.focus();
 		}
 	}, [mobileSearchVisible]);
+
+	const handleLogout = () => {
+		// Clear user-related information from local storage
+		localStorage.removeItem('fname');
+		localStorage.removeItem('lname');
+		localStorage.removeItem('mail');
+		localStorage.removeItem('usertoken');
+		localStorage.removeItem('renitoken');
+
+		// Redirect to the login page
+		toast.success('Logout Successful');
+		router.push('/login'); // Change '/login' to the actual path of your login page
+	};
 
 	return (
 		<div className='relative w-full font-poppins text-dark overflow-hidden'>
@@ -200,8 +214,20 @@ const DasboardNav = () => {
 								</p>
 							</Link>
 						</div>
+
+						{/* logout */}
+						<div className='w-full mt-7'>
+							<button
+								className='grid justify-end w-full'
+								onClick={handleLogout}>
+								<p className='border-greens border w-full rounded-lg text-dark py-2 px-5 text-center text-sm'>
+									Logout
+								</p>
+							</button>
+						</div>
 					</div>
 				</div>
+				<ToastContainer />
 			</div>
 		</div>
 	);

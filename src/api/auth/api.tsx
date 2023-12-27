@@ -189,41 +189,4 @@ export const Update = async (
 	}
 };
 
-// Update KYC
-const endpoint1 = 'reni-kyc/verify-kyc';
-export const UpdateKyc = async (
-	userData: {
-		fname: string;
-		bvn: string;
-		occupation: string;
-		usertoken: string;
-		renitoken: string;
-	},
-	bearerToken: string
-): Promise<{ success: boolean; message?: string }> => {
-	try {
-		const config: AxiosRequestConfig = {
-			headers: {
-				Authorization: `Bearer ${bearerToken}`,
-			},
-		};
-		const response = await axios.post(
-			`${API_URL}/${endpoint}/register`,
-			userData,
-			config
-		);
-
-		// Assuming a successful response structure with user data
-		const responseData = response.data;
-
-		// Save user details to localStorage
-
-		// console.log('Registration successful', response.data);
-		return response.data;
-	} catch (error: any) {
-		console.error('KYC update error:', error);
-		throw new Error(error.response?.data?.message || 'Failed to update kyc');
-	}
-};
-
 // Image
