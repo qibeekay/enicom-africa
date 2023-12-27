@@ -1,11 +1,8 @@
 'use client';
 import { Dialog, Typography } from '@material-tailwind/react';
 import React, { useEffect, useRef, useState } from 'react';
-import { BsCart } from 'react-icons/bs';
 import CartModal from './CartModal';
 import { MdLiveHelp } from 'react-icons/md';
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import {
 	DecreaseCartItems,
 	DeleteCartItems,
@@ -171,26 +168,31 @@ const CartDetails = () => {
 					</div>
 
 					{/* buttons */}
-					<div className=' sm:w-[20rem] md:w-[45%] bg-white shadows rounded-lg h-fit p-4'>
-						<p className=' text-xl font-medium '>Cart Summary</p>
+					{cartItems?.length === 0 ? (
+						<p>Your cart is empty</p>
+					) : (
+						<div className=' sm:w-[20rem] md:w-[45%] bg-white shadows rounded-lg h-fit p-4'>
+							<p className=' text-xl font-medium '>Cart Summary</p>
 
-						{/* sub total */}
-						<div className='flex items-center justify-between mt-3'>
-							<p className='font-medium'>Sub Total</p>
-							<p className=' text-xl font-semibold'>N310,000</p>
+							{/* sub total */}
+							<div className='flex items-center justify-between mt-3'>
+								<p className='font-medium'>Sub Total</p>
+								<p className=' text-xl font-semibold'>N310,000</p>
+							</div>
+
+							{/* Delivery fees included */}
+							<p className=' mt-5'>Delivery fees included</p>
+
+							{/* purchase */}
+							<button
+								className='w-full bg-greens text-white py-2 rounded-lg mt-11 mb-6'
+								onClick={handleOpen}>
+								Purchase
+							</button>
 						</div>
-
-						{/* Delivery fees included */}
-						<p className=' mt-5'>Delivery fees included</p>
-
-						{/* purchase */}
-						<button
-							className='w-full bg-greens text-white py-2 rounded-lg mt-11 mb-6'
-							onClick={handleOpen}>
-							Purchase
-						</button>
-					</div>
+					)}
 				</div>
+
 				<ToastContainer />
 			</div>
 			<Dialog
