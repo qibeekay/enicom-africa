@@ -84,6 +84,9 @@ import CategoryModal from './sellers/CategoryModal';
 import SalesTab1 from './accounts/sales/SalesTab1';
 import SalesTab2 from './accounts/sales/SalesTab2';
 import SalesTab3 from './accounts/sales/SalesTab3';
+import OverviewPage from './admin/overview/OverviewPage';
+import AdminNav from './admin/AdminNav';
+import OverviewMain from './admin/overview/OverviewMain';
 
 export {
 	RegisterForm,
@@ -171,4 +174,7 @@ export {
 	SalesTab1,
 	SalesTab2,
 	SalesTab3,
+	OverviewPage,
+	AdminNav,
+	OverviewMain,
 };

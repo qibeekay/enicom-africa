@@ -10,8 +10,6 @@ import { CgMenuGridR } from 'react-icons/cg';
 import { PiShoppingBagOpenLight } from 'react-icons/pi';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
-import { fetchCartItems } from '@/api/cart/cart';
 import { useCart } from '../CartContext';
 
 const DasboardNav = () => {
@@ -61,8 +59,6 @@ const DasboardNav = () => {
 			searchInputRef.current.focus();
 		}
 	}, [mobileSearchVisible]);
-
-	console.log(cartItems.length);
 
 	return (
 		<div className='relative w-full font-poppins text-dark overflow-hidden'>
@@ -126,7 +122,7 @@ const DasboardNav = () => {
 								</div>
 								<p className='hidden md:block text-center text-sm'>Cart</p>
 								<div className='bg-greens text-white w-4 aspect-square rounded-full grid items-center justify-center absolute -top-1 right-0'>
-									<p className='text-xs'>{cartItems.length}</p>
+									<p className='text-xs'>{cartItems?.length || 0}</p>
 								</div>
 							</Link>
 						</div>

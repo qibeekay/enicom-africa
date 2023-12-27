@@ -5,10 +5,87 @@ import { BsCart } from 'react-icons/bs';
 import CartModal from './CartModal';
 import { MdLiveHelp } from 'react-icons/md';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import {
+	DecreaseCartItems,
+	DeleteCartItems,
+	IncreaseCartItems,
+} from '@/api/cart/cart';
+import { ToastContainer, toast } from 'react-toastify';
+import { useCart } from '@/components/CartContext';
 
 const CartDetails = () => {
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen((cur) => !cur);
+	const { cartItems, fetchCartItem } = useCart();
+
+	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
+
+	// Fetch mail from localStorage when the component mounts
+	const usertoken =
+		typeof window !== 'undefined'
+			? localStorage.getItem('usertoken') || ''
+			: '';
+
+	const increase = async (
+		productToken: string,
+		currentQuantity: number,
+		maximumQuantity: number
+	) => {
+		try {
+			const updatedQuantity = currentQuantity + 1;
+
+			// Check if the updated quantity exceeds the maximum quantity
+			if (updatedQuantity > maximumQuantity) {
+				toast.error('Quantity exceeds the maximum allowed');
+				return;
+			}
+
+			// Perform the increase operation
+			await IncreaseCartItems(`$${token}`, `${productToken}`, `${usertoken}`);
+
+			// Fetch updated cart items after increasing
+			fetchCartItem();
+		} catch (error) {
+			toast.error('Error increasing products');
+			console.error('Error increasing products:', error);
+		}
+	};
+
+	const decrease = async (productToken: string, currentQuantity: number) => {
+		try {
+			const updatedQuantity = currentQuantity - 1;
+
+			// Check if the updated quantity is less than 0
+			if (updatedQuantity < 0) {
+				toast.error('Quantity cannot be less than 0');
+				return;
+			}
+
+			// Perform the decrease operation
+			await DecreaseCartItems(`$${token}`, `${productToken}`, `${usertoken}`);
+
+			// Fetch updated cart items after decreasing
+			fetchCartItem();
+		} catch (error) {
+			toast.error('Error decreasing products');
+			console.error('Error decreasing products:', error);
+		}
+	};
+
+	const remove = async (productToken: string) => {
+		try {
+			// Perform the decrease operation
+			await DeleteCartItems(`$${token}`, `${productToken}`, `${usertoken}`);
+
+			// Fetch updated cart items after decreasing
+			fetchCartItem();
+			toast.success('item removed');
+		} catch (error) {
+			toast.error('Error removing products');
+			console.error('Error removing products:', error);
+		}
+	};
 
 	return (
 		<div className='font-poppins my-10 relative'>
@@ -18,124 +95,79 @@ const CartDetails = () => {
 					{/* item */}
 					<div className='w-full flex flex-col gap-y-6'>
 						{/* items info */}
-						<div className='bg-white shadows rounded-lg p-4 w-full'>
-							<div className='flex flex-col md:flex-row gap-5'>
-								{/* image */}
-								<div className='sm:w-[20rem] md:w-[50%]'>
-									{/* img */}
-									<div className=' w-full rounded-lg h-[9rem] overflow-hidden'>
-										<img
-											className='w-full h-full object-cover'
-											src='/exterior2.jpg'
-											alt=''
-										/>
+						{cartItems?.map((items, index) => (
+							<div
+								className='bg-white shadows rounded-lg p-4 w-full'
+								key={index}>
+								<div className='flex flex-col md:flex-row gap-5'>
+									{/* image */}
+									<div className='sm:w-[20rem] md:w-[50%]'>
+										{/* img */}
+										<div className=' w-full rounded-lg h-[9rem] overflow-hidden'>
+											<img
+												className='w-full h-full object-cover'
+												src={items.product_image}
+												alt=''
+											/>
+										</div>
+									</div>
+
+									<div className='w-full'>
+										<div>
+											<p className=' text-dark'>{items.product_name}</p>
+											<p className='text-dark text-xl font-semibold '>
+												{items.poduct_price_th}
+											</p>
+										</div>
+										<div className='my-2 text-dark text-sm md:text-base'>
+											<p className='flex gap-4 text-sm md:text-base'>
+												Capacity: <span>{items.product_desc}</span>
+											</p>
+										</div>
 									</div>
 								</div>
 
-								<div className='w-full'>
+								<div className='flex flex-col sm:flex-row items-center justify-between w-full mt-4'>
+									{/* remove */}
 									<div>
-										<p className=' text-dark'>Timo Money Batteries</p>
-										<p className='text-dark text-xl font-semibold '>N300,000</p>
+										<button
+											className='bg-[#E4FEE3] py-2 px-[5.2rem] rounded-lg'
+											onClick={() => remove(items.product_token)}>
+											Remove
+										</button>
 									</div>
-									<div className='my-2 text-dark text-sm md:text-base'>
-										<p className='flex gap-4 text-sm md:text-base'>
-											Capacity:{' '}
-											<span>
-												Lorem ipsum dolor sit amet consectetur, adipisicing
-												elit. Voluptatum ullam nobis fugit consectetur debitis
-												similique.
-											</span>
-										</p>
+									{/* increment */}
+									<div className='flex gap-5 items-center my-4'>
+										{/* - */}
+										<div
+											className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white text-2xl cursor-pointer'
+											onClick={() =>
+												decrease(items.product_token, items.product_quantity)
+											}>
+											<p>-</p>
+										</div>
+
+										{/* 1 */}
+										<div className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white'>
+											<p>{items.product_quantity}</p>
+										</div>
+
+										{/* + */}
+										<div
+											className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white text-2xl cursor-pointer'
+											onClick={() =>
+												increase(
+													items.product_token,
+													items.product_quantity,
+													items.maximum_quantity
+												)
+											}>
+											<p>+</p>
+										</div>
 									</div>
 								</div>
 							</div>
-
-							<div className='flex flex-col sm:flex-row items-center justify-between w-full mt-4'>
-								{/* remove */}
-								<div>
-									<button className='bg-[#E4FEE3] py-2 px-[5.2rem] rounded-lg'>
-										Remove
-									</button>
-								</div>
-								{/* increment */}
-								<div className='flex gap-5 items-center my-4'>
-									{/* - */}
-									<div className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white text-2xl'>
-										<p>-</p>
-									</div>
-
-									{/* 1 */}
-									<div className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white'>
-										<p>1</p>
-									</div>
-
-									{/* + */}
-									<div className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white text-2xl'>
-										<p>+</p>
-									</div>
-								</div>
-							</div>
-						</div>
-
-						{/* items info */}
-						<div className='bg-white shadows rounded-lg p-4 w-full'>
-							<div className='flex flex-col md:flex-row gap-5'>
-								{/* image */}
-								<div className='sm:w-[20rem] md:w-[50%]'>
-									{/* img */}
-									<div className=' w-full rounded-lg h-[9rem] overflow-hidden'>
-										<img
-											className='w-full h-full object-cover'
-											src='/exterior2.jpg'
-											alt=''
-										/>
-									</div>
-								</div>
-
-								<div className='w-full'>
-									<div>
-										<p className=' text-dark'>Timo Money Batteries</p>
-										<p className='text-dark text-xl font-semibold '>N300,000</p>
-									</div>
-									<div className='my-2 text-dark text-sm md:text-base'>
-										<p className='flex gap-4 text-sm md:text-base'>
-											Capacity:{' '}
-											<span>
-												Lorem ipsum dolor sit amet consectetur, adipisicing
-												elit. Voluptatum ullam nobis fugit consectetur debitis
-												similique.
-											</span>
-										</p>
-									</div>
-								</div>
-							</div>
-
-							<div className='flex flex-col sm:flex-row items-center justify-between w-full mt-4'>
-								{/* remove */}
-								<div>
-									<button className='bg-[#E4FEE3] py-2 px-[5.2rem] rounded-lg'>
-										Remove
-									</button>
-								</div>
-								{/* increment */}
-								<div className='flex gap-5 items-center my-4'>
-									{/* - */}
-									<div className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white text-2xl'>
-										<p>-</p>
-									</div>
-
-									{/* 1 */}
-									<div className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white'>
-										<p>1</p>
-									</div>
-
-									{/* + */}
-									<div className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white text-2xl'>
-										<p>+</p>
-									</div>
-								</div>
-							</div>
-						</div>
+						))}
 					</div>
 
 					{/* buttons */}
@@ -159,6 +191,7 @@ const CartDetails = () => {
 						</button>
 					</div>
 				</div>
+				<ToastContainer />
 			</div>
 			<Dialog
 				size='xl'

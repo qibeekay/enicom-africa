@@ -1,5 +1,4 @@
 'use client';
-import Link from 'next/link';
 import React, { useState } from 'react';
 import { HiChevronDown } from 'react-icons/hi2';
 import { LiaSearchSolid } from 'react-icons/lia';

@@ -6,13 +6,20 @@ import { fetchCartItems, addToCart as addToCartApi } from '@/api/cart/cart';
 import { useSearchParams } from 'next/navigation';
 
 interface Product {
-	// Define the structure of your product data
-	// ...
+	product_name: string;
+	poduct_price_th: string;
+	product_price: string;
+	product_image: string;
+	product_token: string;
+	product_desc: string;
+	product_quantity: number;
+	maximum_quantity: number;
 }
 
 interface CartContextProps {
 	cartItems: Product[];
 	addToCart: (product: Product) => void;
+	fetchCartItem: () => void;
 	// Add other functions as needed
 }
 
@@ -28,17 +35,24 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 	// Access the query parameter
 	const productToken = searchParams.get('producttoken');
 
-	const usertoken = localStorage.getItem('usertoken') || null;
+	// Fetch mail from localStorage when the component mounts
+	const usertoken =
+		typeof window !== 'undefined'
+			? localStorage.getItem('usertoken') || ''
+			: '';
 
 	const fetchCartItem = async () => {
 		try {
 			const fetchedCartItem = await fetchCartItems(`$${token}`, `${usertoken}`);
 			setCartItems(fetchedCartItem.products);
 		} catch (error) {
-			toast.error('Error fetching cart items');
-			console.error('Error fetching cart items:', error);
+			// console.error('Error fetching cart items:', error);
 		}
 	};
+
+	useEffect(() => {
+		fetchCartItem();
+	}, []);
 
 	const addToCart = async (product: Product) => {
 		try {
@@ -59,13 +73,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 		}
 	};
 
-	// Fetch cart items on component mount
-	useEffect(() => {
-		fetchCartItem();
-	}, []);
-
 	return (
-		<CartContext.Provider value={{ cartItems, addToCart }}>
+		<CartContext.Provider value={{ cartItems, addToCart, fetchCartItem }}>
 			{children}
 		</CartContext.Provider>
 	);

@@ -24,6 +24,7 @@ const config: Config = withMT({
 			mss: '911px',
 			md: '768px',
 			lg: '976px',
+			ll: '1030px',
 			xl: '1440px',
 		},
 		backgroundImage: {

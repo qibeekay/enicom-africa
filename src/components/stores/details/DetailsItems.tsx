@@ -7,17 +7,18 @@ import { Select, Option, Input, Typography } from '@material-tailwind/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getProductByToken } from '@/api/products/products';
 import { ToastContainer, toast } from 'react-toastify';
-import { addToCart } from '@/api/cart/cart';
 import { useCart } from '@/components/CartContext';
+import { DecreaseCartItems, IncreaseCartItems } from '@/api/cart/cart';
 
 interface Product {
-	// Define the structure of your product data
 	product_name: string;
+	poduct_price_th: string;
 	product_price: string;
 	product_image: string;
 	product_token: string;
 	product_desc: string;
-	// Add other properties as needed
+	product_quantity: number;
+	maximum_quantity: number;
 }
 
 const DetailsItems = () => {
@@ -25,11 +26,16 @@ const DetailsItems = () => {
 	const [loaded, setLoaded] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const router = useRouter();
-	const { addToCart } = useCart();
+	const { addToCart, fetchCartItem } = useCart();
 	const searchParams = useSearchParams();
 	// Access the query parameter
 	const productToken = searchParams.get('producttoken');
-	const usertoken = localStorage.getItem('usertoken');
+
+	// Fetch mail from localStorage when the component mounts
+	const usertoken =
+		typeof window !== 'undefined'
+			? localStorage.getItem('usertoken') || ''
+			: '';
 
 	const handlePurchase = () => {
 		router.push('/cart');
@@ -69,6 +75,52 @@ const DetailsItems = () => {
 		}
 	};
 
+	const increase = async (
+		productToken: string,
+		currentQuantity: number,
+		maximumQuantity: number
+	) => {
+		try {
+			const updatedQuantity = currentQuantity + 1;
+
+			// Check if the updated quantity exceeds the maximum quantity
+			if (updatedQuantity > maximumQuantity) {
+				toast.error('Quantity exceeds the maximum allowed');
+				return;
+			}
+
+			// Perform the increase operation
+			await IncreaseCartItems(`$${token}`, `${productToken}`, `${usertoken}`);
+
+			// Fetch updated cart items after increasing
+			fetchCartItem();
+		} catch (error) {
+			toast.error('Error increasing products');
+			console.error('Error increasing products:', error);
+		}
+	};
+
+	const decrease = async (productToken: string, currentQuantity: number) => {
+		try {
+			const updatedQuantity = currentQuantity - 1;
+
+			// Check if the updated quantity is less than 0
+			if (updatedQuantity < 0) {
+				toast.error('Quantity cannot be less than 0');
+				return;
+			}
+
+			// Perform the decrease operation
+			await DecreaseCartItems(`$${token}`, `${productToken}`, `${usertoken}`);
+
+			// Fetch updated cart items after decreasing
+			fetchCartItem();
+		} catch (error) {
+			toast.error('Error decreasing products');
+			console.error('Error decreasing products:', error);
+		}
+	};
+
 	return (
 		<div className='font-poppins my-10'>
 			<div className='max-w-6xl px-4 mx-auto'>
@@ -93,13 +145,13 @@ const DetailsItems = () => {
 									{/* increment */}
 									<div className='flex justify-between items-center my-4'>
 										{/* - */}
-										<div className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white text-2xl'>
+										<div className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white text-2xl cursor-pointer'>
 											<p>-</p>
 										</div>
 
 										{/* 1 */}
 										<div className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white'>
-											<p>1</p>
+											<p>{productsByToken?.product_quantity}</p>
 										</div>
 
 										{/* + */}

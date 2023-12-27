@@ -1,12 +1,21 @@
 'use client';
+import { updateKyc } from '@/api/kyc/kyc';
 import Link from 'next/link';
-import React, { useRef, useState } from 'react';
+import React, { FormEvent, useRef, useState } from 'react';
 import { IoCloudUpload } from 'react-icons/io5';
+import { ToastContainer, toast } from 'react-toastify';
 
 const Kyc1 = () => {
 	const [otp, setOtp] = useState(['', '', '', '']);
 	const [selectedFile, setSelectedFile] = useState<null | File>(null);
 	const [selectedFile1, setSelectedFile1] = useState<null | File>(null);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
+	// auth token
+	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
+
+	const usertoken = localStorage.getItem('usertoken');
+	const renitoken = localStorage.getItem('renitoken');
 
 	const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
@@ -46,13 +55,85 @@ const Kyc1 = () => {
 		}
 	};
 
+	const [formData, setFormData] = useState({
+		fname: '',
+		bvn: '',
+		occupation: '',
+		usertoken: usertoken,
+		renitoken: renitoken,
+	});
+
+	const resetForm = () => {
+		setFormData({
+			fname: '',
+			bvn: '',
+			occupation: '',
+			usertoken: '',
+			renitoken: '',
+		});
+	};
+
+	/* handling all form change */
+
+	const handleChange = (
+		e: React.ChangeEvent<
+			HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+		>
+	) => {
+		const { name, value } = e.target;
+
+		setFormData((prevFormData) => ({
+			...prevFormData,
+			[name]: value,
+		}));
+	};
+
+	const handleKycUpdate = async (event: FormEvent) => {
+		event.preventDefault();
+		try {
+			setIsLoading(true);
+
+			// Check if the token is defined before using it
+			if (!token) {
+				toast.error('Authentication token is undefined');
+				return;
+			}
+
+			// Ensure that usertoken is a string and not null
+			const userToken = formData.usertoken || '';
+			const reniToken = formData.renitoken || '';
+
+			const response = await updateKyc(
+				{
+					...formData,
+					usertoken: userToken,
+					renitoken: reniToken,
+				},
+				`$${token}`
+			);
+
+			console.log('Upload response:', response);
+
+			if (response.success === true) {
+				toast.success(response.message || 'KYC verification successful');
+				resetForm();
+			} else {
+				toast.error(response.message || 'Failed to update KYC');
+			}
+		} catch (error: any) {
+			toast.error(error.message || 'Failed to update KYC');
+		} finally {
+			setIsLoading(false);
+		}
+	};
+
 	return (
 		<div className='w-full my-20 font-poppins'>
 			<div className='px-4 md:px-[3rem] lg:px-[5rem]'>
 				<div className='w-[90%] sm:w-[75%] md:w-auto mx-auto'>
-					<form className=''>
-						<div className='flex flex-col gap-y-10 md:flex-row justify-between md:gap-x-[10%] lg:gap-x-[20%] relative'>
-							{/* input 1 */}
+					<div className='flex flex-col gap-y-10 md:flex-row justify-between md:gap-x-[10%] lg:gap-x-[20%] relative'>
+						{/* input 1 */}
+						<form action='' className='w-full' onSubmit={handleKycUpdate}>
 							<div className='w-full'>
 								<div className='grid gap-y-10 w-full'>
 									{/* BVN */}
@@ -65,28 +146,52 @@ const Kyc1 = () => {
 										</label>
 										<input
 											type='text'
+											name='bvn'
+											value={formData.bvn}
+											onChange={handleChange}
 											className='mt-2 bg-greens/10 text-dark outline-none py-2 px-5 rounded-lg w-full'
-											placeholder='08070678787'
+											placeholder='8070678787'
 										/>
 									</div>
 
-									{/* NIN */}
+									{/* Full name */}
 									<div className='flex flex-col w-full'>
 										<label htmlFor='nin' className='font-semibold'>
-											NIN{' '}
-											<span className='text-sm font-normal'>
+											Full Name
+											{/* <span className='text-sm font-normal'>
 												(verify your NIN)
-											</span>
+											</span> */}
 										</label>
 										<input
 											type='text'
+											name='fname'
+											value={formData.fname}
+											onChange={handleChange}
 											className='mt-2 bg-greens/10 text-dark outline-none py-2 px-5 rounded-lg w-full'
-											placeholder='080706787878'
+											placeholder='John Doe'
+										/>
+									</div>
+
+									{/* Occupation */}
+									<div className='flex flex-col w-full'>
+										<label htmlFor='nin' className='font-semibold'>
+											Occupation
+											{/* <span className='text-sm font-normal'>
+												(verify your NIN)
+											</span> */}
+										</label>
+										<input
+											type='text'
+											name='occupation'
+											value={formData.occupation}
+											onChange={handleChange}
+											className='mt-2 bg-greens/10 text-dark outline-none py-2 px-5 rounded-lg w-full'
+											placeholder='Engineer...'
 										/>
 									</div>
 
 									{/* Phone Number */}
-									<div className='flex flex-col w-full'>
+									{/* <div className='flex flex-col w-full'>
 										<label htmlFor='phone' className='font-semibold'>
 											Phone Number{' '}
 											<span className='text-sm font-normal'>
@@ -105,10 +210,10 @@ const Kyc1 = () => {
 												</button>
 											</div>
 										</div>
-									</div>
+									</div> */}
 
 									{/* Verification Code */}
-									<div className='flex flex-col w-full'>
+									{/* <div className='flex flex-col w-full'>
 										<label htmlFor='verificationCode' className='font-semibold'>
 											Verification Code
 											<span className='text-sm font-normal'>
@@ -138,11 +243,23 @@ const Kyc1 = () => {
 												Resend Code
 											</Link>
 										</p>
+									</div> */}
+
+									{/* button */}
+									<div className='grid justify-end mt-5'>
+										{/* submit */}
+										<button
+											type='submit'
+											className='bg-greens text-white py-2 px-10 rounded-lg w-[10rem]'>
+											{isLoading ? 'Loading...' : 'Submit'}
+										</button>
 									</div>
 								</div>
 							</div>
+						</form>
 
-							{/* input 2 */}
+						{/* input 2 */}
+						<form action='' className='w-full'>
 							<div className='w-full'>
 								<h1 className='font-semibold'>ID Verification</h1>
 
@@ -231,21 +348,22 @@ const Kyc1 = () => {
 										id=''
 										placeholder=''></textarea>
 								</div>
-							</div>
-						</div>
 
-						{/* button */}
-						<div className='grid justify-end mt-20'>
-							{/* submit */}
-							<button
-								type='submit'
-								className='bg-greens text-white py-2 px-10 rounded-lg w-[10rem]'>
-								Next
-							</button>
-						</div>
-					</form>
+								{/* button */}
+								<div className='grid justify-end mt-20'>
+									{/* submit */}
+									<button
+										type='submit'
+										className='bg-greens text-white py-2 px-10 rounded-lg w-[10rem]'>
+										Submit
+									</button>
+								</div>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
+			<ToastContainer />
 		</div>
 	);
 };

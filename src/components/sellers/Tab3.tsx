@@ -46,7 +46,7 @@ const Tab3 = () => {
 	const [query, setQuery] = useState<string>('');
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	// auth toke
+	// auth token
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
 	const onDrop = useCallback(
@@ -486,7 +486,7 @@ const Tab3 = () => {
 								{/* button */}
 								<div className='mt-5'>
 									<button className='bg-greens px-14 py-2 rounded-lg text-white w-fit'>
-										Next
+										{isLoading ? 'Loading...' : 'Upload'}
 									</button>
 								</div>
 							</div>
