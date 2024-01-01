@@ -2,7 +2,7 @@ import { OverviewPage } from '@/components';
 
 export default function Overview() {
 	return (
-		<div>
+		<div className=''>
 			<OverviewPage />
 		</div>
 	);

@@ -5,7 +5,7 @@ import React from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 interface CloseProps {
-	close: () => void; // Define the type of handleOpen as a function that takes no arguments and returns void.
+	close: () => void;
 }
 
 const AccountSideMobile: React.FC<CloseProps> = ({ close }) => {

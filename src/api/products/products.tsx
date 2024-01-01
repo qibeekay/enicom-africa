@@ -67,6 +67,10 @@ export const uploadProduct = async (
 		product_desc: string;
 		product_condition: string;
 		product_capacity: string;
+		product_voltage: string;
+		product_amps: string;
+		product_watts: string;
+		product_rating: string;
 		product_quantity: string;
 		product_category: string[];
 		usertoken: string;
@@ -111,6 +115,25 @@ export const getAllProduct = async (bearerToken: string) => {
 	} catch (error) {
 		toast.error('Error fetching categories');
 		console.error('Error fetching categories:', error);
+		return [];
+	}
+};
+
+// get all products admin
+export const getAllProductAdmin = async (bearerToken: string) => {
+	try {
+		const response = await axios.get(
+			`${API_URL}/admin/service-request/get-requested-product`,
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		toast.error('Error fetching products');
+		console.error('Error fetching products:', error);
 		return [];
 	}
 };

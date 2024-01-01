@@ -6,19 +6,18 @@ import { FiPlus } from 'react-icons/fi';
 import { HiChevronDown } from 'react-icons/hi2';
 import { LiaSearchSolid } from 'react-icons/lia';
 import { AiOutlineEyeInvisible, AiOutlineSwap } from 'react-icons/ai';
+import { HiOutlineChevronRight } from 'react-icons/hi';
 import { DashBoardItems } from '..';
 
 const DashboardBalance = () => {
-	const [kyc, setKyc] = useState('');
+	const [kyc, setKyc] = useState<string>('');
 
 	// Check if user is logged in based on your authentication mechanism
 	useEffect(() => {
-		const kycStatus = localStorage.getItem('kycStatus');
-		console.log(kycStatus);
-		setKyc(kycStatus || '');
-	});
-	console.log(kyc);
-	const iskycStatus = !!kyc;
+		// Retrieve kyc_status from local storage
+		const storedKycStatus = localStorage.getItem('kyc_status');
+		setKyc(storedKycStatus || '');
+	}, []);
 
 	return (
 		<div className='w-full font-poppins'>
@@ -26,14 +25,20 @@ const DashboardBalance = () => {
 				{/* header */}
 				<div className='flex md:items-center flex-wrap justify-between mb-3'>
 					{/* Balance / transaction history  */}
-					<div className='flex items-center gap-4 md:gap-10'>
-						<h1 className='text-dark font-medium text-lg'>Balances</h1>
-						<div>
-							<Link className='flex items-center gap-1 text-dark' href={''}>
-								<GiBackwardTime size={25} />
-								<span className=' underline'>Transaction History</span>
-							</Link>
-						</div>
+					<div>
+						{kyc === 'true' ? (
+							<div className='flex items-center gap-4 md:gap-10'>
+								<h1 className='text-dark font-medium text-lg'>Balances</h1>
+								<div>
+									<Link className='flex items-center gap-1 text-dark' href={''}>
+										<GiBackwardTime size={25} />
+										<span className=' underline'>Transaction History</span>
+									</Link>
+								</div>
+							</div>
+						) : (
+							<h1 className='text-dark font-medium text-lg'>Verification</h1>
+						)}
 					</div>
 
 					{/* View Details */}
@@ -46,7 +51,7 @@ const DashboardBalance = () => {
 
 				{/* wallet */}
 				<div>
-					{iskycStatus ? (
+					{kyc === 'true' ? (
 						<div className='flex flex-col md:flex-row xl:flex-row items-center gap-4 md:gap-20 lg:gap-10 xl:gap-20'>
 							{/* wallet balance */}
 							<div className='bg-greens text-white w-full sm:w-[20rem] md:w-full p-4 rounded-lg'>
@@ -122,7 +127,17 @@ const DashboardBalance = () => {
 							</div>
 						</div>
 					) : (
-						<div>Verify</div>
+						<div className='bg-greens rounded-lg p-4 text-white'>
+							<p>Verify Account</p>
+							<p className='text-xs mt-2 text-white/70'>
+								Complete your registration process to get your account number
+								and enjoy our loan facility
+							</p>
+							<div className='flex items-center justify-end mt-2'>
+								<HiOutlineChevronRight />
+								<HiOutlineChevronRight />
+							</div>
+						</div>
 					)}
 				</div>
 

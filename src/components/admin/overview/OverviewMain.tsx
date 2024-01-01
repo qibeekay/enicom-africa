@@ -1,13 +1,24 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { BsBell } from 'react-icons/bs';
+import {
+	OverviewTab1,
+	OverviewTab2,
+	OverviewTab3,
+	OverviewTab4,
+} from '@/components';
 
 const OverviewMain = () => {
+	const [activeTab, setActiveTab] = useState('1');
+	const handleTabClick = (tab: string) => {
+		setActiveTab(tab);
+	};
 	return (
-		<div className=''>
+		<div className='bg-[#eeeeee]'>
 			<div className=''>
 				{/* nav */}
-				<div className='flex items-center justify-between w-full py-4 bg-white pr-10 pl-4'>
+				<div className='flex items-center justify-between w-full py-4 bg-white pl-10 pr-10 lg:pl-4'>
 					{/* search */}
 					<div className='flex items-center gap-4 bg-greens/5 rounded px-4 py-2 w-[50%]'>
 						{/* icon */}
@@ -31,7 +42,7 @@ const OverviewMain = () => {
 
 						{/* user */}
 						<div className='flex items-center gap-4'>
-							<h1>Welcome, Jenner</h1>
+							<h1 className='hidden ms:grid text-sm'>Welcome, Jenner</h1>
 
 							{/* image */}
 							<div className='w-10 aspect-square overflow-hidden rounded-full'>
@@ -151,6 +162,45 @@ const OverviewMain = () => {
 					</div>
 
 					{/* table */}
+				</div>
+
+				{/* tabs */}
+				<div className='flex gap-4 flex-wrap items-center mt-8 mx-4'>
+					<button
+						onClick={() => handleTabClick('1')}
+						className={` rounded-lg py-1.5 px-5 ${
+							activeTab === '1' ? 'bg-greens text-white' : 'bg-white text-dark'
+						}`}>
+						Recent orders
+					</button>
+					<button
+						onClick={() => handleTabClick('2')}
+						className={` rounded-lg py-1.5 px-5 ${
+							activeTab === '2' ? 'bg-greens text-white' : 'bg-white text-dark'
+						}`}>
+						Recent transaction
+					</button>
+					<button
+						onClick={() => handleTabClick('3')}
+						className={` rounded-lg py-1.5 px-5 ${
+							activeTab === '3' ? 'bg-greens text-white' : 'bg-white text-dark'
+						}`}>
+						Uploaded Products
+					</button>
+					<button
+						onClick={() => handleTabClick('4')}
+						className={` rounded-lg py-1.5 px-5 ${
+							activeTab === '4' ? 'bg-greens text-white' : 'bg-white text-dark'
+						}`}>
+						Recent Agents
+					</button>
+				</div>
+
+				<div className=' w-full'>
+					{activeTab === '1' && <OverviewTab1 />}
+					{activeTab === '2' && <OverviewTab2 />}
+					{activeTab === '3' && <OverviewTab3 />}
+					{activeTab === '4' && <OverviewTab4 />}
 				</div>
 			</div>
 		</div>

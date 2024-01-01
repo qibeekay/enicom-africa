@@ -87,6 +87,11 @@ import SalesTab3 from './accounts/sales/SalesTab3';
 import OverviewPage from './admin/overview/OverviewPage';
 import AdminNav from './admin/AdminNav';
 import OverviewMain from './admin/overview/OverviewMain';
+import AdminMobileNav from './admin/AdminMobileNav';
+import OverviewTab1 from './admin/overview/OverviewTab1';
+import OverviewTab2 from './admin/overview/OverviewTab2';
+import OverviewTab3 from './admin/overview/OverviewTab3';
+import OverviewTab4 from './admin/overview/OverviewTab4';
 
 export {
 	RegisterForm,
@@ -177,4 +182,9 @@ export {
 	OverviewPage,
 	AdminNav,
 	OverviewMain,
+	AdminMobileNav,
+	OverviewTab1,
+	OverviewTab2,
+	OverviewTab3,
+	OverviewTab4,
 };

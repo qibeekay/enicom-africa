@@ -50,7 +50,7 @@ export const fetchCartItems = async (
 		);
 		return response.data.data;
 	} catch (error) {
-		toast.error('Your cart is empty');
+		// toast.error('Your cart is empty');
 		console.error('Error fetching cart items:', error);
 		return [];
 	}

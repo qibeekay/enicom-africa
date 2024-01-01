@@ -140,6 +140,10 @@ const Tab3 = () => {
 		product_image: '',
 		product_desc: '',
 		product_condition: '',
+		product_voltage: '',
+		product_amps: '',
+		product_watts: '',
+		product_rating: '',
 		product_capacity: '',
 		product_quantity: '',
 		usertoken: usertoken,
@@ -154,6 +158,10 @@ const Tab3 = () => {
 			product_image: '',
 			product_desc: '',
 			product_condition: '',
+			product_voltage: '',
+			product_amps: '',
+			product_watts: '',
+			product_rating: '',
 			product_capacity: '',
 			product_quantity: '',
 			usertoken: usertoken,
@@ -267,6 +275,54 @@ const Tab3 = () => {
 										type='text'
 										name='product_capacity'
 										value={formData.product_capacity}
+										onChange={handleChange}
+										className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
+									/>
+								</div>
+
+								{/* product voltage */}
+								<div>
+									<label htmlFor='amount'>Product Voltage</label>
+									<input
+										type='text'
+										name='product_voltage'
+										value={formData.product_voltage}
+										onChange={handleChange}
+										className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
+									/>
+								</div>
+
+								{/* product amps */}
+								<div>
+									<label htmlFor='amount'>Product Amps</label>
+									<input
+										type='text'
+										name='product_amps'
+										value={formData.product_amps}
+										onChange={handleChange}
+										className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
+									/>
+								</div>
+
+								{/* product watt */}
+								<div>
+									<label htmlFor='amount'>Product Watts</label>
+									<input
+										type='text'
+										name='product_watts'
+										value={formData.product_watts}
+										onChange={handleChange}
+										className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
+									/>
+								</div>
+
+								{/* product rating */}
+								<div>
+									<label htmlFor='amount'>Product Rating</label>
+									<input
+										type='text'
+										name='product_rating'
+										value={formData.product_rating}
 										onChange={handleChange}
 										className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
 									/>
