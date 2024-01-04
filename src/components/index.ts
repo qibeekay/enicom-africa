@@ -92,6 +92,7 @@ import OverviewTab1 from './admin/overview/OverviewTab1';
 import OverviewTab2 from './admin/overview/OverviewTab2';
 import OverviewTab3 from './admin/overview/OverviewTab3';
 import OverviewTab4 from './admin/overview/OverviewTab4';
+import OverviewModal from './admin/overview/OverviewModal';
 
 export {
 	RegisterForm,
@@ -187,4 +188,5 @@ export {
 	OverviewTab2,
 	OverviewTab3,
 	OverviewTab4,
+	OverviewModal,
 };

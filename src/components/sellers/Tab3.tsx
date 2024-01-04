@@ -146,6 +146,7 @@ const Tab3 = () => {
 		product_rating: '',
 		product_capacity: '',
 		product_quantity: '',
+		delivery_fee: '',
 		usertoken: usertoken,
 		product_category: [] as string[],
 	});
@@ -164,6 +165,7 @@ const Tab3 = () => {
 			product_rating: '',
 			product_capacity: '',
 			product_quantity: '',
+			delivery_fee: '',
 			usertoken: usertoken,
 			product_category: [] as string[],
 		});
@@ -458,6 +460,16 @@ const Tab3 = () => {
 										type='text'
 										name='product_quantity'
 										value={formData.product_quantity}
+										onChange={handleChange}
+										className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
+									/>
+								</div>
+								<div>
+									<label htmlFor='amount'>Delivery Fee</label>
+									<input
+										type='text'
+										name='delivery_fee'
+										value={formData.delivery_fee}
 										onChange={handleChange}
 										className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
 									/>

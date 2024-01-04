@@ -1,7 +1,9 @@
 'use client';
 import { getAllProductAdmin } from '@/api/products/products';
+import { Dialog } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
+import OverviewModal from './OverviewModal';
 
 interface Product {
 	// Define the structure of your product data
@@ -10,12 +12,20 @@ interface Product {
 	product_image: string;
 	created_on: string;
 	product_status: string;
+	product_token: string;
 	// Add other properties as needed
 }
 
 const OverviewTab3 = () => {
 	const [products, setProducts] = useState<Product[]>([]);
+	const [productToken, setProductToken] = useState<string>('');
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
+
+	const [open, setOpen] = React.useState(false);
+	const handleOpen = (productToken: string) => {
+		setOpen((cur) => !cur);
+		setProductToken(productToken);
+	};
 
 	const fetchProducts = async () => {
 		try {
@@ -87,6 +97,7 @@ const OverviewTab3 = () => {
 						{products.map((product, index) => (
 							<tr
 								key={index}
+								onClick={() => handleOpen(product.product_token)}
 								className='odd:bg-greens/5 hover:bg-greens hover:text-white cursor-pointer'>
 								<td className='px-4 py-2'>
 									<p className='font-normal'>{product.product_name}</p>
@@ -111,6 +122,17 @@ const OverviewTab3 = () => {
 					</tbody>
 				</table>
 			</div>
+			<Dialog
+				size='lg'
+				open={open}
+				handler={() => handleOpen('')}
+				className='bg-transparent shadow-none text-dark'>
+				<OverviewModal
+					handleOpen={handleOpen}
+					productToken={productToken}
+					fetchProduct={fetchProducts}
+				/>
+			</Dialog>
 		</div>
 	);
 };

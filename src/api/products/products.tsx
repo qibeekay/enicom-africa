@@ -72,6 +72,7 @@ export const uploadProduct = async (
 		product_watts: string;
 		product_rating: string;
 		product_quantity: string;
+		delivery_fee: string;
 		product_category: string[];
 		usertoken: string;
 	},
@@ -184,6 +185,95 @@ export const getProductByToken = async (
 	} catch (error) {
 		toast.error('Error fetching product');
 		console.error('Error fetching product:', error);
+		return [];
+	}
+};
+
+// get product by token
+export const getAdminProductByToken = async (
+	bearerToken: string,
+	productToken: string | null
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/admin/service-request/view-requested-product`,
+			{
+				product_token: productToken,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		toast.error('Error fetching product');
+		console.error('Error fetching product:', error);
+		return [];
+	}
+};
+
+// admin disapprove product
+export const disapproveProduct = async (
+	bearerToken: string,
+	productToken: string | null,
+	productName: string,
+	reason: string,
+	productCondition: string,
+	userToken: string | null
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/admin/service-request/disapprove-product`,
+			{
+				product_token: productToken,
+				product_name: productName,
+				product_condition: productCondition,
+				reason: reason,
+				usertoken: userToken,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		toast.error('Error fetching cart items');
+		console.error('Error fetching cart items:', error);
+		return [];
+	}
+};
+
+// admin approve product
+export const approveProduct = async (
+	bearerToken: string,
+	productToken: string | null,
+	productName: string,
+	productCondition: string,
+	userToken: string | null
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/admin/service-request/approve-product`,
+			{
+				product_token: productToken,
+				product_name: productName,
+				product_condition: productCondition,
+				usertoken: userToken,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		toast.error('Error fetching cart items');
+		console.error('Error fetching cart items:', error);
 		return [];
 	}
 };
