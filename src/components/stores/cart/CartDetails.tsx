@@ -14,7 +14,7 @@ import { useCart } from '@/components/CartContext';
 const CartDetails = () => {
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen((cur) => !cur);
-	const { cartItems, fetchCartItem } = useCart();
+	const { cartItems, fetchCartItem, total_price_th, total_price } = useCart();
 
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
@@ -83,6 +83,8 @@ const CartDetails = () => {
 			console.error('Error removing products:', error);
 		}
 	};
+
+	console.log(total_price_th);
 
 	return (
 		<div className='font-poppins my-10 relative'>
@@ -177,7 +179,7 @@ const CartDetails = () => {
 							{/* sub total */}
 							<div className='flex items-center justify-between mt-3'>
 								<p className='font-medium'>Sub Total</p>
-								<p className=' text-xl font-semibold'>N310,000</p>
+								<p className=' text-xl font-semibold'>N{total_price_th}</p>
 							</div>
 
 							{/* Delivery fees included */}

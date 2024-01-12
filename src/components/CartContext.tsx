@@ -20,6 +20,8 @@ interface CartContextProps {
 	cartItems: Product[];
 	addToCart: (product: Product) => void;
 	fetchCartItem: () => void;
+	total_price_th: string; // Add total_price_th to the interface
+	total_price: number; // Add total_price to the interface
 	// Add other functions as needed
 }
 
@@ -29,6 +31,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 	children,
 }) => {
 	const [cartItems, setCartItems] = useState<Product[]>([]);
+	const [totalPriceTh, setTotalPriceTh] = useState<string>('');
+	const [totalPrice, setTotalPrice] = useState<number>(0);
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
 	const searchParams = useSearchParams();
@@ -44,6 +48,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 	const fetchCartItem = async () => {
 		try {
 			const fetchedCartItem = await fetchCartItems(`$${token}`, `${usertoken}`);
+			setCartItems(fetchedCartItem.products);
+			setTotalPriceTh(fetchedCartItem.total_price_th);
 			setCartItems(fetchedCartItem.products);
 		} catch (error) {
 			// console.error('Error fetching cart items:', error);
@@ -74,7 +80,14 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 	};
 
 	return (
-		<CartContext.Provider value={{ cartItems, addToCart, fetchCartItem }}>
+		<CartContext.Provider
+			value={{
+				cartItems,
+				addToCart,
+				fetchCartItem,
+				total_price_th: totalPriceTh,
+				total_price: totalPrice,
+			}}>
 			{children}
 		</CartContext.Provider>
 	);

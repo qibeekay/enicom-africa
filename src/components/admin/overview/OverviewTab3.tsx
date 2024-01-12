@@ -94,7 +94,7 @@ const OverviewTab3 = () => {
 						</tr>
 					</thead>
 					<tbody className=''>
-						{products.map((product, index) => (
+						{products?.map((product, index) => (
 							<tr
 								key={index}
 								onClick={() => handleOpen(product.product_token)}
