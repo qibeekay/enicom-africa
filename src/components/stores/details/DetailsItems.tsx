@@ -17,6 +17,8 @@ interface Product {
 	product_image: string;
 	product_token: string;
 	product_desc: string;
+	product_type: string;
+	product_owner: string;
 	product_quantity: number;
 	maximum_quantity: number;
 }
