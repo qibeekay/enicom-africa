@@ -12,6 +12,8 @@ interface Product {
 	product_image: string;
 	product_token: string;
 	product_desc: string;
+	product_type: string;
+	product_owner: string;
 	product_quantity: number;
 	maximum_quantity: number;
 }
@@ -50,6 +52,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 			const fetchedCartItem = await fetchCartItems(`$${token}`, `${usertoken}`);
 			setCartItems(fetchedCartItem.products);
 			setTotalPriceTh(fetchedCartItem.total_price_th);
+			setTotalPrice(fetchedCartItem.total_price);
 			setCartItems(fetchedCartItem.products);
 		} catch (error) {
 			// console.error('Error fetching cart items:', error);

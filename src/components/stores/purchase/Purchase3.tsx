@@ -16,8 +16,9 @@ const Purchase3 = () => {
 				</div>
 
 				<p className=' font-medium text-dark/[85%]'>
-					You have successfully purchased 2 M20 hand guns at{' '}
-					<span className='text-greens'>$100,000</span>.
+					You purchase has been placed succesfully. Check your email for more
+					details
+					{/* <span className='text-greens'>$100,000</span>. */}
 				</p>
 				<div className='flex items-center gap-4 mt-5 justify-center'>
 					<p className='font-medium text-dark/[85%] '>
@@ -31,7 +32,9 @@ const Purchase3 = () => {
 					</div>
 				</div>
 				<div className='mt-20'>
-					<Link href={''} className='bg-greens px-6 py-2 rounded-lg text-white'>
+					<Link
+						href={'/dashboard'}
+						className='bg-greens px-6 py-2 rounded-lg text-white'>
 						Go To Home
 					</Link>
 				</div>

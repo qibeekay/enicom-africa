@@ -8,6 +8,7 @@ import { LiaSearchSolid } from 'react-icons/lia';
 import { AiOutlineEyeInvisible, AiOutlineSwap } from 'react-icons/ai';
 import { HiOutlineChevronRight } from 'react-icons/hi';
 import { DashBoardItems } from '..';
+import { useRouter } from 'next/navigation';
 
 const DashboardBalance = () => {
 	const [kyc, setKyc] = useState<string>('');
@@ -18,6 +19,12 @@ const DashboardBalance = () => {
 		const storedKycStatus = localStorage.getItem('kyc_status');
 		setKyc(storedKycStatus || '');
 	}, []);
+
+	const router = useRouter();
+
+	const kycClick = () => {
+		router.push('/kyc');
+	};
 
 	return (
 		<div className='w-full font-poppins'>
@@ -127,7 +134,9 @@ const DashboardBalance = () => {
 							</div>
 						</div>
 					) : (
-						<div className='bg-greens rounded-lg p-4 text-white'>
+						<div
+							className='bg-greens rounded-lg p-4 text-white cursor-pointer'
+							onClick={kycClick}>
 							<p>Verify Account</p>
 							<p className='text-xs mt-2 text-white/70'>
 								Complete your registration process to get your account number

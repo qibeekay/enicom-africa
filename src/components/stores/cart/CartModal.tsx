@@ -79,12 +79,19 @@ const CartModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 		<div className='w-full'>
 			<div className='bg-white rounded-lg shadows py-4 px-1 md:px-8 h-screen overflow-y-scroll'>
 				{/* back */}
-				<button
-					className='flex items-center gap-4 cursor-pointer'
-					onClick={handleOpen}>
-					<HiChevronLeft />
-					<p>Back</p>
-				</button>
+				<div className='flex items-center justify-between'>
+					<button
+						className='flex items-center gap-2 cursor-pointer'
+						onClick={handleOpen}>
+						<HiChevronLeft />
+						<p>Back</p>
+					</button>
+					<button
+						className='flex items-center gap-4 cursor-pointer'
+						onClick={handleOpen}>
+						<p>Skip</p>
+					</button>
+				</div>
 
 				{/* header */}
 				<p className='text-center font-medium text-xl'>Our Engineers</p>

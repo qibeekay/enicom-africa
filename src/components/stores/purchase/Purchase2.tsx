@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import WalletsPurchase from './WalletsPurchase';
 import CardPayment from './CardPayment';
 
-const Purchase2 = () => {
+const Purchase1 = () => {
 	const [activeTab, setActiveTab] = useState('1');
 
 	return (
@@ -44,4 +44,4 @@ const Purchase2 = () => {
 	);
 };
 
-export default Purchase2;
+export default Purchase1;

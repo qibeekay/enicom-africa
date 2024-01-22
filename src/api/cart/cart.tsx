@@ -136,3 +136,69 @@ export const DeleteCartItems = async (
 		return [];
 	}
 };
+
+export const IntializePay = async (
+	bearerToken: string,
+	totalPrice: string,
+	userToken: string | null
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/payment/initialize-payment`,
+			{
+				total_price: totalPrice,
+				usertoken: userToken,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data;
+	} catch (error) {
+		toast.error('Error initializing payment');
+		console.error('Error initializing payment:', error);
+		return [];
+	}
+};
+
+// complete payment
+export const CompletePay = async (
+	bearerToken: string,
+	userToken: string | null,
+	otp: string,
+	products: Array<any>,
+	engineerId: { engineer_id: number },
+	address: {
+		state: string;
+		local_govt: string;
+		address: string;
+	},
+	total_price: number
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/payment/confirm-user-payment
+			`,
+			{
+				usertoken: userToken,
+				otp: otp,
+				products: products,
+				engineer_id: engineerId,
+				address: address,
+				total_price: total_price,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data;
+	} catch (error) {
+		toast.error('Error initializing payment');
+		console.error('Error initializing payment:', error);
+		return [];
+	}
+};

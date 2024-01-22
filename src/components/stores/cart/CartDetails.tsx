@@ -7,16 +7,22 @@ import {
 	DecreaseCartItems,
 	DeleteCartItems,
 	IncreaseCartItems,
+	IntializePay,
 } from '@/api/cart/cart';
 import { ToastContainer, toast } from 'react-toastify';
 import { useCart } from '@/components/CartContext';
+import axios from 'axios';
+import { getUser } from '@/api/products/products';
+import { useRouter } from 'next/navigation';
 
 const CartDetails = () => {
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen((cur) => !cur);
-	const { cartItems, fetchCartItem, total_price_th, total_price } = useCart();
+	const { cartItems, fetchCartItem, total_price_th } = useCart();
 
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
+
+	const router = useRouter();
 
 	// Fetch mail from localStorage when the component mounts
 	const usertoken =
@@ -83,6 +89,24 @@ const CartDetails = () => {
 			console.error('Error removing products:', error);
 		}
 	};
+
+	const purchase = () => {
+		router.push('/purchase');
+	};
+
+	const getuser = async () => {
+		try {
+			const getusers = await getUser(`$${token}`, `${usertoken}`);
+			console.log(getusers);
+		} catch (error) {
+			// console.error('Error fetching cart items:', error);
+			console.log('error');
+		}
+	};
+
+	useEffect(() => {
+		getuser();
+	}, []);
 
 	console.log(total_price_th);
 
@@ -188,7 +212,7 @@ const CartDetails = () => {
 							{/* purchase */}
 							<button
 								className='w-full bg-greens text-white py-2 rounded-lg mt-11 mb-6'
-								onClick={handleOpen}>
+								onClick={purchase}>
 								Purchase
 							</button>
 						</div>

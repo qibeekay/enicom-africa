@@ -10,15 +10,36 @@ import React from 'react';
 import { BsCart } from 'react-icons/bs';
 import { HiMiniStar } from 'react-icons/hi2';
 import PurchaseModal from './PurchaseModal';
+import { useCart } from '@/components/CartContext';
+import { useRouter } from 'next/navigation';
+import { CompletePay, IntializePay } from '@/api/cart/cart';
+import { ToastContainer, toast } from 'react-toastify';
+import { useFormData } from './FormDataContext';
 
 const Purchase1 = () => {
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen((cur) => !cur);
+
+	const { fetchCartItem, cartItems, total_price_th, total_price } = useCart();
+
+	// State for form data
+	const { formData, updateFormData } = useFormData();
+
+	// Function to handle form input changes
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		updateFormData({
+			[name]: value,
+		});
+	};
+
+	console.log(total_price);
+
 	return (
 		<div className='font-poppins my-10'>
 			<div className='max-w-6xl px-4 mx-auto'>
 				{/* flex */}
-				<div className='flex flex-col md:flex-row gap-4 lg:gap-32'>
+				<form className='flex flex-col-reverse md:flex-row gap-4 lg:gap-32'>
 					{/* item */}
 					<div className='w-full'>
 						{/* items info */}
@@ -27,58 +48,39 @@ const Purchase1 = () => {
 
 							{/* orders */}
 							<div>
-								{/* order-1 */}
-								<div className='flex justify-between mt-4'>
-									{/* image */}
-									<div className='w-[7rem] sm:w-[10rem] aspect-[2/1.2] rounded-xl overflow-hidden'>
-										<img
-											className='w-full h-full object-cover'
-											src='/exterior2.jpg'
-											alt=''
-										/>
+								{cartItems?.map((items, index) => (
+									<div key={index} className='flex justify-between mt-7'>
+										{/* image */}
+										<div className='w-[7rem] sm:w-[10rem] aspect-[2/1.2] rounded-xl overflow-hidden'>
+											<img
+												className='w-full h-full object-cover'
+												src={items.product_image}
+												alt=''
+											/>
+										</div>
+
+										{/* text */}
+										<div className='text-right'>
+											<p className=' uppercase'>{items.product_name}</p>
+
+											<p className='text-greens font-medium my-2'>
+												{items.product_price}
+											</p>
+
+											<p className='flex gap-4 sm:gap-10 items-center justify-end'>
+												Quantity: <span>{items.product_quantity}</span>
+											</p>
+										</div>
 									</div>
-
-									{/* text */}
-									<div>
-										<p className=' uppercase'>Battery</p>
-
-										<p className='text-greens font-medium my-2'>N150,000</p>
-
-										<p className='flex gap-4 sm:gap-10 items-center'>
-											Quantity: <span>1</span>
-										</p>
-									</div>
-								</div>
-								{/* order-1 */}
-								<div className='flex justify-between mt-4'>
-									{/* image */}
-									<div className='w-[7rem] sm:w-[10rem] aspect-[2/1.2] rounded-xl overflow-hidden'>
-										<img
-											className='w-full h-full object-cover'
-											src='/exterior2.jpg'
-											alt=''
-										/>
-									</div>
-
-									{/* text */}
-									<div>
-										<p className=' uppercase'>Battery</p>
-
-										<p className='text-greens font-medium my-2'>N150,000</p>
-
-										<p className='flex gap-4 sm:gap-10 items-center'>
-											Quantity: <span>1</span>
-										</p>
-									</div>
-								</div>
+								))}
 							</div>
 
 							{/* engineer */}
-							<div className='flex items-center justify-between my-7'>
-								{/* details */}
-								<div className='flex items-center gap-4'>
-									{/* image */}
-									<div className=' w-[2rem] aspect-square overflow-hidden rounded-full'>
+							{/* <div className='flex items-center justify-between my-7'> */}
+							{/* details */}
+							{/* <div className='flex items-center gap-4'> */}
+							{/* image */}
+							{/* <div className=' w-[2rem] aspect-square overflow-hidden rounded-full'>
 										<img
 											className='w-full h-full object-cover object-center'
 											src='/img.png'
@@ -90,10 +92,10 @@ const Purchase1 = () => {
 										<p>Senator agbadfd</p>
 										<p className='text-sm'>Installer</p>
 									</div>
-								</div>
+								</div> */}
 
-								{/* rating / price */}
-								<div>
+							{/* rating / price */}
+							{/* <div>
 									<p className='text-greens font-medium text-right'>N50,000</p>
 									<div className='flex gap-1 text-[#D49901] py-1'>
 										<HiMiniStar />
@@ -102,18 +104,19 @@ const Purchase1 = () => {
 										<HiMiniStar />
 										<HiMiniStar />
 									</div>
-								</div>
-							</div>
+								</div> */}
+							{/* </div> */}
 
 							{/* total */}
-							<div className='flex justify-between items-center font-medium'>
+							<div className='flex justify-between items-center font-medium mt-10'>
 								<p>Total:</p>
-								<p className='text-greens'>N310,000</p>
+								<p className='text-greens'>N{total_price_th}</p>
 							</div>
 
 							{/* pay now */}
 							<button
 								className='w-full bg-greens text-white py-3 rounded-lg mt-8'
+								type='button'
 								onClick={handleOpen}>
 								Pay Now
 							</button>
@@ -124,29 +127,37 @@ const Purchase1 = () => {
 					<div className=' md:w-[80%] bg-[#F2FFF1] rounded-lg p-10'>
 						<p className=' text-lg font-medium'>Confirm Address</p>
 
-						<form action='' className='mt-10'>
+						<div className='mt-10'>
 							<div className='grid gap-y-2'>
 								<div className='w-full'>
 									<Typography className='mb-1 text-dark'>State</Typography>
-									<Select>
-										<Option>Material Tailwind HTML</Option>
-										<Option>Material Tailwind React</Option>
-										<Option>Material Tailwind Vue</Option>
-										<Option>Material Tailwind Angular</Option>
-										<Option>Material Tailwind Svelte</Option>
-									</Select>
+									<Input
+										size='lg'
+										className=' !border-t-blue-gray-200 focus:!border-t-gray-900'
+										labelProps={{
+											className: 'before:content-none after:content-none',
+										}}
+										name='state'
+										value={formData.state}
+										onChange={handleInputChange}
+										crossOrigin={undefined}
+									/>
 								</div>
 								<div className='w-full'>
 									<Typography className='mb-1 text-dark'>
 										Local Government
 									</Typography>
-									<Select>
-										<Option>Material Tailwind HTML</Option>
-										<Option>Material Tailwind React</Option>
-										<Option>Material Tailwind Vue</Option>
-										<Option>Material Tailwind Angular</Option>
-										<Option>Material Tailwind Svelte</Option>
-									</Select>
+									<Input
+										size='lg'
+										className=' !border-t-blue-gray-200 focus:!border-t-gray-900'
+										labelProps={{
+											className: 'before:content-none after:content-none',
+										}}
+										name='local_govt'
+										value={formData.local_govt}
+										onChange={handleInputChange}
+										crossOrigin={undefined}
+									/>
 								</div>
 								<div className='w-full'>
 									<Typography className='mb-1 text-dark'>Address</Typography>
@@ -156,20 +167,22 @@ const Purchase1 = () => {
 										labelProps={{
 											className: 'before:content-none after:content-none',
 										}}
+										name='address'
+										value={formData.address}
+										onChange={handleInputChange}
 										crossOrigin={undefined}
 									/>
 								</div>
 							</div>
-						</form>
-
-						<div
-							className='flex items-center gap-5 text-dark mt-20 mb-2 justify-between'
-							onClick={handleOpen}>
-							<p>Delivery fee:</p>
-							<p className='font-semibold text-lg text-greens'>N10,000</p>
 						</div>
+
+						<div className='flex items-center gap-5 text-dark mt-20 mb-2 justify-between'>
+							<p>Delivery fee:</p>
+							<p className='font-semibold text-lg text-greens'>00</p>
+						</div>
+						<ToastContainer />
 					</div>
-				</div>
+				</form>
 
 				<Dialog
 					size='lg'

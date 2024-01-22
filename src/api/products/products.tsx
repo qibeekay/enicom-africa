@@ -188,6 +188,30 @@ export const getProductByToken = async (
 		return [];
 	}
 };
+// get product by token
+export const getUser = async (
+	bearerToken: string,
+	userToken: string | null
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/profile/getUserData`,
+			{
+				identifier: userToken,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		toast.error('Error fetching product');
+		console.error('Error fetching product:', error);
+		return [];
+	}
+};
 
 // get product by token
 export const getAdminProductByToken = async (

@@ -6,6 +6,7 @@ import Purchase2 from './Purchase2';
 import { useTabContext } from '@/components/TabContext';
 import Purchase3 from './Purchase3';
 import { useRouter } from 'next/navigation';
+import WalletsPurchase from './WalletsPurchase';
 
 const PurchasePage = () => {
 	const { activeTab, setTab } = useTabContext();
@@ -85,7 +86,7 @@ const PurchasePage = () => {
 				</div>
 				<div>
 					{activeTab === '1' && <Purchase1 />}
-					{activeTab === '2' && <Purchase2 />}
+					{activeTab === '2' && <WalletsPurchase />}
 					{activeTab === '3' && <Purchase3 />}
 				</div>
 			</div>
