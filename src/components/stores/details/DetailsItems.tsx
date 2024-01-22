@@ -216,10 +216,10 @@ const DetailsItems = () => {
 					</div>
 
 					{/* buttons */}
-					<div className=' sm:w-[20rem] md:w-[45%] bg-white shadows rounded-lg h-fit p-4'>
-						<p className=' text-lg font-medium'>Deliveries</p>
+					<div className=' sm:w-[20rem] md:w-[45%] bg-white rounded-lg h-fit p-4'>
+						{/* <p className=' text-lg font-medium'>Deliveries</p> */}
 
-						<form action='' className='mt-2'>
+						{/* <form action='' className='mt-2'>
 							<div className='grid gap-y-2'>
 								<div className='w-full'>
 									<Typography className='mb-1 text-dark'>State</Typography>
@@ -261,7 +261,7 @@ const DetailsItems = () => {
 						<div className='flex items-center gap-5 text-dark mt-4 mb-2'>
 							<p>Delivery</p>
 							<p className='font-semibold text-lg'>N10,000</p>
-						</div>
+						</div> */}
 					</div>
 				</div>
 
