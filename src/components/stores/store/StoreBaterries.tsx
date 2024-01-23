@@ -31,15 +31,27 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 
 	const [currentSlide, setCurrentSlide] = React.useState(0);
 	const [loaded, setLoaded] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 	const [productsCategories, setProductsCategories] = useState<Category[]>([]);
 	const router = useRouter();
 
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
+	const animation = { duration: 30000, easing: (t: number) => t };
 
-	const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>({
+	const [sliderRef, instanceRef] = useKeenSlider({
 		initial: 0,
 		loop: true,
 		mode: 'free-snap',
+		created(s) {
+			setLoaded(true);
+			s.moveToIdx(10, true, animation);
+		},
+		updated(s) {
+			s.moveToIdx(s.track.details.abs + 10, true, animation);
+		},
+		animationEnded(s) {
+			s.moveToIdx(s.track.details.abs + 10, true, animation);
+		},
 		slides: {
 			// origin: 'center',
 			perView: 2.5,
@@ -79,9 +91,9 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 		slideChanged(slider) {
 			setCurrentSlide(slider.track.details.rel);
 		},
-		created() {
-			setLoaded(true);
-		},
+		// created() {
+		// 	setLoaded(true);
+		// },
 	});
 
 	const handleNavigation = () => {
@@ -89,8 +101,15 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 	};
 
 	const fetchProducts = async () => {
-		const fetchedProducts = (await getAllProduct(`$${token}`)) || [];
-		setProductsCategories(fetchedProducts);
+		try {
+			const fetchedProducts = await getAllProduct(`$${token}`);
+			setProductsCategories(fetchedProducts);
+			// setLoaded(true);
+			setIsLoading(false);
+		} catch (error) {
+			console.error('Error fetching products:', error);
+			// Handle error if needed
+		}
 	};
 
 	useEffect(() => {
@@ -109,61 +128,68 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 				{/* navigation wrapper */}
 				<div className=' md:mx-[4rem] navigation-wrapper'>
 					{/* slider ref */}
+					{isLoading ? (
+						<div className='flex flex-row items-center justify-center gap-2 absolute left-[50%] -translate-x-[50%]'>
+							<div className='w-3 h-3 rounded-full bg-[#D5FFD3] animate-bounce'></div>
+							<div className='w-3 h-3 rounded-full bg-[#D5FFD3] animate-bounce [animation-delay:-.3s]'></div>
+							<div className='w-3 h-3 rounded-full bg-[#D5FFD3] animate-bounce [animation-delay:-.5s]'></div>
+						</div>
+					) : (
+						<div ref={sliderRef} className='keen-slider py-10 relative'>
+							{/* testimonial */}
+							{/* loading message */}
+							{!loaded && (
+								<div className='flex flex-row items-center justify-center gap-2 absolute left-[50%] -translate-x-[50%]'>
+									<div className='w-3 h-3 rounded-full bg-[#D5FFD3] animate-bounce'></div>
+									<div className='w-3 h-3 rounded-full bg-[#D5FFD3] animate-bounce [animation-delay:-.3s]'></div>
+									<div className='w-3 h-3 rounded-full bg-[#D5FFD3] animate-bounce [animation-delay:-.5s]'></div>
+								</div>
+							)}
 
-					<div ref={sliderRef} className='keen-slider py-10 relative'>
-						{/* testimonial */}
-						{/* loading message */}
-						{!loaded && (
-							<div className='flex flex-row items-center justify-center gap-2 absolute left-[50%] -translate-x-[50%]'>
-								<div className='w-3 h-3 rounded-full bg-[#D5FFD3] animate-bounce'></div>
-								<div className='w-3 h-3 rounded-full bg-[#D5FFD3] animate-bounce [animation-delay:-.3s]'></div>
-								<div className='w-3 h-3 rounded-full bg-[#D5FFD3] animate-bounce [animation-delay:-.5s]'></div>
-							</div>
-						)}
+							{/* keen-slider__slide number-slide1 */}
+							{productsCategories
+								.filter((cat) => cat.category === category)
+								.map((cat, index) => (
+									<React.Fragment key={index}>
+										{cat.products.map((product, productIndex) => (
+											<div
+												key={productIndex}
+												className={`overflow-hidden rounded-xl w-[11rem] hover:shadow-lg hover:bg-white cursor-pointer px-2 keen-slider__slide`}
+												onClick={() =>
+													handleDetailsClick(product.product_token)
+												}>
+												{/* image */}
+												{loaded && (
+													<div>
+														<div className='w-full rounded-xl overflow-hidden h-[7rem]'>
+															<img
+																className='w-full h-full object-cover'
+																src={product.product_image}
+																alt=''
+															/>
+														</div>
 
-						{/* keen-slider__slide number-slide1 */}
-						{productsCategories
-							.filter((cat) => cat.category === category)
-							.map((cat, index) => (
-								<React.Fragment key={index}>
-									{cat.products.map((product, productIndex) => (
-										<div
-											key={productIndex}
-											className={`overflow-hidden rounded-xl w-[11rem] hover:shadow-lg hover:bg-white cursor-pointer px-2 keen-slider__slide number-slide${
-												index + 1
-											}`}
-											onClick={() => handleDetailsClick(product.product_token)}>
-											{/* image */}
-											{loaded && (
-												<div>
-													<div className='w-full rounded-xl overflow-hidden h-[7rem]'>
-														<img
-															className='w-full h-full object-cover'
-															src={product.product_image}
-															alt=''
-														/>
+														{/* text */}
+														<div className='px-2'>
+															<p className='my-2 text-dark'>
+																{product.product_name}
+															</p>
+															<h1 className='mb-4 font-semibold text-lg text-dark'>
+																{product.product_price_th}
+															</h1>
+														</div>
 													</div>
-
-													{/* text */}
-													<div className='px-2'>
-														<p className='my-2 text-dark'>
-															{product.product_name}
-														</p>
-														<h1 className='mb-4 font-semibold text-lg text-dark'>
-															{product.product_price_th}
-														</h1>
-													</div>
-												</div>
-											)}
-										</div>
-									))}
-								</React.Fragment>
-							))}
-					</div>
+												)}
+											</div>
+										))}
+									</React.Fragment>
+								))}
+						</div>
+					)}
 
 					{/* buttons */}
 					<div>
-						{instanceRef.current && (
+						{instanceRef?.current && (
 							<div className=''>
 								<div className='hidden absolute left-0 top-[50%] -translate-y-[50%] bg-greens w-10 aspect-square md:grid items-center justify-center'>
 									<Arrow
