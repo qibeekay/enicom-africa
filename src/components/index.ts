@@ -93,6 +93,10 @@ import OverviewTab2 from './admin/overview/OverviewTab2';
 import OverviewTab3 from './admin/overview/OverviewTab3';
 import OverviewTab4 from './admin/overview/OverviewTab4';
 import OverviewModal from './admin/overview/OverviewModal';
+import PlanPage from './admin/plan/PlanPage';
+import PlanMain from './admin/plan/PlanMain';
+import SearchNav from './admin/SearchNav';
+import LoanFacilityPage from './loans/loan-facility/LoanFacilityPage';
 
 export {
 	RegisterForm,
@@ -189,4 +193,8 @@ export {
 	OverviewTab3,
 	OverviewTab4,
 	OverviewModal,
+	PlanMain,
+	PlanPage,
+	SearchNav,
+	LoanFacilityPage,
 };

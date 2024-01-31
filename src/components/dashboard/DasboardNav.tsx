@@ -191,7 +191,7 @@ const DasboardNav = () => {
 
 						{/* loan */}
 						<Link
-							href={''}
+							href={'/loan-facility'}
 							className=' flex items-center justify-end gap-4 hover:bg-greens/20 py-3 px-5 rounded-lg hover:text-greens'>
 							<HiOutlineCreditCard size='27' />
 							<p className=''>Loan Facility</p>
@@ -199,7 +199,7 @@ const DasboardNav = () => {
 
 						{/* seller */}
 						<div className='w-full mt-10'>
-							<Link className='' href={''}>
+							<Link className='' href={'/sellers'}>
 								<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
 									Become a Seller
 								</p>
