@@ -178,7 +178,7 @@ const PlanMain = () => {
 
 		if (success) {
 			// Refresh the list of categories after adding a new one
-			fetchPlans();
+			fetchProviders();
 			toast.success('Provider Updated');
 			// Reset the state and hide the input field
 			setNewProvider('');
@@ -274,9 +274,7 @@ const PlanMain = () => {
 											<Combobox.Input
 												className='w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0'
 												displayValue={() =>
-													selectedPlans
-														? selectedPlans.plan_duration
-														: 'Select Loan Plans'
+													selectedPlans ? selectedPlans.plan_duration : ''
 												}
 												onChange={(event) => setQuery(event.target.value)}
 											/>
@@ -410,7 +408,7 @@ const PlanMain = () => {
 												displayValue={() =>
 													selectedProviders
 														? selectedProviders.provider_name
-														: 'Select Loan Provider'
+														: ''
 												}
 												onChange={(event) => setQuery1(event.target.value)}
 											/>
