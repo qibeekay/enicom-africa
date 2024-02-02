@@ -196,14 +196,14 @@ const OverviewModal: React.FC<OverviewModalProps> = ({
 							<div className='text-sm md:text-base'>
 								<p>By Sdelaide Ventures</p>
 								<p className='flex gap-4 my-3'>
-									Capacity:{' '}
+									{/* Capacity:{' '}
 									<span>
 										Lorem ipsum dolor sit amet consectetur, adipisicing elit.
 										Voluptatum ullam nobis fugit consectetur debitis similique.
-									</span>
+									</span> */}
 								</p>
 
-								<p>Delivery: 10 - 15 days after request</p>
+								{/* <p>Delivery: 10 - 15 days after request</p> */}
 							</div>
 						</div>
 					</div>

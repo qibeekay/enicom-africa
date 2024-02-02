@@ -5,13 +5,14 @@ import { Tab1, Tab2, Tab3 } from '..';
 import { TbUserCheck } from 'react-icons/tb';
 import { MdDownloading } from 'react-icons/md';
 import { PiBookThin } from 'react-icons/pi';
+import { useTabContext } from '../TabContext';
 
 const SellerTab = () => {
-	const [activeTab, setActiveTab] = useState('1');
+	const { activeTab, setTab } = useTabContext();
 	const [progress, setProgress] = useState(35);
 
 	const handleTabClick = (tab: string) => {
-		setActiveTab(tab);
+		setTab(tab);
 		// Calculate the progress based on the clicked tab
 		let newProgress = 0;
 		switch (tab) {
@@ -50,9 +51,9 @@ const SellerTab = () => {
 					<div className='flex flex-col md:flex-row mt-5 mx-auto w-full px-4 md:px-0 md:w-[85%] gap-y-4 md:gap-[8rem]'>
 						<div className='flex flex-wrap items-center justify-between md:items-start md:justify-start md:flex-col gap-5 w-full md:w-[18rem] font-medium text-dark/60 '>
 							<div>
-								{activeTab === '1' && <p>1/3</p>}
-								{activeTab === '2' && <p>2/3</p>}
-								{activeTab === '3' && <p>3/3</p>}
+								{activeTab === '1'}
+								{/* {activeTab === '2' && <p>2/3</p>} */}
+								{activeTab === '2'}
 							</div>
 							{/* bank transfer */}
 							<button
@@ -70,7 +71,7 @@ const SellerTab = () => {
 							</button>
 
 							{/* debit card */}
-							<button
+							{/* <button
 								onClick={() => handleTabClick('2')}
 								className={`w-full sm:w-auto py-2 flex items-center justify-center ${
 									activeTab === '2' ? 'bg-bgGreen text-dark rounded-lg' : ''
@@ -82,18 +83,18 @@ const SellerTab = () => {
 									/>
 									Verifications
 								</div>
-							</button>
+							</button> */}
 
 							{/* debit card */}
 							<button
-								onClick={() => handleTabClick('3')}
+								onClick={() => handleTabClick('2')}
 								className={`w-full sm:w-auto py-2 flex items-center justify-center ${
-									activeTab === '3' ? ' bg-bgGreen text-dark rounded-lg' : ''
+									activeTab === '2' ? ' bg-bgGreen text-dark rounded-lg' : ''
 								}`}>
 								<div className='flex items-center gap-4'>
 									<MdDownloading
 										size='20'
-										className={activeTab === '3' ? 'text-greens' : ''}
+										className={activeTab === '2' ? 'text-greens' : ''}
 									/>
 									Upload Product
 								</div>
@@ -102,8 +103,7 @@ const SellerTab = () => {
 
 						<div className=' w-full'>
 							{activeTab === '1' && <Tab1 />}
-							{activeTab === '2' && <Tab2 />}
-							{activeTab === '3' && <Tab3 />}
+							{activeTab === '2' && <Tab3 />}
 						</div>
 					</div>
 				</div>

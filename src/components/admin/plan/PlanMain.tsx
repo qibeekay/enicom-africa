@@ -271,13 +271,17 @@ const PlanMain = () => {
 									onChange={(selected) => setSelectedPlans(selected)}>
 									<div className='relative z-50 mt-1'>
 										<div className='relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm'>
-											<Combobox.Input
-												className='w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0'
-												displayValue={() =>
-													selectedPlans ? selectedPlans.plan_duration : ''
-												}
-												onChange={(event) => setQuery(event.target.value)}
-											/>
+											<Combobox.Button className='w-full'>
+												<Combobox.Input
+													className='w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0'
+													displayValue={() =>
+														selectedPlans
+															? selectedPlans.plan_duration
+															: 'Select Plans'
+													}
+													onChange={(event) => setQuery(event.target.value)}
+												/>
+											</Combobox.Button>
 											<Combobox.Button className='absolute inset-y-0 right-0 flex items-center pr-2'>
 												<FaChevronDown
 													className='h-5 w-5 text-gray-400'
@@ -403,15 +407,17 @@ const PlanMain = () => {
 									onChange={(selected) => setSelectedProviders(selected)}>
 									<div className='relative z-30 mt-1'>
 										<div className='relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm'>
-											<Combobox.Input
-												className='w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0'
-												displayValue={() =>
-													selectedProviders
-														? selectedProviders.provider_name
-														: ''
-												}
-												onChange={(event) => setQuery1(event.target.value)}
-											/>
+											<Combobox.Button className='w-full'>
+												<Combobox.Input
+													className='w-full border-none py-2 pl-3 pr-10 text-sm leading-5 text-gray-900 focus:ring-0'
+													displayValue={() =>
+														selectedProviders
+															? selectedProviders.provider_name
+															: 'Select Provider'
+													}
+													onChange={(event) => setQuery1(event.target.value)}
+												/>
+											</Combobox.Button>
 											<Combobox.Button className='absolute inset-y-0 right-0 flex items-center pr-2'>
 												<FaChevronDown
 													className='h-5 w-5 text-gray-400'

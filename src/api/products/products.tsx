@@ -188,7 +188,8 @@ export const getProductByToken = async (
 		return [];
 	}
 };
-// get product by token
+
+// get users
 export const getUser = async (
 	bearerToken: string,
 	userToken: string | null

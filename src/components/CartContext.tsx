@@ -41,7 +41,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 	// Access the query parameter
 	const productToken = searchParams.get('producttoken');
 
-	// Fetch mail from localStorage when the component mounts
+	// Fetch usertoken from localStorage when the component mounts
 	const usertoken =
 		typeof window !== 'undefined'
 			? localStorage.getItem('usertoken') || ''

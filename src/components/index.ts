@@ -97,6 +97,8 @@ import PlanPage from './admin/plan/PlanPage';
 import PlanMain from './admin/plan/PlanMain';
 import SearchNav from './admin/SearchNav';
 import LoanFacilityPage from './loans/loan-facility/LoanFacilityPage';
+import BussinessVerify from './sellers/BussinessVerify';
+import SellersModal from './admin/overview/SellersModal';
 
 export {
 	RegisterForm,
@@ -197,4 +199,6 @@ export {
 	PlanPage,
 	SearchNav,
 	LoanFacilityPage,
+	BussinessVerify,
+	SellersModal,
 };

@@ -2,10 +2,18 @@
 import {
 	createCategory,
 	getAllCategories,
+	getUser,
 	uploadProduct,
 } from '@/api/products/products';
 import { Combobox, Transition } from '@headlessui/react';
-import { Option, Select, Typography } from '@material-tailwind/react';
+import {
+	Button,
+	Dialog,
+	DialogHeader,
+	Option,
+	Select,
+	Typography,
+} from '@material-tailwind/react';
 import React, {
 	FormEvent,
 	Fragment,
@@ -18,6 +26,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { FaCheck, FaChevronDown } from 'react-icons/fa6';
 import { useRouter } from 'next/navigation';
+import { useTabContext } from '../TabContext';
 
 interface UploadResponse {
 	success: boolean;
@@ -45,6 +54,13 @@ const Tab3 = () => {
 	const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
 	const [query, setQuery] = useState<string>('');
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const { setTab } = useTabContext();
+	const [open, setOpen] = React.useState(false);
+	const [open1, setOpen1] = React.useState(false);
+	const handleOpen1 = () => setOpen1((cur) => !cur);
+	const handleOpen = () => {
+		setOpen((cur) => !cur);
+	};
 
 	// auth token
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
@@ -130,7 +146,12 @@ const Tab3 = () => {
 
 	const router = useRouter();
 
-	const usertoken = localStorage.getItem('usertoken');
+	// Fetch mail from localStorage when the component mounts
+	const usertoken =
+		typeof window !== 'undefined'
+			? localStorage.getItem('usertoken') || ''
+			: '';
+
 	console.log(usertoken);
 
 	// uplaod product
@@ -201,6 +222,16 @@ const Tab3 = () => {
 				return;
 			}
 
+			// Fetch user data to check is_verified_seller
+			const getusers = await getUser(`$${token}`, `${usertoken}`);
+
+			// Check if the user is not verified as a seller
+			if (getusers.is_verified_seller === false) {
+				// Show a dialog to prompt the user to register as a seller
+				setOpen(true);
+				return; // Do not proceed with the upload
+			}
+
 			// Ensure that product_image is a string and not undefined
 			const productImage = uploadedImageUrl || '';
 			// Ensure that usertoken is a string and not null
@@ -235,6 +266,39 @@ const Tab3 = () => {
 		} finally {
 			setIsLoading(false);
 		}
+	};
+
+	// api to get user data
+	const getuser = async () => {
+		try {
+			const getusers = await getUser(`$${token}`, `${usertoken}`);
+			// Check if the user is not verified
+			if (getusers.is_verified_seller === false) {
+				// Show a dialog to prompt the user to register as a seller
+				setOpen(true);
+			}
+		} catch (error) {
+			// console.error('Error fetching cart items:', error);
+			console.log('error');
+		}
+	};
+
+	useEffect(() => {
+		getuser();
+	}, []);
+
+	const handleBusiness = () => {
+		localStorage.setItem('bussiness_type', 'Bussiness');
+		// router.push('/sellers');
+		setTab('1');
+		handleOpen1();
+	};
+	const handleIndividual = () => {
+		// Save the word "individual" to local storage
+		localStorage.setItem('bussiness_type', 'Individual');
+		// router.push('/sellers');
+		setTab('1');
+		handleOpen1();
 	};
 
 	return (
@@ -562,6 +626,44 @@ const Tab3 = () => {
 					</div>
 				</div>
 				<ToastContainer />
+				<Dialog
+					size='xs'
+					open={open}
+					handler={handleOpen}
+					className='bg-white shadow-none text-dark p-6'>
+					<DialogHeader>Register as a Seller</DialogHeader>
+					<div className='grid mt-4'>
+						<Typography className='text-gray-700'>
+							To upload products, you need to register as a seller. Becoming a
+							verified seller allows you to showcase your products to a wider
+							audience. Take the first step towards growing your business!
+						</Typography>
+						<div className='mt-6'>
+							<Button variant='filled' color='green' onClick={handleOpen1}>
+								Register as Seller
+							</Button>
+						</div>
+					</div>
+				</Dialog>
+				<Dialog
+					size='xs'
+					open={open1}
+					handler={handleOpen1}
+					className='bg-white shadow-none text-dark p-6'>
+					<DialogHeader>You want to become a seller?</DialogHeader>
+					<div className='grid mt-4'>
+						<button
+							className='border border-greens bg-greens text-white py-2'
+							onClick={handleIndividual}>
+							Register as an Individual
+						</button>
+						<button
+							className='border border-greens bg-greens text-white py-2 mt-4'
+							onClick={handleBusiness}>
+							Register as a Business
+						</button>
+					</div>
+				</Dialog>
 			</div>
 		</div>
 	);

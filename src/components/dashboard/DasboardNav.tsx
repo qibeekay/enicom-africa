@@ -12,6 +12,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '../CartContext';
 import { ToastContainer, toast } from 'react-toastify';
+import {
+	Button,
+	Dialog,
+	DialogBody,
+	DialogFooter,
+	DialogHeader,
+} from '@material-tailwind/react';
 
 const DasboardNav = () => {
 	const [nav, setNav] = useState(false);
@@ -25,6 +32,15 @@ const DasboardNav = () => {
 
 	const handleHome = () => {
 		router.push('/dashboard');
+	};
+	const handleBusiness = () => {
+		localStorage.setItem('bussiness_type', 'Bussiness');
+		router.push('/sellers');
+	};
+	const handleIndividual = () => {
+		// Save the word "individual" to local storage
+		localStorage.setItem('bussiness_type', 'Individual');
+		router.push('/sellers');
 	};
 
 	const closeNavigation = () => {
@@ -73,6 +89,9 @@ const DasboardNav = () => {
 		toast.success('Logout Successful');
 		router.push('/login'); // Change '/login' to the actual path of your login page
 	};
+
+	const [open, setOpen] = React.useState(false);
+	const handleOpen = () => setOpen((cur) => !cur);
 
 	return (
 		<div className='relative w-full font-poppins text-dark overflow-hidden'>
@@ -199,11 +218,11 @@ const DasboardNav = () => {
 
 						{/* seller */}
 						<div className='w-full mt-10'>
-							<Link className='' href={'/sellers'}>
-								<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
-									Become a Seller
-								</p>
-							</Link>
+							<button
+								className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'
+								onClick={handleOpen}>
+								Become a Seller
+							</button>
 						</div>
 
 						{/* agent */}
@@ -227,6 +246,25 @@ const DasboardNav = () => {
 						</div>
 					</div>
 				</div>
+				<Dialog
+					size='xs'
+					open={open}
+					handler={handleOpen}
+					className='bg-white shadow-none text-dark p-6'>
+					<DialogHeader>You want to become a seller?</DialogHeader>
+					<div className='grid mt-4'>
+						<button
+							className='border border-greens bg-greens text-white py-2'
+							onClick={handleIndividual}>
+							Register as an Individual
+						</button>
+						<button
+							className='border border-greens bg-greens text-white py-2 mt-4'
+							onClick={handleBusiness}>
+							Register as a Business
+						</button>
+					</div>
+				</Dialog>
 				<ToastContainer />
 			</div>
 		</div>
