@@ -120,25 +120,6 @@ export const getAllProduct = async (bearerToken: string) => {
 	}
 };
 
-// get all installers
-export const getAllInstallers = async (bearerToken: string) => {
-	try {
-		const response = await axios.get(
-			`${API_URL}/service-request/request-agent`,
-			{
-				headers: {
-					Authorization: `Bearer ${bearerToken}`,
-				},
-			}
-		);
-		return response.data.data;
-	} catch (error) {
-		// toast.error('Error fetching agents');
-		console.error('Error fetching agents:', error);
-		return [];
-	}
-};
-
 // get all products admin
 export const getAllProductAdmin = async (bearerToken: string) => {
 	try {
