@@ -1,9 +1,13 @@
+'use client';
 import { SalesPage } from '@/components';
+import { TabProvider } from '@/components/TabContext';
 
 export default function Sales() {
 	return (
 		<div>
-			<SalesPage />
+			<TabProvider>
+				<SalesPage />
+			</TabProvider>
 		</div>
 	);
 }

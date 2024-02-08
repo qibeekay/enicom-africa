@@ -19,6 +19,7 @@ interface Product {
 	product_desc: string;
 	product_type: string;
 	product_owner: string;
+	product_condition: string;
 	product_quantity: number;
 	maximum_quantity: number;
 }
@@ -136,39 +137,12 @@ const DetailsItems = () => {
 								{/* image */}
 								<div className='sm:w-[20rem] md:w-[50%]'>
 									{/* img */}
-									<div className=' w-full rounded-lg h-[9rem] overflow-hidden'>
+									<div className=' w-full rounded-lg h-auto overflow-hidden'>
 										<img
-											className='w-full h-full object-cover'
+											className='w-full'
 											src={productsByToken?.product_image}
 											alt=''
 										/>
-									</div>
-
-									{/* increment */}
-									<div className='flex justify-between items-center my-4'>
-										{/* - */}
-										<div className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white text-2xl cursor-pointer'>
-											<p>-</p>
-										</div>
-
-										{/* 1 */}
-										<div className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white'>
-											<p>{productsByToken?.product_quantity}</p>
-										</div>
-
-										{/* + */}
-										<div className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white text-2xl'>
-											<p>+</p>
-										</div>
-									</div>
-
-									{/* purchase */}
-									<div className='mt-6'>
-										<button
-											className='py-2 bg-greens w-full text-white rounded-md'
-											onClick={handlePurchase}>
-											Purchase
-										</button>
 									</div>
 
 									{/* Add to Cart */}
@@ -198,17 +172,10 @@ const DetailsItems = () => {
 										</p>
 									</div>
 									<div className='text-sm md:text-base'>
-										<p>By Sdelaide Ventures</p>
-										<p className='flex gap-4 my-3'>
-											Capacity:{' '}
-											<span>
-												Lorem ipsum dolor sit amet consectetur, adipisicing
-												elit. Voluptatum ullam nobis fugit consectetur debitis
-												similique.
-											</span>
+										<p className='flex gap-4 text-sm md:text-base'>
+											Condition:
+											<span>{productsByToken?.product_condition}</span>
 										</p>
-
-										<p>Delivery: 10 - 15 days after request</p>
 									</div>
 								</div>
 							</div>

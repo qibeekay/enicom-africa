@@ -99,6 +99,9 @@ import SearchNav from './admin/SearchNav';
 import LoanFacilityPage from './loans/loan-facility/LoanFacilityPage';
 import BussinessVerify from './sellers/BussinessVerify';
 import SellersModal from './admin/overview/SellersModal';
+import AgentsPage from './accounts/agents/AgentsPage';
+import OverviewTab5 from './admin/overview/OverviewTab5';
+import AgentsModal from './admin/overview/AgentsModal';
 
 export {
 	RegisterForm,
@@ -201,4 +204,7 @@ export {
 	LoanFacilityPage,
 	BussinessVerify,
 	SellersModal,
+	AgentsPage,
+	OverviewTab5,
+	AgentsModal,
 };

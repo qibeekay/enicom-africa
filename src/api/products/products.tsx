@@ -120,6 +120,25 @@ export const getAllProduct = async (bearerToken: string) => {
 	}
 };
 
+// get all installers
+export const getAllInstallers = async (bearerToken: string) => {
+	try {
+		const response = await axios.get(
+			`${API_URL}/service-request/request-agent`,
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		// toast.error('Error fetching agents');
+		console.error('Error fetching agents:', error);
+		return [];
+	}
+};
+
 // get all products admin
 export const getAllProductAdmin = async (bearerToken: string) => {
 	try {
@@ -299,6 +318,32 @@ export const approveProduct = async (
 	} catch (error) {
 		toast.error('Error fetching cart items');
 		console.error('Error fetching cart items:', error);
+		return [];
+	}
+};
+
+// get all orders
+export const getAllOrders = async (
+	bearerToken: string,
+	order_status: string | null,
+	userToken: string
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/buyer.orders/get-all-orders`,
+			{
+				order_status: order_status,
+				usertoken: userToken,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		console.error('Error fetching orders:', error);
 		return [];
 	}
 };

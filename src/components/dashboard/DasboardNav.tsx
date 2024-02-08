@@ -19,9 +19,11 @@ import {
 	DialogFooter,
 	DialogHeader,
 } from '@material-tailwind/react';
+import { getUser } from '@/api/products/products';
 
 const DasboardNav = () => {
 	const [nav, setNav] = useState(false);
+	const [status, setStatus] = useState('');
 	const [mobileSearchVisible, setMobileSearchVisible] = useState(false);
 	const { cartItems } = useCart();
 
@@ -92,6 +94,31 @@ const DasboardNav = () => {
 
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen((cur) => !cur);
+
+	// auth token
+	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
+
+	// Fetch mail from localStorage when the component mounts
+	const usertoken =
+		typeof window !== 'undefined'
+			? localStorage.getItem('usertoken') || ''
+			: '';
+
+	const getuser = async () => {
+		try {
+			const getusers = await getUser(`$${token}`, `${usertoken}`);
+			setStatus(getusers.is_verified_seller);
+		} catch (error) {
+			// console.error('Error fetching cart items:', error);
+			console.log('error');
+		}
+	};
+
+	useEffect(() => {
+		getuser();
+	}, []);
+
+	console.log(status);
 
 	return (
 		<div className='relative w-full font-poppins text-dark overflow-hidden'>
@@ -217,17 +244,35 @@ const DasboardNav = () => {
 						</Link>
 
 						{/* seller */}
-						<div className='w-full mt-10'>
+						{/* <div className='w-full mt-10'>
 							<button
 								className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'
 								onClick={handleOpen}>
 								Become a Seller
 							</button>
-						</div>
+						</div> */}
+
+						{status ? (
+							<div className='w-full mt-10'>
+								<Link className='' href={''}>
+									<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
+										Sellers Dashboard
+									</p>
+								</Link>
+							</div>
+						) : (
+							<div className='w-full mt-10'>
+								<button
+									className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'
+									onClick={handleOpen}>
+									Become a Seller
+								</button>
+							</div>
+						)}
 
 						{/* agent */}
 						<div className='w-full mt-7'>
-							<Link className='' href={''}>
+							<Link className='' href={'/agent'}>
 								<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
 									Become an Agent
 								</p>

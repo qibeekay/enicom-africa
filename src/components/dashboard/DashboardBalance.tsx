@@ -150,40 +150,6 @@ const DashboardBalance = () => {
 					)}
 				</div>
 
-				{/* Orders on delivery */}
-				<div className='flex gap-x-7 items-center py-5 flex-wrap font-medium md:text-lg text-dark/60'>
-					<p className='text-greens cursor-pointer'>Orders on delivery</p>
-					<p className='cursor-pointer hover:text-greens'>Pending sales</p>
-					<p className='cursor-pointer hover:text-greens'>New Items</p>
-				</div>
-
-				{/* search */}
-				<div className='flex flex-col md:flex-row md:items-center gap-4'>
-					{/* order */}
-					<div className='border border-dark/50 bg-white text-dark flex items-center w-full rounded-lg overflow-hidden'>
-						<div className='flex items-center gap-4 md:gap-7 px-3 border-r border-dark/50'>
-							<p>Order</p>
-							<HiChevronDown />
-						</div>
-
-						<div className='w-full px-3'>
-							<input
-								type='text'
-								placeholder='Order ID, Product or Store Name'
-								className='w-full outline-none bg-transparent placeholder:text-dark placeholder:text-[12px] md:placeholder:text-base'
-							/>
-						</div>
-						<div className='text-white bg-greens h-full py-2 w-[5.5rem] grid items-center justify-center'>
-							<LiaSearchSolid size={32} />
-						</div>
-					</div>
-
-					{/* last day */}
-					<div className='bg-greens/5 w-[30%] grid items-center justify-center py-3 rounded-lg'>
-						<p>Last 1 Day</p>
-					</div>
-				</div>
-
 				{/* items */}
 				<div>
 					<DashBoardItems />

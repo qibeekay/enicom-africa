@@ -102,6 +102,7 @@ const Tab1 = () => {
 		fname: '',
 		mail: '',
 		address: '',
+		state: '',
 		phone_number: '',
 		profile_image: '',
 		bussiness_type: '',
@@ -115,6 +116,7 @@ const Tab1 = () => {
 			fname: '',
 			mail: '',
 			address: '',
+			state: '',
 			phone_number: '',
 			profile_image: '',
 			bussiness_type: '',
@@ -232,6 +234,19 @@ const Tab1 = () => {
 											type='text'
 											name='address'
 											value={formData.address}
+											onChange={handleChange}
+											className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
+											placeholder='Type here'
+										/>
+									</div>
+
+									{/* State */}
+									<div>
+										<label htmlFor='amount'>State (e.g Lagos)</label>
+										<input
+											type='text'
+											name='state'
+											value={formData.state}
 											onChange={handleChange}
 											className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
 											placeholder='Type here'

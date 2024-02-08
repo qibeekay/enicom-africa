@@ -11,6 +11,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 const WalletsPurchase = () => {
 	const { setTab } = useTabContext();
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [otpData, setOtpData] = useState({
 		otp: '',
 	});
@@ -40,6 +41,7 @@ const WalletsPurchase = () => {
 	// Function to handle the payment process
 	const handlePayment = async () => {
 		try {
+			setIsLoading(true);
 			const cartItemsWithFormData = cartItems.map((item) => ({
 				product_token: item.product_token,
 				product_quantity: item.product_quantity,
@@ -82,6 +84,8 @@ const WalletsPurchase = () => {
 			// Handle errors, e.g., show an error message
 			toast.error('Error processing payment:');
 			console.error('Error processing payment:', error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -116,7 +120,7 @@ const WalletsPurchase = () => {
 								className='bg-greens px-14 py-2 rounded-lg text-white'
 								onClick={handlePayment}
 								type='button'>
-								Complete Payment
+								{isLoading ? 'Verifying...' : 'Complete Verification'}
 							</button>
 						</div>
 					</div>

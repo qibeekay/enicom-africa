@@ -5,6 +5,7 @@ import { IoCloudUpload } from 'react-icons/io5';
 
 const Kyc2 = () => {
 	const [otp, setOtp] = useState(['', '', '', '']);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [selectedFile, setSelectedFile] = useState<null | File>(null);
 	const [selectedFile1, setSelectedFile1] = useState<null | File>(null);
 
@@ -215,7 +216,7 @@ const Kyc2 = () => {
 							<button
 								type='submit'
 								className='bg-greens text-white py-2 px-10 rounded-lg w-[16rem]'>
-								Complete Verification
+								{isLoading ? 'Verifying...' : 'Complete Verification'}
 							</button>
 						</div>
 					</form>

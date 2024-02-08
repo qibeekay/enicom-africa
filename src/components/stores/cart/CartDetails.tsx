@@ -82,7 +82,7 @@ const CartDetails = () => {
 			await DeleteCartItems(`$${token}`, `${productToken}`, `${usertoken}`);
 
 			// Fetch updated cart items after decreasing
-			fetchCartItem();
+			await fetchCartItem();
 			toast.success('item removed');
 		} catch (error) {
 			toast.error('Error removing products');

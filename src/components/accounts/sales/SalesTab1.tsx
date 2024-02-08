@@ -47,8 +47,8 @@ const SalesTab1 = () => {
 		fetchProducts();
 	}, []);
 
-	console.log(products);
-	console.log(usertoken);
+	// console.log(products);
+	// console.log(usertoken);
 	return (
 		<div>
 			{/* product */}

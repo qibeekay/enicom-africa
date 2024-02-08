@@ -7,6 +7,7 @@ import {
 	OverviewTab2,
 	OverviewTab3,
 	OverviewTab4,
+	OverviewTab5,
 	SearchNav,
 } from '@/components';
 
@@ -161,6 +162,13 @@ const OverviewMain = () => {
 						className={` rounded-lg py-1.5 px-5 ${
 							activeTab === '4' ? 'bg-greens text-white' : 'bg-white text-dark'
 						}`}>
+						Recent Sellers
+					</button>
+					<button
+						onClick={() => handleTabClick('5')}
+						className={` rounded-lg py-1.5 px-5 ${
+							activeTab === '5' ? 'bg-greens text-white' : 'bg-white text-dark'
+						}`}>
 						Recent Agents
 					</button>
 				</div>
@@ -170,6 +178,7 @@ const OverviewMain = () => {
 					{activeTab === '2' && <OverviewTab2 />}
 					{activeTab === '3' && <OverviewTab3 />}
 					{activeTab === '4' && <OverviewTab4 />}
+					{activeTab === '5' && <OverviewTab5 />}
 				</div>
 			</div>
 		</div>

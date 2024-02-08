@@ -152,7 +152,7 @@ const Tab3 = () => {
 			? localStorage.getItem('usertoken') || ''
 			: '';
 
-	console.log(usertoken);
+	// console.log(usertoken);
 
 	// uplaod product
 	const [formData, setFormData] = useState({
@@ -293,6 +293,7 @@ const Tab3 = () => {
 		setTab('1');
 		handleOpen1();
 	};
+
 	const handleIndividual = () => {
 		// Save the word "individual" to local storage
 		localStorage.setItem('bussiness_type', 'Individual');
