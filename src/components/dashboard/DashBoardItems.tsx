@@ -1,5 +1,5 @@
 'use client';
-import { getAllInstallers, getAllOrders } from '@/api/products/products';
+import { getAllOrders } from '@/api/products/products';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { HiChevronDown } from 'react-icons/hi';
@@ -44,23 +44,7 @@ const DashBoardItems = () => {
 		fetchOrders();
 	}, [selectedFilter]); // Call fetchSellers whenever selectedFilter changes
 
-	console.log(orders);
-
-	// get all agents
-	const getagent = async () => {
-		try {
-			const getAgents = await getAllInstallers(`$${token}`);
-			// setStatus(getusers.is_verified_seller);
-			console.log(getAgents);
-		} catch (error) {
-			// console.error('Error fetching cart items:', error);
-			console.log('error');
-		}
-	};
-
-	useEffect(() => {
-		getagent();
-	}, []);
+	// console.log(orders);
 
 	return (
 		<div className='mt-4 text-dark'>
