@@ -102,6 +102,19 @@ import SellersModal from './admin/overview/SellersModal';
 import AgentsPage from './accounts/agents/AgentsPage';
 import OverviewTab5 from './admin/overview/OverviewTab5';
 import AgentsModal from './admin/overview/AgentsModal';
+import RequestInstallerPage from './installer/request-installer/RequestInstallerPage';
+import RequestInstallerMain from './installer/request-installer/RequestInstallerMain';
+import RequestSide from './installer/request-installer/RequestSide';
+import RequestSideMobile from './installer/request-installer/RequestSideMobile';
+import RequestInstallerDetails from './installer/request-installer/RequestInstallerDetails';
+import BidPage from './installer/installers-bid/BidPage';
+import BidMain from './installer/installers-bid/BidMain';
+import BidMainDetails from './installer/installers-bid/BidMainDetails';
+import BidModal from './installer/installers-bid/BidModal';
+import GetAllBidsPage from './installer/get-bids/GetAllBidsPage';
+import GetAllBidsMain from './installer/get-bids/GetAllBidsMain';
+import GetAllBidsDetails from './installer/get-bids/GetAllBidsDetails';
+import AllBidsModal from './installer/get-bids/AllBidsModal';
 
 export {
 	RegisterForm,
@@ -207,4 +220,17 @@ export {
 	AgentsPage,
 	OverviewTab5,
 	AgentsModal,
+	RequestInstallerPage,
+	RequestInstallerMain,
+	RequestSide,
+	RequestSideMobile,
+	RequestInstallerDetails,
+	BidMain,
+	BidPage,
+	BidMainDetails,
+	BidModal,
+	GetAllBidsDetails,
+	GetAllBidsPage,
+	GetAllBidsMain,
+	AllBidsModal,
 };

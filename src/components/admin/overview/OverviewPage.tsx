@@ -12,13 +12,13 @@ const OverviewPage = () => {
 		setSideMenuOpen(!isSideMenuOpen);
 	};
 	return (
-		<div className='relative bg-[#eeeeee] h-auto'>
+		<div className='relative h-auto'>
 			<div className='hidden lg:grid fixed w-[15rem] h-screen'>
 				<AdminNav />
 			</div>
 			{isSideMenuOpen && (
 				<div className='lg:hidden h-screen fixed w-[15rem] z-40'>
-					<AdminMobileNav close={toggleSideMenu} />
+					<AdminMobileNav close={() => setSideMenuOpen(false)} />
 				</div>
 			)}
 			<div className='relative '>

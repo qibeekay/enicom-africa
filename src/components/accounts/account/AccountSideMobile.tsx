@@ -18,7 +18,7 @@ const AccountSideMobile: React.FC<CloseProps> = ({ close }) => {
 		<div className='md:hidden fixed bg-white shadows py-5 w-[20rem] rounded-lg h-screen text-dark'>
 			<div className=''>
 				<div className='flex items-center justify-between pr-4'>
-					<h1 className='px-8'>Account</h1>
+					<h1 className='px-8 font-bold text-lg'>Account</h1>
 					<div className=' cursor-pointer' onClick={close}>
 						<FaTimes size={25} />
 					</div>

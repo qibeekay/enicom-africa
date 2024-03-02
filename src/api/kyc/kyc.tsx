@@ -335,3 +335,31 @@ export const changeAgentsStatus = async (
 		return [];
 	}
 };
+
+// admin restricts agent
+export const restrictInstaller = async (
+	bearerToken: string,
+	restrictToken: string | null,
+	userToken: string,
+	agentToken: string
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/admin/agent/manage-agent-restriction`,
+			{
+				restrict_bidding: restrictToken,
+				usertoken: userToken,
+				agent_profile_token: agentToken,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		console.error('Error fetching request:', error);
+		return [];
+	}
+};

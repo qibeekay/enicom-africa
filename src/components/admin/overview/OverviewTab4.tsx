@@ -126,8 +126,8 @@ const OverviewTab4 = () => {
 								<td>
 									<div className='flex gap-2 items-center'>
 										<Avatar
-											src={seller.profile_image}
-											alt={seller.profile_image}
+											src={seller?.profile_image}
+											alt={seller?.profile_image}
 											size='md'
 											className='border border-blue-gray-50 bg-blue-gray-50/50 object-contain p-1'
 										/>
@@ -136,7 +136,7 @@ const OverviewTab4 = () => {
 											variant='small'
 											color='blue-gray'
 											className='font-bold'>
-											{seller.fname}
+											{seller?.fname}
 										</Typography>
 									</div>
 								</td>
@@ -145,7 +145,7 @@ const OverviewTab4 = () => {
 										variant='small'
 										color='blue-gray'
 										className='font-bold'>
-										{seller.bussiness_type}
+										{seller?.bussiness_type}
 									</Typography>
 								</td>
 								<td className=''>
@@ -153,11 +153,11 @@ const OverviewTab4 = () => {
 										<Chip
 											size='sm'
 											variant='ghost'
-											value={seller.is_verified_seller_status}
+											value={seller?.is_verified_seller_status}
 											color={
-												seller.is_verified_seller_status === 'Approved'
+												seller?.is_verified_seller_status === 'Approved'
 													? 'green'
-													: seller.is_verified_seller_status === 'Pending'
+													: seller?.is_verified_seller_status === 'Pending'
 													? 'amber'
 													: 'red'
 											}
@@ -171,7 +171,7 @@ const OverviewTab4 = () => {
 											variant='small'
 											color='blue-gray'
 											className='font-bold'>
-											{seller.requested_date}
+											{seller?.requested_date}
 										</Typography>
 									</div>
 								</td>
@@ -180,7 +180,7 @@ const OverviewTab4 = () => {
 										<Button
 											variant='outlined'
 											size='sm'
-											onClick={() => handleOpen(seller.seller_profile_token)}>
+											onClick={() => handleOpen(seller?.seller_profile_token)}>
 											Details
 										</Button>
 									</div>

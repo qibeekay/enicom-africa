@@ -108,7 +108,7 @@ const CartDetails = () => {
 		getuser();
 	}, []);
 
-	console.log(total_price_th);
+	// console.log(total_price_th);
 
 	return (
 		<div className='font-poppins my-10 relative'>

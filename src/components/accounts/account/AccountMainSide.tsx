@@ -12,7 +12,7 @@ const AccountMainSide = () => {
 	return (
 		<div className='hidden md:block bg-white py-5 w-[20rem] rounded-lg h-screen text-dark'>
 			<div className=''>
-				<h1 className='px-8'>Account</h1>
+				<h1 className='px-8 font-bold text-lg'>Account</h1>
 
 				{/* links */}
 				<div className='mt-7'>

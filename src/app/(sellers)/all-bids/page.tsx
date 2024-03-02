@@ -1,14 +1,14 @@
 'use client';
-import { OrdersPage } from '@/components';
+import { GetAllBidsPage, RequestInstallerPage } from '@/components';
 import { CartProvider } from '@/components/CartContext';
 import { ThemeProvider } from '@material-tailwind/react';
 
-export default function Orders() {
+export default function AllBids() {
 	return (
 		<div>
 			<ThemeProvider>
 				<CartProvider>
-					<OrdersPage />
+					<GetAllBidsPage />
 				</CartProvider>
 			</ThemeProvider>
 		</div>

@@ -18,7 +18,7 @@ export const getAllCategories = async (bearerToken: string) => {
 		);
 		return response.data.data;
 	} catch (error) {
-		toast.error('Error fetching categories');
+		// toast.error('Error fetching categories');
 		console.error('Error fetching categories:', error);
 		return [];
 	}
@@ -46,7 +46,7 @@ export const createCategory = async (
 			toast.success('Category added successfully');
 			return true;
 		} else {
-			toast.error('Failed to create category');
+			// toast.error('Failed to create category');
 			console.error('Failed to create category');
 			return false;
 		}
@@ -133,7 +133,7 @@ export const getAllProductAdmin = async (bearerToken: string) => {
 		);
 		return response.data.data;
 	} catch (error) {
-		toast.error('Error fetching products');
+		// toast.error('Error fetching products');
 		console.error('Error fetching products:', error);
 		return [];
 	}
@@ -158,7 +158,7 @@ export const getAllApprovedProduct = async (
 		);
 		return response.data.data;
 	} catch (error) {
-		toast.error('Error fetching products');
+		// toast.error('Error fetching products');
 		console.error('Error fetching products:', error);
 		return [];
 	}
@@ -183,7 +183,7 @@ export const getProductByToken = async (
 		);
 		return response.data.data;
 	} catch (error) {
-		toast.error('Error fetching product');
+		// toast.error('Error fetching product');
 		console.error('Error fetching product:', error);
 		return [];
 	}
@@ -208,7 +208,7 @@ export const getUser = async (
 		);
 		return response.data.data;
 	} catch (error) {
-		toast.error('Error fetching product');
+		// toast.error('Error fetching product');
 		console.error('Error fetching product:', error);
 		return [];
 	}
@@ -233,7 +233,7 @@ export const getAdminProductByToken = async (
 		);
 		return response.data.data;
 	} catch (error) {
-		toast.error('Error fetching product');
+		// toast.error('Error fetching product');
 		console.error('Error fetching product:', error);
 		return [];
 	}
@@ -266,7 +266,7 @@ export const disapproveProduct = async (
 		);
 		return response.data.data;
 	} catch (error) {
-		toast.error('Error fetching cart items');
+		// toast.error('Error fetching cart items');
 		console.error('Error fetching cart items:', error);
 		return [];
 	}
@@ -297,7 +297,7 @@ export const approveProduct = async (
 		);
 		return response.data.data;
 	} catch (error) {
-		toast.error('Error fetching cart items');
+		// toast.error('Error fetching cart items');
 		console.error('Error fetching cart items:', error);
 		return [];
 	}

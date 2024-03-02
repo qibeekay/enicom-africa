@@ -1,5 +1,5 @@
 'use client';
-import { getAllAgents } from '@/api/kyc/kyc';
+import { getAllAgents, restrictInstaller } from '@/api/kyc/kyc';
 import {
 	Avatar,
 	Button,
@@ -13,6 +13,7 @@ import {
 } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react';
 import { AgentsModal } from '@/components';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface Agent {
 	// Define the structure of your product data
@@ -31,12 +32,18 @@ const OverviewTab5 = () => {
 	const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 	const [agentsToken, setAgentsToken] = useState<string>('');
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = (agentsToken: string) => {
 		setOpen((cur) => !cur);
 		setAgentsToken(agentsToken);
 	};
+
+	const usertoken =
+		typeof window !== 'undefined'
+			? localStorage.getItem('usertoken') || ''
+			: '';
 
 	const fetchAgents = async () => {
 		try {
@@ -54,6 +61,27 @@ const OverviewTab5 = () => {
 	}, [selectedFilter]); // Call fetchSellers whenever selectedFilter changes
 
 	console.log(agents);
+
+	// restrict agents
+	const restrictAgent = async (agentToken: string) => {
+		try {
+			setIsLoading(true);
+			const restrictedAgent = await restrictInstaller(
+				`$${token}`,
+				'2',
+				usertoken,
+				agentToken
+			);
+
+			setIsLoading(false);
+			toast.success('Agent is now restricted');
+		} catch (error) {
+			// toast.error('Error fetching products');
+			console.error('Error restricting agent:', error);
+			setIsLoading(false);
+		}
+	};
+
 	return (
 		<div>
 			<div className='w-full overflow-scroll'>
@@ -121,8 +149,8 @@ const OverviewTab5 = () => {
 					<tbody className=''>
 						{agents?.map((agent, index) => (
 							<tr key={index} className=''>
-								<td>
-									<div className='flex gap-2 items-center'>
+								<td className=''>
+									<div className='flex gap-2 items-center mr-4'>
 										<Avatar
 											src={agent.profile_image}
 											alt={agent.profile_image}
@@ -147,7 +175,7 @@ const OverviewTab5 = () => {
 									</Typography>
 								</td>
 								<td className=''>
-									<div className='w-max'>
+									<div className='w-max ml-4'>
 										<Chip
 											size='sm'
 											variant='ghost'
@@ -164,7 +192,7 @@ const OverviewTab5 = () => {
 								</td>
 
 								<td>
-									<div>
+									<div className='ml-4'>
 										<Typography
 											variant='small'
 											color='blue-gray'
@@ -173,13 +201,22 @@ const OverviewTab5 = () => {
 										</Typography>
 									</div>
 								</td>
+
 								<td>
-									<div>
+									<div className='flex items-center justify-center gap-4 ml-4'>
 										<Button
 											variant='outlined'
 											size='sm'
 											onClick={() => handleOpen(agent.agent_token)}>
 											Details
+										</Button>
+
+										<Button
+											variant='outlined'
+											color='amber'
+											size='sm'
+											onClick={() => restrictAgent(agent.agent_token)}>
+											{isLoading ? 'Restricting...' : 'Restrict'}
 										</Button>
 									</div>
 								</td>
@@ -199,6 +236,7 @@ const OverviewTab5 = () => {
 					/>
 				</Dialog>
 			</div>
+			<ToastContainer />
 		</div>
 	);
 };

@@ -257,19 +257,19 @@ const PlanMain = () => {
 			<SearchNav />
 
 			<div>
-				<h1>Create Loans</h1>
+				<h1 className='p-4 font-bold text-lg'>Create Loans</h1>
 
 				<div>
 					<form action='' className=' w-[70%] mx-auto'>
 						<div className='flex flex-col gap-3'>
 							{/* select plans */}
-							<div className='w-full relative z-50'>
+							<div className='w-full relative z-30'>
 								<Typography className='mb-1 text-dark'>Loan Plans</Typography>
 
 								<Combobox
 									value={selectedPlans}
 									onChange={(selected) => setSelectedPlans(selected)}>
-									<div className='relative z-50 mt-1'>
+									<div className='relative z-30 mt-1'>
 										<div className='relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm'>
 											<Combobox.Button className='w-full'>
 												<Combobox.Input

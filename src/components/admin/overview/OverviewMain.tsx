@@ -17,12 +17,12 @@ const OverviewMain = () => {
 		setActiveTab(tab);
 	};
 	return (
-		<div className='bg-[#eeeeee]'>
+		<div className=''>
 			<div className=''>
 				{/* nav */}
 				<SearchNav />
 
-				<div className=' bg-[#eeeeee] w-full pr-10 pl-4'>
+				<div className=' w-full pr-10 pl-4'>
 					{/* overview */}
 					<div>
 						<div className='flex items-center justify-between py-2'>
@@ -136,49 +136,59 @@ const OverviewMain = () => {
 
 				{/* tabs */}
 				<div className='flex gap-4 flex-wrap items-center mt-8 mx-4'>
-					<button
+					{/* recent orders */}
+					{/* <button
 						onClick={() => handleTabClick('1')}
 						className={` rounded-lg py-1.5 px-5 ${
 							activeTab === '1' ? 'bg-greens text-white' : 'bg-white text-dark'
 						}`}>
 						Recent orders
-					</button>
-					<button
+					</button> */}
+
+					{/* recent transactions */}
+					{/* <button
 						onClick={() => handleTabClick('2')}
 						className={` rounded-lg py-1.5 px-5 ${
 							activeTab === '2' ? 'bg-greens text-white' : 'bg-white text-dark'
 						}`}>
 						Recent transaction
-					</button>
+					</button> */}
+
+					{/* view uploaded product requests */}
 					<button
-						onClick={() => handleTabClick('3')}
-						className={` rounded-lg py-1.5 px-5 ${
-							activeTab === '3' ? 'bg-greens text-white' : 'bg-white text-dark'
+						onClick={() => handleTabClick('1')}
+						className={` rounded-lg py-1.5 shadows px-5 ${
+							activeTab === '1' ? 'bg-greens text-white' : 'bg-white text-dark'
 						}`}>
 						Uploaded Products
 					</button>
+
+					{/* view sellers requests */}
 					<button
-						onClick={() => handleTabClick('4')}
-						className={` rounded-lg py-1.5 px-5 ${
-							activeTab === '4' ? 'bg-greens text-white' : 'bg-white text-dark'
+						onClick={() => handleTabClick('2')}
+						className={` rounded-lg py-1.5 shadows px-5 ${
+							activeTab === '2' ? 'bg-greens text-white' : 'bg-white text-dark'
 						}`}>
 						Recent Sellers
 					</button>
+
+					{/* view agents requests */}
 					<button
-						onClick={() => handleTabClick('5')}
-						className={` rounded-lg py-1.5 px-5 ${
-							activeTab === '5' ? 'bg-greens text-white' : 'bg-white text-dark'
+						onClick={() => handleTabClick('3')}
+						className={` rounded-lg py-1.5 shadows px-5 ${
+							activeTab === '3' ? 'bg-greens text-white' : 'bg-white text-dark'
 						}`}>
 						Recent Agents
 					</button>
 				</div>
 
+				{/* tabs to be shows */}
 				<div className=' w-full'>
-					{activeTab === '1' && <OverviewTab1 />}
-					{activeTab === '2' && <OverviewTab2 />}
-					{activeTab === '3' && <OverviewTab3 />}
-					{activeTab === '4' && <OverviewTab4 />}
-					{activeTab === '5' && <OverviewTab5 />}
+					{/* {activeTab === '1' && <OverviewTab1 />} */}
+					{/* {activeTab === '2' && <OverviewTab2 />} */}
+					{activeTab === '1' && <OverviewTab3 />}
+					{activeTab === '2' && <OverviewTab4 />}
+					{activeTab === '3' && <OverviewTab5 />}
 				</div>
 			</div>
 		</div>

@@ -24,6 +24,7 @@ import { getUser } from '@/api/products/products';
 const DasboardNav = () => {
 	const [nav, setNav] = useState(false);
 	const [status, setStatus] = useState('');
+	const [agentStatus, setAgentStatus] = useState('');
 	const [mobileSearchVisible, setMobileSearchVisible] = useState(false);
 	const { cartItems } = useCart();
 
@@ -108,6 +109,7 @@ const DasboardNav = () => {
 		try {
 			const getusers = await getUser(`$${token}`, `${usertoken}`);
 			setStatus(getusers.is_verified_seller);
+			setAgentStatus(getusers.is_verified_agent);
 		} catch (error) {
 			// console.error('Error fetching cart items:', error);
 			console.log('error');
@@ -118,7 +120,7 @@ const DasboardNav = () => {
 		getuser();
 	}, []);
 
-	console.log(status);
+	// console.log(status);
 
 	return (
 		<div className='relative w-full font-poppins text-dark overflow-hidden'>
@@ -243,18 +245,10 @@ const DasboardNav = () => {
 							<p className=''>Loan Facility</p>
 						</Link>
 
-						{/* seller */}
-						{/* <div className='w-full mt-10'>
-							<button
-								className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'
-								onClick={handleOpen}>
-								Become a Seller
-							</button>
-						</div> */}
-
+						{/* become a seller */}
 						{status ? (
 							<div className='w-full mt-10'>
-								<Link className='' href={''}>
+								<Link className='' href={'/sales'}>
 									<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
 										Sellers Dashboard
 									</p>
@@ -270,14 +264,24 @@ const DasboardNav = () => {
 							</div>
 						)}
 
-						{/* agent */}
-						<div className='w-full mt-7'>
-							<Link className='' href={'/agent'}>
-								<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
-									Become an Agent
-								</p>
-							</Link>
-						</div>
+						{/* become an Agent */}
+						{agentStatus ? (
+							<div className='w-full mt-10'>
+								<Link className='' href={'agent-dashboard'}>
+									<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
+										Agents Dashboard
+									</p>
+								</Link>
+							</div>
+						) : (
+							<div className='w-full mt-7'>
+								<Link className='' href={'/agent'}>
+									<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
+										Become an Agent
+									</p>
+								</Link>
+							</div>
+						)}
 
 						{/* logout */}
 						<div className='w-full mt-7'>

@@ -56,7 +56,6 @@ const SalesTab1 = () => {
 				{/* order id */}
 				<div className='w-full flex justify-between'>
 					<p className='text-lg font-semibold'>Approved Products</p>
-					{/* <p>Order ID: sfdfdfhhfhfhfhfh</p> */}
 				</div>
 				{loading && <p>Loading...</p>}
 				<div className='mt-2 flex flex-col gap-7'>

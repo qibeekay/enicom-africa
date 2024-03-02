@@ -49,6 +49,8 @@ const AgentsModal: React.FC<OverviewModalProps> = ({
 	const [disapproveReason, setDisapproveReason] = useState<string>('');
 	const [selectedFilter, setSelectedFilter] = useState<string>('');
 	const [showDisapproveForm, setShowDisapproveForm] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isDisLoading, setIsDisLoading] = useState<boolean>(false);
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
 	const usertoken =
@@ -76,38 +78,54 @@ const AgentsModal: React.FC<OverviewModalProps> = ({
 	const approveVerify = 1;
 	const disapproveVerify = 2;
 
+	// show disapprove form, so admin can enter the reason for disapproving
 	const disapprove = () => {
 		setShowDisapproveForm(true);
 	};
 
 	// approve product
 	const approve = async () => {
-		const approveProducts = await changeAgentsStatus(
-			`$${token}`,
-			`${agentsToken}`,
-			approveVerify,
-			disapproveReason,
-			`${usertoken}`
-		);
-		toast.success('Agent is now approved!');
-		fetchAgents();
+		setIsLoading(true);
+		try {
+			const approveProducts = await changeAgentsStatus(
+				`$${token}`,
+				`${agentsToken}`,
+				approveVerify,
+				disapproveReason,
+				`${usertoken}`
+			);
+			setIsLoading(false);
+			toast.success('Agent is now approved!');
+			fetchAgents();
+		} catch (error) {
+			setIsLoading(false); // Ensure isLoading is set to false in case of an error
+			toast.error('Error approving agent');
+			// console.error('Error approving agent:', error);
+		}
 	};
 
 	const handleDisapproveSubmit = async (event: FormEvent) => {
 		event.preventDefault();
+		setIsDisLoading(true);
 		// Perform disapproval process with disapproveReason
-		const disapproveProducts = await changeSellersStatus(
-			`$${token}`,
-			`${agentsToken}`,
-			disapproveVerify,
-			disapproveReason,
-			`${usertoken}`
-		);
+		try {
+			const disapproveProducts = await changeSellersStatus(
+				`$${token}`,
+				`${agentsToken}`,
+				disapproveVerify,
+				disapproveReason,
+				`${usertoken}`
+			);
 
-		// Close the form and fetch updated products
-		setShowDisapproveForm(false);
-		toast.success('Seller has been Declined!');
-		fetchAgents();
+			// Close the form and fetch updated products
+			setShowDisapproveForm(false);
+			setIsDisLoading(false);
+			toast.success('Seller has been Declined!');
+			fetchAgents();
+		} catch {
+			setIsDisLoading(false);
+			toast.success('Error Disapproving Seller');
+		}
 	};
 
 	console.log(agentsByToken);
@@ -220,7 +238,7 @@ const AgentsModal: React.FC<OverviewModalProps> = ({
 							</Button>
 							<div className='w-full flex items-center gap-4 justify-end'>
 								<Button color='green' onClick={approve}>
-									Approve
+									{isLoading ? 'Loading...' : 'Approve'}
 								</Button>
 								<Button variant='outlined' color='red' onClick={disapprove}>
 									Decline
@@ -242,7 +260,7 @@ const AgentsModal: React.FC<OverviewModalProps> = ({
 											<button
 												type='submit'
 												className='bg-greens rounded-lg text-white py-2 px-4 cursor-pointer'>
-												Submit
+												{isDisLoading ? 'Loading...' : 'Submit'}
 											</button>
 										</form>
 									</div>

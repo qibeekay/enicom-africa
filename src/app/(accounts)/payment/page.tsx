@@ -1,9 +1,12 @@
 import { PaymentPage } from '@/components';
+import { CartProvider } from '@/components/CartContext';
 
 export default function Payment() {
 	return (
 		<div>
-			<PaymentPage />
+			<CartProvider>
+				<PaymentPage />
+			</CartProvider>
 		</div>
 	);
 }

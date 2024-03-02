@@ -16,11 +16,17 @@ const AdminMobileNav: React.FC<CloseProps> = ({ close }) => {
 		return path === pathname;
 	};
 	return (
-		<div className=' text-dark bg-[#e2eae2] h-screen'>
+		<div className=' text-dark bg-[#e2eae2] h-screen w-[20rem] fixed z-[9999]'>
 			<div>
 				{/*image  */}
-				<div className='grid items-center cursor-pointer px-10 py-8'>
-					<Image src={'/logo.png'} width={150} height={150} alt='logo' />
+				<div className='flex items-center justify-between px-4 py-5'>
+					<div className='grid items-center cursor-pointer'>
+						<Image src={'/logo.png'} width={150} height={150} alt='logo' />
+					</div>
+
+					<div className='cursor-pointer' onClick={close}>
+						<FaTimes />
+					</div>
 				</div>
 
 				{/* links */}
@@ -29,7 +35,9 @@ const AdminMobileNav: React.FC<CloseProps> = ({ close }) => {
 						<li>
 							<Link
 								href={'/admin/overview'}
-								className='flex items-center gap-2 bg-greens text-white px-10 py-2 rounded-r-xl'>
+								className={`px-10 py-2 text-dark flex items-center gap-2 rounded-r-xl ${
+									isActive('/admin/overview') ? 'text-white bg-greens' : ''
+								}`}>
 								<RxDashboard size={25} />
 								Overview
 							</Link>
@@ -38,7 +46,9 @@ const AdminMobileNav: React.FC<CloseProps> = ({ close }) => {
 						<li>
 							<Link
 								href={'/admin/plan'}
-								className='flex items-center gap-2 text-dark px-10 py-2 rounded-r-xl'>
+								className={`px-10 py-2 text-dark flex items-center gap-2 rounded-r-xl ${
+									isActive('/admin/plan') ? 'text-white bg-greens' : ''
+								}`}>
 								<RxDashboard size={25} />
 								Plans
 							</Link>

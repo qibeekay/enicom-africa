@@ -96,9 +96,11 @@ const DashBoardItems = () => {
 					</div>
 
 					{/* last day */}
-					<div className='bg-greens/5 w-[30%] grid items-center justify-center py-3 rounded-lg'>
-						<p>Last 1 Day</p>
-					</div>
+					<Link
+						href={'/request-installer'}
+						className='bg-greens/5 hover:bg-greens hover:text-white ease-in-out duration-300 w-[30%] grid items-center justify-center py-3 rounded-lg'>
+						Request Installer
+					</Link>
 				</div>
 				{/* grid container*/}
 				<div className='grid gap-y-5 mt-4'>

@@ -47,8 +47,8 @@ const MarketPlace = () => {
 						ease your financial burdens
 					</p>
 
-					<div className='bg-white ms:px-[4rem] shadow my-10'>
-						<Categories />
+					<div className=' ms:px-[4rem] shadow my-10'>
+						{/* <Categories /> */}
 					</div>
 
 					<div className='px-4 lg:px-[4rem]'>

@@ -171,7 +171,7 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 
 														{/* text */}
 														<div className='px-2'>
-															<p className='my-2 text-dark'>
+															<p className='my-2 text-dark line-clamp-3'>
 																{product.product_name}
 															</p>
 															<h1 className='mb-4 font-semibold text-lg text-dark'>

@@ -44,6 +44,8 @@ const SellersModal: React.FC<OverviewModalProps> = ({
 	const [disapproveReason, setDisapproveReason] = useState<string>('');
 	const [selectedFilter, setSelectedFilter] = useState<string>('');
 	const [showDisapproveForm, setShowDisapproveForm] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isDisLoading, setIsDisLoading] = useState<boolean>(false);
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
 	const usertoken =
@@ -77,32 +79,46 @@ const SellersModal: React.FC<OverviewModalProps> = ({
 
 	// approve product
 	const approve = async () => {
-		const approveProducts = await changeSellersStatus(
-			`$${token}`,
-			`${sellersToken}`,
-			approveVerify,
-			disapproveReason,
-			`${usertoken}`
-		);
-		toast.success('Seller is now approved!');
-		fetchSellers();
+		setIsLoading(true);
+		try {
+			const approveProducts = await changeSellersStatus(
+				`$${token}`,
+				`${sellersToken}`,
+				approveVerify,
+				disapproveReason,
+				`${usertoken}`
+			);
+			toast.success('Seller is now approved!');
+			setIsLoading(false);
+			fetchSellers();
+		} catch (error: any) {
+			setIsLoading(false);
+			toast.error('Error disapproving seller');
+		}
 	};
 
 	const handleDisapproveSubmit = async (event: FormEvent) => {
 		event.preventDefault();
 		// Perform disapproval process with disapproveReason
-		const disapproveProducts = await changeSellersStatus(
-			`$${token}`,
-			`${sellersToken}`,
-			disapproveVerify,
-			disapproveReason,
-			`${usertoken}`
-		);
+		setIsDisLoading(true);
+		try {
+			const disapproveProducts = await changeSellersStatus(
+				`$${token}`,
+				`${sellersToken}`,
+				disapproveVerify,
+				disapproveReason,
+				`${usertoken}`
+			);
 
-		// Close the form and fetch updated products
-		setShowDisapproveForm(false);
-		toast.success('Seller has been Declined!');
-		fetchSellers();
+			// Close the form and fetch updated products
+			setShowDisapproveForm(false);
+			setIsDisLoading(false);
+			toast.success('Seller has been Declined!');
+			fetchSellers();
+		} catch (error) {
+			setIsDisLoading(false);
+			toast.error('Error declining seller');
+		}
 	};
 
 	console.log(sellersByToken);
@@ -188,28 +204,28 @@ const SellersModal: React.FC<OverviewModalProps> = ({
 								<p className=' text-dark'>{sellersByToken?.requested_date}</p>
 							</div>
 						</div>
-						<div>
-							<p className='font-semibold'>Utility Bill</p>
-							<div className=' w-[25rem] h-[20rem] '>
-								<img
-									className='w-full'
-									src={`
-										https:\/\/enicom.reni.com.ng\/uploads\/${sellersByToken?.data?.seller_profile_credentials?.utility_bill}
-									`}
-									alt={
-										sellersByToken?.data?.seller_profile_credentials
-											?.verification_number
-									}
-								/>
+						{sellersByToken?.bussiness_type === 'Individual' ? null : (
+							<div>
+								<p className='font-semibold'>Utility Bill</p>
+								<div className='w-[25rem] h-[15rem]'>
+									<img
+										className='w-full'
+										src={`https:\/\/enicom.reni.com.ng\/uploads\/${sellersByToken?.data?.seller_profile_credentials?.utility_bill}`}
+										alt={
+											sellersByToken?.data?.seller_profile_credentials
+												?.verification_number
+										}
+									/>
+								</div>
 							</div>
-						</div>
-						<div className='flex items-center'>
+						)}
+						<div className='flex items-center mt-7'>
 							<Button size='sm' onClick={() => handleOpen('')}>
 								Close
 							</Button>
 							<div className='w-full flex items-center gap-4 justify-end'>
 								<Button color='green' onClick={approve}>
-									Approve
+									{isLoading ? 'Loading...' : 'Approve'}
 								</Button>
 								<Button variant='outlined' color='red' onClick={disapprove}>
 									Decline
@@ -231,7 +247,7 @@ const SellersModal: React.FC<OverviewModalProps> = ({
 											<button
 												type='submit'
 												className='bg-greens rounded-lg text-white py-2 px-4 cursor-pointer'>
-												Submit
+												{isDisLoading ? 'Loading...' : 'Submit'}
 											</button>
 										</form>
 									</div>

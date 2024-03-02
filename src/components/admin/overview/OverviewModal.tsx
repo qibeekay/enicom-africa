@@ -37,6 +37,8 @@ const OverviewModal: React.FC<OverviewModalProps> = ({
 	const [productsByToken, setProductsByToken] = useState<Product | null>(null);
 	const [disapproveReason, setDisapproveReason] = useState<string>('');
 	const [showDisapproveForm, setShowDisapproveForm] = useState<boolean>(false);
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [isDisLoading, setIsDisLoading] = useState<boolean>(false);
 
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
@@ -64,15 +66,22 @@ const OverviewModal: React.FC<OverviewModalProps> = ({
 
 	// approve product
 	const approve = async () => {
-		const approveProducts = await approveProduct(
-			`$${token}`,
-			`${productToken}`,
-			`${productsByToken?.product_name}`,
-			`${productsByToken?.product_condition}`,
-			`${usertoken}`
-		);
-		toast.success('Product Approved');
-		fetchProduct();
+		setIsLoading(true);
+		try {
+			const approveProducts = await approveProduct(
+				`$${token}`,
+				`${productToken}`,
+				`${productsByToken?.product_name}`,
+				`${productsByToken?.product_condition}`,
+				`${usertoken}`
+			);
+			setIsLoading(false);
+			toast.success('Product Approved');
+			fetchProduct();
+		} catch (error: any) {
+			setIsLoading(false);
+			toast.success('Error disapproving product');
+		}
 	};
 
 	const disapprove = () => {
@@ -82,19 +91,26 @@ const OverviewModal: React.FC<OverviewModalProps> = ({
 	const handleDisapproveSubmit = async (event: FormEvent) => {
 		event.preventDefault();
 		// Perform disapproval process with disapproveReason
-		const disapproveProducts = await disapproveProduct(
-			`$${token}`,
-			`${productToken}`,
-			`${productsByToken?.product_name}`,
-			disapproveReason,
-			`${productsByToken?.product_condition}`,
-			`${usertoken}`
-		);
+		setIsDisLoading(true);
+		try {
+			const disapproveProducts = await disapproveProduct(
+				`$${token}`,
+				`${productToken}`,
+				`${productsByToken?.product_name}`,
+				disapproveReason,
+				`${productsByToken?.product_condition}`,
+				`${usertoken}`
+			);
 
-		// Close the form and fetch updated products
-		setShowDisapproveForm(false);
-		fetchProduct();
-		toast.success('Product Disapproved');
+			// Close the form and fetch updated products
+			setShowDisapproveForm(false);
+			setIsDisLoading(false);
+			fetchProduct();
+			toast.success('Product Disapproved');
+		} catch (error: any) {
+			setIsDisLoading(false);
+			toast.success('Product can not be disapproved');
+		}
 	};
 	return (
 		<div className='w-full font-poppins text-dark'>
@@ -143,7 +159,7 @@ const OverviewModal: React.FC<OverviewModalProps> = ({
 								<button
 									className='py-2 bg-greens w-full text-white rounded-md'
 									onClick={approve}>
-									Approve Product
+									{isLoading ? 'Loading...' : 'Approve Product'}
 								</button>
 							</div>
 
@@ -173,7 +189,7 @@ const OverviewModal: React.FC<OverviewModalProps> = ({
 										<button
 											type='submit'
 											className='bg-greens rounded-lg text-white py-2 px-4 cursor-pointer'>
-											Submit
+											{isDisLoading ? 'Loading...' : 'Submit'}
 										</button>
 									</form>
 								</div>
