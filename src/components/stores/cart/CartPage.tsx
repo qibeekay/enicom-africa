@@ -1,3 +1,4 @@
+'use client';
 import { CartDetails, DasboardNav } from '@/components';
 import React, { useEffect, useState } from 'react';
 import {
