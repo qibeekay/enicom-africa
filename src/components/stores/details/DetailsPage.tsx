@@ -1,3 +1,4 @@
+'use client';
 import { DasboardNav, DetailsItems } from '@/components';
 import React, { useEffect, useState } from 'react';
 import { MdLiveHelp } from 'react-icons/md';
