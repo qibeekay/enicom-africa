@@ -1,11 +1,7 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
-import {
-	AccountMain,
-	AccountNav,
-	DasboardNav,
-	DashboardMain,
-} from '@/components';
+import { AccountMain, AccountNav } from '@/components';
 import {
 	Button,
 	Dialog,
@@ -21,6 +17,7 @@ import { CgMenuGridR } from 'react-icons/cg';
 import { getUser } from '@/api/products/products';
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
+
 const AccountPage = () => {
 	const [status, setStatus] = useState('');
 	const [agentStatus, setAgentStatus] = useState('');

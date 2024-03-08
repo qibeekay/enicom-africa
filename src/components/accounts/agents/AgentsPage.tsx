@@ -1,12 +1,12 @@
 'use client';
 
 import { DasboardNav } from '@/components';
-import { verifyAgent, verifyIndividual } from '@/api/kyc/kyc';
+import { verifyAgent } from '@/api/kyc/kyc';
 import { Option, Select } from '@material-tailwind/react';
 import React, { FormEvent, useCallback, useEffect, useState } from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
-import { HiChevronDown, HiOutlineCreditCard } from 'react-icons/hi2';
-import { ToastContainer, toast } from 'react-toastify';
+import { HiOutlineCreditCard } from 'react-icons/hi2';
+import { toast } from 'react-toastify';
 import {
 	Button,
 	Dialog,
@@ -341,7 +341,7 @@ const AgentsPage = () => {
 	}, []);
 
 	return (
-		<div>
+		<React.Fragment>
 			<DasboardNav openRight={() => setOpenRight(true)} />
 
 			<div className='max-w-6xl mx-auto p-4'>
@@ -806,7 +806,7 @@ const AgentsPage = () => {
 					</Button>
 				</DialogFooter>
 			</Dialog>
-		</div>
+		</React.Fragment>
 	);
 };
 
