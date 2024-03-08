@@ -138,7 +138,7 @@ const Kyc1 = () => {
 		<div className='w-full my-20 font-poppins'>
 			<div className='px-4 md:px-[3rem] lg:px-[5rem]'>
 				<div className='w-[90%] sm:w-[75%] md:w-auto mx-auto'>
-					<div className='flex flex-col gap-y-10 md:flex-row justify-between md:gap-x-[10%] lg:gap-x-[20%] relative'>
+					<div className='flex flex-col max-w-[30rem] mx-auto gap-y-10 md:flex-row justify-between md:gap-x-[10%] lg:gap-x-[20%] relative'>
 						{/* input 1 */}
 						<form action='' className='w-full' onSubmit={handleKycUpdate}>
 							<div className='w-full'>
@@ -266,14 +266,14 @@ const Kyc1 = () => {
 						</form>
 
 						{/* input 2 */}
-						<form action='' className='w-full'>
-							<div className='w-full'>
-								<h1 className='font-semibold'>ID Verification</h1>
+						{/* <form action='' className='w-full'> */}
+						{/* <div className='w-full'> */}
+						{/* <h1 className='font-semibold'>ID Verification</h1> */}
 
-								<div className='flex flex-col items-end xs:flex-row gap-4 w-full'>
-									<div className='w-full'>
-										{/* Upload ID */}
-										<div className='relative w-full'>
+						{/* <div className='flex flex-col items-end xs:flex-row gap-4 w-full'>
+									<div className='w-full'> */}
+						{/* Upload ID */}
+						{/* <div className='relative w-full'>
 											<label
 												title='Click to upload'
 												htmlFor='idUpload'
@@ -299,18 +299,18 @@ const Kyc1 = () => {
 												<p>{selectedFile.name}</p>
 											</div>
 										)}
-									</div>
+									</div> */}
 
-									{/* Take Selfie */}
-									<div className='flex flex-col w-full'>
+						{/* Take Selfie */}
+						{/* <div className='flex flex-col w-full'>
 										<div className='mt-2 bg-greens/10 text-dark outline-none py-2 px-5 rounded-lg w-full text-center'>
 											Take Selfie
 										</div>
 									</div>
-								</div>
+								</div> */}
 
-								{/* Upload Image */}
-								<div className='w-full mt-7'>
+						{/* Upload Image */}
+						{/* <div className='w-full mt-7'>
 									<h1 className='font-semibold'>
 										Evidence of Utility Bills{' '}
 										<span className='text-sm font-normal'>
@@ -343,10 +343,10 @@ const Kyc1 = () => {
 											<p>{selectedFile1.name}</p>
 										</div>
 									)}
-								</div>
+								</div> */}
 
-								{/* address */}
-								<div className='mt-10'>
+						{/* address */}
+						{/* <div className='mt-10'>
 									<h1 className='font-semibold'>Address</h1>
 
 									<textarea
@@ -354,19 +354,19 @@ const Kyc1 = () => {
 										className='mt-2 bg-greens/10 text-dark outline-none py-2 h-[6rem] px-5 rounded-lg w-full'
 										id=''
 										placeholder=''></textarea>
-								</div>
+								</div> */}
 
-								{/* button */}
-								<div className='grid justify-end mt-20'>
-									{/* submit */}
-									<button
+						{/* button */}
+						{/* <div className='grid justify-end mt-20'> */}
+						{/* submit */}
+						{/* <button
 										type='submit'
 										className='bg-greens text-white py-2 px-10 rounded-lg w-[10rem]'>
 										Submit
 									</button>
 								</div>
 							</div>
-						</form>
+						</form> */}
 					</div>
 				</div>
 			</div>

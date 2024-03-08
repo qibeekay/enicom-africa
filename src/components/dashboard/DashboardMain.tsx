@@ -13,7 +13,7 @@ const DashboardMain = () => {
 	}, []);
 
 	return (
-		<div className='w-full font-poppins '>
+		<div className='w-full font-poppins relative z-0'>
 			<div className='max-w-6xl mx-auto px-4 py-10'>
 				{/* header text */}
 				<div className='text-xl font-medium text-dark'>

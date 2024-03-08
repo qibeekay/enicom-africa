@@ -56,8 +56,8 @@ const KycPage = () => {
 						}`}>
 						1
 					</button>
-					<hr className='w-[2rem]' />
-					<button
+					{/* <hr className='w-[2rem]' /> */}
+					{/* <button
 						onClick={() => handleTabClick('2')}
 						className={`w-[2rem] h-[2rem] rounded-full border-dark/50 border ${
 							activeTab === '2'
@@ -65,9 +65,9 @@ const KycPage = () => {
 								: 'border-dark/50 border text-dark/50'
 						}`}>
 						2
-					</button>
-					<hr className='w-[2rem]' />
-					<button
+					</button> */}
+					{/* <hr className='w-[2rem]' /> */}
+					{/* <button
 						onClick={() => handleTabClick('3')}
 						className={`w-[2rem] h-[2rem] rounded-full border-dark/50 border ${
 							activeTab === '3'
@@ -75,13 +75,13 @@ const KycPage = () => {
 								: 'border-dark/50 border text-dark/50'
 						}`}>
 						3
-					</button>
+					</button> */}
 				</div>
-				<div className='w-full bg-greens/10 h-1.5'>
+				{/* <div className='w-full bg-greens/10 h-1.5'>
 					<div
 						className={`h-1.5 ${progressBarColor} transition-width duration-700`}
 						style={{ width: `${progress}%` }}></div>
-				</div>
+				</div> */}
 				<div>
 					{activeTab === '1' && <Kyc1 />}
 					{activeTab === '2' && <Kyc2 />}
