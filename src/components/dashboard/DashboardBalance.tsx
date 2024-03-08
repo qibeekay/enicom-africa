@@ -9,9 +9,41 @@ import { AiOutlineEyeInvisible, AiOutlineSwap } from 'react-icons/ai';
 import { HiOutlineChevronRight } from 'react-icons/hi';
 import { DashBoardItems } from '..';
 import { useRouter } from 'next/navigation';
+import { getUser } from '@/api/products/products';
+
+interface Users {
+	fname: string;
+	mail: string;
+	lname: string;
+	role: string;
+	renitoken: string;
+	is_verified: boolean;
+	usertoken: number;
+	is_verified_seller: boolean;
+	is_verified_seller_status: string;
+	is_verified_agent: boolean;
+	is_verified_agent_status: string;
+	kyc_status: boolean;
+	accountDetails: {
+		accountNumber: string;
+		accountName: string;
+	};
+	accountBalance_th: string;
+	accountBalance: string;
+	accountNumber: string;
+}
 
 const DashboardBalance = () => {
+	const [user, setUser] = useState<Users | null>(null);
 	const [kyc, setKyc] = useState<string>('');
+	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
+	const [loading, setLoading] = useState<boolean>(true);
+
+	// Fetch mail from localStorage when the component mounts
+	const usertoken =
+		typeof window !== 'undefined'
+			? localStorage.getItem('usertoken') || ''
+			: '';
 
 	// Check if user is logged in based on your authentication mechanism
 	useEffect(() => {
@@ -25,6 +57,24 @@ const DashboardBalance = () => {
 	const kycClick = () => {
 		router.push('/kyc');
 	};
+
+	// getting specific user data
+	const getuser = async () => {
+		try {
+			const getusers = await getUser(`$${token}`, `${usertoken}`);
+			console.log(getusers);
+			setUser(getusers);
+			setLoading(false);
+		} catch (error) {
+			// console.error('Error fetching cart items:', error);
+			console.log('error');
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		getuser();
+	}, []);
 
 	return (
 		<div className='w-full font-poppins'>
@@ -71,7 +121,12 @@ const DashboardBalance = () => {
 
 									{/* amount */}
 									<div>
-										<h1 className='font-semibold text-2xl'>N1,500,000</h1>
+										<h1 className='font-semibold text-2xl'>
+											N
+											{user?.accountBalance_th
+												? user.accountBalance_th
+												: '0.00'}
+										</h1>
 									</div>
 
 									{/* bottom */}
@@ -115,19 +170,19 @@ const DashboardBalance = () => {
 
 									{/* amount */}
 									<div>
-										<h1 className='font-semibold text-2xl py-1'>N1,000,000</h1>
+										<h1 className='font-semibold text-2xl py-1'>N0.00</h1>
 									</div>
 
 									{/* bottom */}
 									<div className='flex justify-between items-center'>
 										{/* date */}
 										<div className='flex items-center text-sm text-dark'>
-											<p>28/12/2022</p>
+											{/* <p>28/12/2022</p> */}
 										</div>
 
 										{/* due date */}
 										<div className='flex items-center text-sm '>
-											<p className='text-[#FD0F0F]'>28 days remaining</p>
+											<p className='text-[#FD0F0F]'>days remaining</p>
 										</div>
 									</div>
 								</div>
