@@ -83,7 +83,7 @@ const Tab3 = () => {
 
 				try {
 					const uploadResponse = await fetch(
-						'https://enicom.reni.com.ng/v0.1/api/upload_image',
+						'https://enicom.iccflifeskills.com.ng/v0.1/api/upload_image',
 						{
 							method: 'POST',
 							headers: {
@@ -596,7 +596,7 @@ const Tab3 = () => {
 									{uploadedImageUrl && (
 										<div className=' w-[5rem] aspect-square overflow-hidden bg-orange-500 absolute right-5 top-5'>
 											<img
-												src={`https://enicom.reni.com.ng/uploads/${uploadedImageUrl}`}
+												src={`https://enicom.iccflifeskills.com.ng/uploads/${uploadedImageUrl}`}
 												alt={uploadedImageUrl}
 												className='w-full h-full object-cover'
 											/>

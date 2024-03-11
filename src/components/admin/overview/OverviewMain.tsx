@@ -180,15 +180,34 @@ const OverviewMain = () => {
 						}`}>
 						Recent Agents
 					</button>
+
+					{/* view loan packages */}
+					<button
+						onClick={() => handleTabClick('4')}
+						className={` rounded-lg py-1.5 shadows px-5 ${
+							activeTab === '4' ? 'bg-greens text-white' : 'bg-white text-dark'
+						}`}>
+						Loan Packages
+					</button>
+
+					{/* view loan packages */}
+					<button
+						onClick={() => handleTabClick('5')}
+						className={` rounded-lg py-1.5 shadows px-5 ${
+							activeTab === '5' ? 'bg-greens text-white' : 'bg-white text-dark'
+						}`}>
+						Loan Requests
+					</button>
 				</div>
 
 				{/* tabs to be shows */}
 				<div className=' w-full'>
 					{/* {activeTab === '1' && <OverviewTab1 />} */}
-					{/* {activeTab === '2' && <OverviewTab2 />} */}
 					{activeTab === '1' && <OverviewTab3 />}
 					{activeTab === '2' && <OverviewTab4 />}
 					{activeTab === '3' && <OverviewTab5 />}
+					{activeTab === '4' && <OverviewTab2 />}
+					{activeTab === '5' && <OverviewTab1 />}
 				</div>
 			</div>
 		</div>

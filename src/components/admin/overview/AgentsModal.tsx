@@ -223,7 +223,7 @@ const AgentsModal: React.FC<OverviewModalProps> = ({
 								<img
 									className='w-full'
 									src={`
-										https:\/\/enicom.reni.com.ng\/uploads\/${agentsByToken?.data?.agent_profile_credentials?.utility_bill}
+										https:\/\/enicom.iccflifeskills.com.ng\/uploads\/${agentsByToken?.data?.agent_profile_credentials?.utility_bill}
 									`}
 									alt={
 										agentsByToken?.data?.agent_profile_credentials

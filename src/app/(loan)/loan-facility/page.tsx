@@ -1,3 +1,4 @@
+'use client';
 import { LoanFacilityPage } from '@/components';
 import { CartProvider } from '@/components/CartContext';
 

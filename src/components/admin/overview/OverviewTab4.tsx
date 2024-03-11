@@ -32,6 +32,7 @@ const OverviewTab4 = () => {
 	const [sellers, setSellers] = useState<Seller[]>([]);
 	const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 	const [sellersToken, setSellersToken] = useState<string>('');
+	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
 	const [open, setOpen] = React.useState(false);
@@ -41,6 +42,7 @@ const OverviewTab4 = () => {
 	};
 
 	const fetchSellers = async () => {
+		setIsLoading(true);
 		try {
 			const fetchedSellers = await getAllSellers(`$${token}`, selectedFilter);
 			console.log('Fetched Sellers:', fetchedSellers);
@@ -48,6 +50,8 @@ const OverviewTab4 = () => {
 		} catch (error) {
 			// toast.error('Error fetching products');
 			console.error('Error fetching sellers:', error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -86,109 +90,118 @@ const OverviewTab4 = () => {
 						</MenuList>
 					</Menu>
 				</div>
-				<table className='w-full min-w-max table-auto text-left'>
-					<thead className=''>
-						<tr>
-							<th className='py-7 px-4'>
-								<p
-									// color='blue-gray'
-									className='font-normal leading-none opacity-70'>
-									Name
-								</p>
-							</th>
-							<th className=''>
-								<p
-									// color='blue-gray'
-									className='font-normal leading-none opacity-70'>
-									Business Type
-								</p>
-							</th>
-							<th className=''>
-								<p
-									// color='blue-gray'
-									className='font-normal leading-none opacity-70'>
-									Status
-								</p>
-							</th>
-							<th className=''>
-								<p
-									// color='blue-gray'
-									className='font-normal leading-none opacity-70 '>
-									Date
-								</p>
-							</th>
-							<th className=' p-4'></th>
-						</tr>
-					</thead>
-					<tbody className=''>
-						{sellers?.map((seller, index) => (
-							<tr key={index} className=''>
-								<td>
-									<div className='flex gap-2 items-center'>
-										<Avatar
-											src={seller?.profile_image}
-											alt={seller?.profile_image}
-											size='md'
-											className='border border-blue-gray-50 bg-blue-gray-50/50 object-contain p-1'
-										/>
 
-										<Typography
-											variant='small'
-											color='blue-gray'
-											className='font-bold'>
-											{seller?.fname}
-										</Typography>
-									</div>
-								</td>
-								<td className='text-left'>
-									<Typography
-										variant='small'
-										color='blue-gray'
-										className='font-bold'>
-										{seller?.bussiness_type}
-									</Typography>
-								</td>
-								<td className=''>
-									<div className='w-max'>
-										<Chip
-											size='sm'
-											variant='ghost'
-											value={seller?.is_verified_seller_status}
-											color={
-												seller?.is_verified_seller_status === 'Approved'
-													? 'green'
-													: seller?.is_verified_seller_status === 'Pending'
-													? 'amber'
-													: 'red'
-											}
-										/>
-									</div>
-								</td>
-
-								<td>
-									<div>
-										<Typography
-											variant='small'
-											color='blue-gray'
-											className='font-bold'>
-											{seller?.requested_date}
-										</Typography>
-									</div>
-								</td>
-								<td>
-									<div>
-										<Button
-											variant='outlined'
-											size='sm'
-											onClick={() => handleOpen(seller?.seller_profile_token)}>
-											Details
-										</Button>
-									</div>
-								</td>
+				{isLoading ? (
+					<div className='px-4 mt-7'>Loading...</div>
+				) : sellers.length === 0 ? (
+					<div className='px-4 mt-7'>No record available.</div>
+				) : (
+					<table className='w-full min-w-max table-auto text-left'>
+						<thead className=''>
+							<tr>
+								<th className='py-7 px-4'>
+									<p
+										// color='blue-gray'
+										className='font-normal leading-none opacity-70'>
+										Name
+									</p>
+								</th>
+								<th className=''>
+									<p
+										// color='blue-gray'
+										className='font-normal leading-none opacity-70'>
+										Business Type
+									</p>
+								</th>
+								<th className=''>
+									<p
+										// color='blue-gray'
+										className='font-normal leading-none opacity-70'>
+										Status
+									</p>
+								</th>
+								<th className=''>
+									<p
+										// color='blue-gray'
+										className='font-normal leading-none opacity-70 '>
+										Date
+									</p>
+								</th>
+								<th className=' p-4'></th>
 							</tr>
-						))}
-					</tbody>
-				</table>
+						</thead>
+						<tbody className=''>
+							{sellers?.map((seller, index) => (
+								<tr key={index} className=''>
+									<td>
+										<div className='flex gap-2 items-center'>
+											<Avatar
+												src={seller?.profile_image}
+												alt={seller?.profile_image}
+												size='md'
+												className='border border-blue-gray-50 bg-blue-gray-50/50 object-contain p-1'
+											/>
+
+											<Typography
+												variant='small'
+												color='blue-gray'
+												className='font-bold'>
+												{seller?.fname}
+											</Typography>
+										</div>
+									</td>
+									<td className='text-left'>
+										<Typography
+											variant='small'
+											color='blue-gray'
+											className='font-bold'>
+											{seller?.bussiness_type}
+										</Typography>
+									</td>
+									<td className=''>
+										<div className='w-max'>
+											<Chip
+												size='sm'
+												variant='ghost'
+												value={seller?.is_verified_seller_status}
+												color={
+													seller?.is_verified_seller_status === 'Approved'
+														? 'green'
+														: seller?.is_verified_seller_status === 'Pending'
+														? 'amber'
+														: 'red'
+												}
+											/>
+										</div>
+									</td>
+
+									<td>
+										<div>
+											<Typography
+												variant='small'
+												color='blue-gray'
+												className='font-bold'>
+												{seller?.requested_date}
+											</Typography>
+										</div>
+									</td>
+									<td>
+										<div>
+											<Button
+												variant='outlined'
+												size='sm'
+												onClick={() =>
+													handleOpen(seller?.seller_profile_token)
+												}>
+												Details
+											</Button>
+										</div>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				)}
 				<Dialog
 					size='lg'
 					open={open}

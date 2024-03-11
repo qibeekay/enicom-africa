@@ -51,7 +51,7 @@ const BussinessVerify = () => {
 
 				try {
 					const uploadResponse = await fetch(
-						'https://enicom.reni.com.ng/v0.1/api/upload_image',
+						'https://enicom.iccflifeskills.com.ng/v0.1/api/upload_image',
 						{
 							method: 'POST',
 							headers: {
@@ -99,7 +99,7 @@ const BussinessVerify = () => {
 
 				try {
 					const uploadResponse = await fetch(
-						'https://enicom.reni.com.ng/v0.1/api/upload_image',
+						'https://enicom.iccflifeskills.com.ng/v0.1/api/upload_image',
 						{
 							method: 'POST',
 							headers: {
@@ -391,7 +391,7 @@ const BussinessVerify = () => {
 							{imageUrl && (
 								<div className=' w-[5rem] aspect-square overflow-hidden bg-orange-500 absolute right-5 top-5'>
 									<img
-										src={`https://enicom.reni.com.ng/uploads/${imageUrl}`}
+										src={`https://enicom.iccflifeskills.com.ng/uploads/${imageUrl}`}
 										alt={imageUrl}
 										className='w-full h-full object-cover'
 									/>
@@ -522,7 +522,7 @@ const BussinessVerify = () => {
 							{imageUrl1 && (
 								<div className=' w-[5rem] aspect-square overflow-hidden bg-orange-500 absolute right-5 top-5'>
 									<img
-										src={`https://enicom.reni.com.ng/uploads/${imageUrl1}`}
+										src={`https://enicom.iccflifeskills.com.ng/uploads/${imageUrl1}`}
 										alt={imageUrl1}
 										className='w-full h-full object-cover'
 									/>

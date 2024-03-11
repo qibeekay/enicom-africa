@@ -96,7 +96,6 @@ export const createLoanPackages = async (
 	loanData: {
 		plan_token: string;
 		provider_token: string;
-		amount: number;
 		percentage: string;
 		package_desc: string;
 	},
@@ -115,9 +114,20 @@ export const createLoanPackages = async (
 		);
 
 		return response.data;
-	} catch (error) {
-		console.error('Error creating provider:', error);
-		return false;
+	} catch (error: any) {
+		if (error.response) {
+			// The request was made and the server responded with a status code
+			// that falls out of the range of 2xx
+			throw new Error(
+				'Failed to create loan package444: ' + error.response.data
+			);
+		} else if (error.request) {
+			// The request was made but no response was received
+			throw new Error('No response received from the server');
+		} else {
+			// Something happened in setting up the request that triggered an Error
+			throw new Error('Error setting up the request: ' + error.message);
+		}
 	}
 };
 
@@ -132,6 +142,177 @@ export const getLoanPackages = async (bearerToken: string) => {
 		return response.data.data;
 	} catch (error) {
 		console.error('Error fetching packages:', error);
+		return [];
+	}
+};
+
+// delete loan package
+export const deleteLoanPackage = async (
+	packageToken: string,
+	bearerToken: string
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/admin/loan.providers/delete-loan-packages`,
+			{
+				package_token: packageToken,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+
+		return response.data;
+	} catch (error) {
+		console.error('Error creating provider:', error);
+		return false;
+	}
+};
+
+// verify loan kyc
+export const verifyLoanKyc = async (
+	reniToken: string,
+	bvn: string,
+	bearerToken: string
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/loan/verify-loan-kyc`,
+			{
+				renitoken: reniToken,
+				bvn: bvn,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+
+		return response.data;
+	} catch (error) {
+		console.error('Error creating provider:', error);
+		return false;
+	}
+};
+
+// apply for loan
+export const applyLoan = async (
+	bearerToken: string,
+	userToken: string | null,
+	planToken: string | null,
+	providerToken: string | null,
+	amountBorrow: string,
+	idNumber: string,
+	providerRate: string,
+	passport: string,
+	purpose: string,
+	occupation: string,
+	guarantor: Array<any>,
+	collecteral: Array<any>
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/loan/request-loan
+			`,
+			{
+				usertoken: userToken,
+				plan_token: planToken,
+				provider_token: providerToken,
+				amount_intended_to_borrow: amountBorrow,
+				identity_number: idNumber,
+				provider_rate: providerRate,
+				passport: passport,
+				purpose_of_loan: purpose,
+				occupation: occupation,
+				guarantor: guarantor,
+				collecteral: collecteral,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data;
+	} catch (error) {
+		console.error('Error initializing payment:', error);
+		return [];
+	}
+};
+
+// get all loan record admin
+export const adminLoanRecord = async (
+	bearerToken: string,
+	isVerified: string | null
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/loan/geta-all-loan-records`,
+			{
+				is_verified: isVerified,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		console.error('Error fetching request:', error);
+		return [];
+	}
+};
+
+// get all loan record users
+export const userLoanRecord = async (
+	bearerToken: string,
+	userToken: string,
+	isVerified: string | null
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/loan/get-user-loan-records`,
+			{
+				is_verified: isVerified,
+				usertoken: userToken,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		console.error('Error fetching request:', error);
+		return [];
+	}
+};
+
+// get single loan
+export const getSpecificLoan = async (
+	bearerToken: string,
+	loanToken: string | null
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/loan/get-specific-loan`,
+			{
+				loan_token: loanToken,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		console.error('Error fetching request:', error);
 		return [];
 	}
 };

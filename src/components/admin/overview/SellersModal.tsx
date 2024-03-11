@@ -210,7 +210,7 @@ const SellersModal: React.FC<OverviewModalProps> = ({
 								<div className='w-[25rem] h-[15rem]'>
 									<img
 										className='w-full'
-										src={`https:\/\/enicom.reni.com.ng\/uploads\/${sellersByToken?.data?.seller_profile_credentials?.utility_bill}`}
+										src={`https://enicom.iccflifeskills.com.ng/uploads/${sellersByToken?.data?.seller_profile_credentials?.utility_bill}`}
 										alt={
 											sellersByToken?.data?.seller_profile_credentials
 												?.verification_number

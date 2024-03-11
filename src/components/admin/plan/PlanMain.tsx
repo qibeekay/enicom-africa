@@ -7,7 +7,7 @@ import React, {
 	useState,
 } from 'react';
 import { SearchNav } from '@/components';
-import { Typography } from '@material-tailwind/react';
+import { Button, Typography } from '@material-tailwind/react';
 import { Combobox, Transition } from '@headlessui/react';
 import { FaCheck, FaChevronDown } from 'react-icons/fa';
 import {
@@ -90,7 +90,7 @@ const PlanMain = () => {
 
 				try {
 					const uploadResponse = await fetch(
-						'https://enicom.reni.com.ng/v0.1/api/upload_image',
+						'https://enicom.iccflifeskills.com.ng/v0.1/api/upload_image',
 						{
 							method: 'POST',
 							headers: {
@@ -190,7 +190,7 @@ const PlanMain = () => {
 	const [formData, setFormData] = useState({
 		plan_token: '',
 		provider_token: '',
-		amount: 0,
+		// amount: 0,
 		percentage: '',
 		package_desc: '',
 	});
@@ -199,7 +199,7 @@ const PlanMain = () => {
 		setFormData({
 			plan_token: '',
 			provider_token: '',
-			amount: 0,
+			// amount: 0,
 			percentage: '',
 			package_desc: '',
 		});
@@ -246,7 +246,7 @@ const PlanMain = () => {
 			toast.success('Loan Package Created');
 			resetForm();
 		} catch (error: any) {
-			toast.error('Failed to upload');
+			toast.error('Failed to create loan package');
 		} finally {
 			setIsLoading(false);
 		}
@@ -256,7 +256,7 @@ const PlanMain = () => {
 		<div>
 			<SearchNav />
 
-			<div>
+			<div className='pb-10'>
 				<h1 className='p-4 font-bold text-lg'>Create Loans</h1>
 
 				<div>
@@ -388,10 +388,13 @@ const PlanMain = () => {
 										</div>
 									</div>
 								) : (
-									<div className='cursor-pointer mt-2'>
-										<p className='text-greens' onClick={handleCreatePlan}>
+									<div className='cursor-pointer mt-4'>
+										<Button
+											size='sm'
+											className='text-white bg-greens'
+											onClick={handleCreatePlan}>
 											Create Plan
-										</p>
+										</Button>
 									</div>
 								)}
 							</div>
@@ -405,7 +408,7 @@ const PlanMain = () => {
 								<Combobox
 									value={selectedProviders}
 									onChange={(selected) => setSelectedProviders(selected)}>
-									<div className='relative z-30 mt-1'>
+									<div className='relative z-0 mt-1'>
 										<div className='relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm'>
 											<Combobox.Button className='w-full'>
 												<Combobox.Input
@@ -451,7 +454,7 @@ const PlanMain = () => {
 															{({ selected, active }) => (
 																<>
 																	<img
-																		src={`https://enicom.reni.com.ng/uploads/${provider.provider_image}`}
+																		src={`https://enicom.iccflifeskills.com.ng/uploads/${provider.provider_image}`}
 																		alt={provider.provider_name}
 																		className='w-8 h-8 object-cover rounded-full mr-2'
 																	/>
@@ -547,7 +550,7 @@ const PlanMain = () => {
 											{uploadedImageUrl && (
 												<div className=' w-[5rem] aspect-square overflow-hidden bg-orange-500 absolute right-5 top-5'>
 													<img
-														src={`https://enicom.reni.com.ng/uploads/${uploadedImageUrl}`}
+														src={`https://enicom.iccflifeskills.com.ng/uploads/${uploadedImageUrl}`}
 														alt={uploadedImageUrl}
 														className='w-full h-full object-cover'
 													/>
@@ -574,16 +577,19 @@ const PlanMain = () => {
 										</div>
 									</div>
 								) : (
-									<div className='cursor-pointer mt-2'>
-										<p className='text-greens' onClick={handleCreateProvider}>
+									<div className='cursor-pointer mt-4'>
+										<Button
+											size='sm'
+											className='text-white bg-greens'
+											onClick={handleCreateProvider}>
 											Create Provider
-										</p>
+										</Button>
 									</div>
 								)}
 							</div>
 
 							{/* amount */}
-							<div>
+							{/* <div>
 								<label htmlFor='amount'>Amount</label>
 								<input
 									type='number'
@@ -592,7 +598,7 @@ const PlanMain = () => {
 									onChange={handleChange}
 									className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
 								/>
-							</div>
+							</div> */}
 
 							{/* percentage */}
 							<div>

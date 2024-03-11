@@ -1,8 +1,13 @@
 'use client';
-import { adminLoanRecord } from '@/api/loan/loan';
+import {
+	adminLoanRecord,
+	getSpecificLoan,
+	userLoanRecord,
+} from '@/api/loan/loan';
 import {
 	Button,
 	Chip,
+	Dialog,
 	Menu,
 	MenuHandler,
 	MenuItem,
@@ -10,32 +15,46 @@ import {
 	Typography,
 } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
+import LoansModal from './LoansModal';
 
 interface Loan {
-	amount_plus_intrest: string;
+	amount_plus_interest: string;
 	amount_to_borrow: string;
 	fullname: string;
 	isCompletedStatus: string;
 	loanStatus: string;
-	loan_token: number;
+	loan_token: string;
 	package_plan: string;
 	requested_date: string;
 }
 
-const OverviewTab1 = () => {
+const LoansMainDetails = () => {
 	const [loanData, setLoanData] = useState<Loan[]>([]);
 	const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
+	const [loanToken, setLoanToken] = useState<string>('');
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [open, setOpen] = React.useState(false);
+	const handleOpen = (loanToken: string) => {
+		setOpen((cur) => !cur);
+		setLoanToken(loanToken);
+	};
 
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
+
+	// Fetch mail from localStorage when the component mounts
+	const usertoken =
+		typeof window !== 'undefined'
+			? localStorage.getItem('usertoken') || ''
+			: '';
 
 	// fetch plans
 	const fetchLoanDatas = async () => {
 		setIsLoading(true);
 		try {
 			const fetchedLoanDatas =
-				(await adminLoanRecord(`$${token}`, selectedFilter)) || [];
-			setLoanData(fetchedLoanDatas.loan_applicant || []);
+				(await userLoanRecord(`$${token}`, usertoken, selectedFilter)) || [];
+			setLoanData(fetchedLoanDatas.loan_applicants || []);
 		} catch (error) {
 			console.error('Error fetching loan data:', error);
 		} finally {
@@ -49,9 +68,9 @@ const OverviewTab1 = () => {
 
 	console.log(loanData);
 	return (
-		<div>
-			<div className='w-full overflow-scroll'>
-				<div className='px-4 mt-10'>
+		<div className='w-full '>
+			<div className='w-full overflow-x-scroll'>
+				<div className='px-4 mt-4'>
 					<Menu>
 						<MenuHandler>
 							<Button>
@@ -83,7 +102,7 @@ const OverviewTab1 = () => {
 				) : loanData.length === 0 ? (
 					<div className='px-4 mt-7'>No record available.</div>
 				) : (
-					<table className='w-full min-w-max table-auto text-left'>
+					<table className='w-full min-w-max table-auto text-left overflow-x-scroll'>
 						<thead className=''>
 							<tr>
 								<th className='py-7 px-4'>
@@ -104,6 +123,9 @@ const OverviewTab1 = () => {
 								</th>
 								<th>
 									<p className='font-normal leading-none opacity-70'>Date</p>
+								</th>
+								<th>
+									<p className='font-normal leading-none opacity-70'></p>
 								</th>
 							</tr>
 						</thead>
@@ -127,7 +149,7 @@ const OverviewTab1 = () => {
 									<td className='text-left'>
 										<div className='mt-2'>
 											<Typography variant='small' color='blue-gray'>
-												{loan?.amount_plus_intrest}
+												{loan?.amount_plus_interest}
 											</Typography>
 										</div>
 									</td>
@@ -148,10 +170,21 @@ const OverviewTab1 = () => {
 										</div>
 									</td>
 									<td>
-										<div className='mt-2'>
+										<div className='mt-2 ml-4'>
 											<Typography variant='small' color='blue-gray'>
 												{loan?.requested_date}
 											</Typography>
+										</div>
+									</td>
+									<td>
+										<div className='mt-2 ml-4'>
+											<Button
+												variant='outlined'
+												size='sm'
+												color='blue-gray'
+												onClick={() => handleOpen(loan?.loan_token)}>
+												Details
+											</Button>
 										</div>
 									</td>
 								</tr>
@@ -160,8 +193,19 @@ const OverviewTab1 = () => {
 					</table>
 				)}
 			</div>
+			<Dialog
+				size='lg'
+				open={open}
+				handler={() => handleOpen('')}
+				className='bg-transparent shadow-none text-dark'>
+				<LoansModal
+					handleOpen={handleOpen}
+					loanToken={loanToken}
+					fetchLoanDatas={fetchLoanDatas}
+				/>
+			</Dialog>
 		</div>
 	);
 };
 
-export default OverviewTab1;
+export default LoansMainDetails;

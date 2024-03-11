@@ -115,6 +115,10 @@ import GetAllBidsPage from './installer/get-bids/GetAllBidsPage';
 import GetAllBidsMain from './installer/get-bids/GetAllBidsMain';
 import GetAllBidsDetails from './installer/get-bids/GetAllBidsDetails';
 import AllBidsModal from './installer/get-bids/AllBidsModal';
+import LoansPage from './accounts/loans/LoansPage';
+import LoansMain from './accounts/loans/LoansMain';
+import LoansMainDetails from './accounts/loans/LoansMainDetails';
+import LoansModal from './accounts/loans/LoansModal';
 
 export {
 	RegisterForm,
@@ -233,4 +237,8 @@ export {
 	GetAllBidsPage,
 	GetAllBidsMain,
 	AllBidsModal,
+	LoansPage,
+	LoansMain,
+	LoansMainDetails,
+	LoansModal,
 };

@@ -85,6 +85,14 @@ const AccountSideMobile: React.FC<CloseProps> = ({ close }) => {
 								}`}>
 								<Link href={'/payment'}>Payments</Link>
 							</li>
+							<li
+								className={`py-2 px-7  text-dark ${
+									isActive('/loans')
+										? 'text-greens border-l-greens border-l-[3px] bg-[#E4FEE3]'
+										: ''
+								}`}>
+								<Link href={'/loans'}>Loans</Link>
+							</li>
 							{/* <li
 							className={`py-2 px-7  text-dark ${
 								isActive('/wallet')
@@ -129,6 +137,14 @@ const AccountSideMobile: React.FC<CloseProps> = ({ close }) => {
 										: ''
 								}`}>
 								<Link href={'/payment'}>Payments</Link>
+							</li>
+							<li
+								className={`py-2 px-7  text-dark ${
+									isActive('/loans')
+										? 'text-greens border-l-greens border-l-[3px] bg-[#E4FEE3]'
+										: ''
+								}`}>
+								<Link href={'/loans'}>Loans</Link>
 							</li>
 							{/* <li
 							className={`py-2 px-7  text-dark ${
