@@ -507,7 +507,9 @@ const LoanForm1 = () => {
 
 									{/* name */}
 									<div className='mt-2'>
-										<p className='text-dark font-semibold'>Guarantor's name</p>
+										<p className='text-dark font-semibold'>
+											Guarantor&apos;s name
+										</p>
 										<input
 											type='text'
 											placeholder=' name...'
@@ -520,7 +522,9 @@ const LoanForm1 = () => {
 
 									{/* email */}
 									<div className='mt-2'>
-										<p className='text-dark font-semibold'>Guarantor's Email</p>
+										<p className='text-dark font-semibold'>
+											Guarantor&apos;s Email
+										</p>
 										<input
 											type='email'
 											placeholder='Email...'
@@ -534,7 +538,7 @@ const LoanForm1 = () => {
 									{/* phone */}
 									<div className='mt-2'>
 										<p className='text-dark font-semibold'>
-											Guarantor's contact
+											Guarantor&apos;s contact
 										</p>
 										<input
 											type='text'
@@ -592,7 +596,9 @@ const LoanForm1 = () => {
 
 									{/* name */}
 									<div className='mt-2'>
-										<p className='text-dark font-semibold'>Guarantor's name</p>
+										<p className='text-dark font-semibold'>
+											Guarantor&apos;s name
+										</p>
 										<input
 											type='text'
 											placeholder=' Name...'
@@ -605,7 +611,9 @@ const LoanForm1 = () => {
 
 									{/* email */}
 									<div className='mt-2'>
-										<p className='text-dark font-semibold'>Guarantor's Email</p>
+										<p className='text-dark font-semibold'>
+											Guarantor&apos;s Email
+										</p>
 										<input
 											type='email'
 											placeholder='Email...'
@@ -619,7 +627,7 @@ const LoanForm1 = () => {
 									{/* phone */}
 									<div className='mt-2'>
 										<p className='text-dark font-semibold'>
-											Guarantor's contact
+											Guarantor&apos;s contact
 										</p>
 										<input
 											type='text'
