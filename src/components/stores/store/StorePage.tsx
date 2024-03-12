@@ -146,7 +146,7 @@ const StorePage = () => {
 				open={openRight}
 				onClose={closeDrawerRight}
 				className='p-4 bg-bgGreen'>
-				<div className='mb-6 flex items-center justify-end'>
+				<div className='mb-2 flex items-center justify-end'>
 					<IconButton
 						variant='text'
 						color='blue-gray'
@@ -193,18 +193,10 @@ const StorePage = () => {
 						<p className=''>Loan Facility</p>
 					</Link>
 
-					{/* loan calculator */}
-					<Link
-						href={'/loan-calculator'}
-						className=' flex items-center justify-end gap-4 hover:bg-greens/20 py-3 px-5 rounded-lg hover:text-greens'>
-						<HiOutlineCreditCard size='27' />
-						<p className=''>Loan Calculator</p>
-					</Link>
-
 					<div>
 						{/* become a seller */}
 						{status ? (
-							<div className='w-full mt-10'>
+							<div className='w-full mt-5'>
 								<Link className='' href={'/sales'}>
 									<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
 										Sellers Dashboard
@@ -212,7 +204,7 @@ const StorePage = () => {
 								</Link>
 							</div>
 						) : (
-							<div className='w-full mt-10'>
+							<div className='w-full mt-5'>
 								<button
 									className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'
 									onClick={handleOpen}>
@@ -223,7 +215,7 @@ const StorePage = () => {
 
 						{/* become an Agent */}
 						{agentStatus ? (
-							<div className='w-full mt-10'>
+							<div className='w-full mt-5'>
 								<Link className='' href={'agent-dashboard'}>
 									<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
 										Agents Dashboard
@@ -231,7 +223,7 @@ const StorePage = () => {
 								</Link>
 							</div>
 						) : (
-							<div className='w-full mt-10'>
+							<div className='w-full mt-5'>
 								<Link className='' href={'/agent'}>
 									<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
 										Become an Agent
@@ -239,6 +231,15 @@ const StorePage = () => {
 								</Link>
 							</div>
 						)}
+
+						{/* loan calculator */}
+						<div className='w-full mt-5'>
+							<Link className='' href={'/loan-calculator'}>
+								<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
+									Loan Calculator
+								</p>
+							</Link>
+						</div>
 					</div>
 
 					{/* logout */}

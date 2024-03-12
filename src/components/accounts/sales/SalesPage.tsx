@@ -138,18 +138,10 @@ const SalesPage = () => {
 						<p className=''>Loan Facility</p>
 					</Link>
 
-					{/* loan calculator */}
-					<Link
-						href={'/loan-calculator'}
-						className=' flex items-center justify-end gap-4 hover:bg-greens/20 py-3 px-5 rounded-lg hover:text-greens'>
-						<HiOutlineCreditCard size='27' />
-						<p className=''>Loan Calculator</p>
-					</Link>
-
 					<div>
 						{/* become a seller */}
 						{status ? (
-							<div className='w-full mt-10'>
+							<div className='w-full mt-5'>
 								<Link className='' href={'/sales'}>
 									<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
 										Sellers Dashboard
@@ -157,7 +149,7 @@ const SalesPage = () => {
 								</Link>
 							</div>
 						) : (
-							<div className='w-full mt-10'>
+							<div className='w-full mt-5'>
 								<button
 									className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'
 									onClick={handleOpen}>
@@ -168,7 +160,7 @@ const SalesPage = () => {
 
 						{/* become an Agent */}
 						{agentStatus ? (
-							<div className='w-full mt-10'>
+							<div className='w-full mt-5'>
 								<Link className='' href={'agent-dashboard'}>
 									<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
 										Agents Dashboard
@@ -176,7 +168,7 @@ const SalesPage = () => {
 								</Link>
 							</div>
 						) : (
-							<div className='w-full mt-10'>
+							<div className='w-full mt-5'>
 								<Link className='' href={'/agent'}>
 									<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
 										Become an Agent
@@ -184,6 +176,25 @@ const SalesPage = () => {
 								</Link>
 							</div>
 						)}
+
+						{/* loan calculator */}
+						<div className='w-full mt-5'>
+							<Link className='' href={'/loan-calculator'}>
+								<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
+									Loan Calculator
+								</p>
+							</Link>
+						</div>
+						{/* logout */}
+						<div className='w-full mt-7'>
+							<button
+								className='grid justify-end w-full'
+								onClick={handleLogout}>
+								<p className='border-greens border w-full rounded-lg text-dark py-2 px-5 text-center text-sm'>
+									Logout
+								</p>
+							</button>
+						</div>
 					</div>
 
 					{/* logout */}
