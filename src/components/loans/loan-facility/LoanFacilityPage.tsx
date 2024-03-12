@@ -69,9 +69,6 @@ const LoanFacilityPage = () => {
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
 	const router = useRouter();
-	// const handleLoan = () => {
-	// 	router.push('/loan-form');
-	// };
 
 	// handles storing and navigating to their specific page
 	const handleBusiness = () => {
@@ -197,18 +194,28 @@ const LoanFacilityPage = () => {
 					payback dates
 				</p>
 
-				<div className=' mt-5 max-w-[20rem]'>
-					<Select label='Select Loan Provider'>
-						{providers.map((provider) => (
-							<Option
-								key={provider?.provider_token}
-								onClick={() =>
-									setSelectedProviderToken(provider?.provider_token)
-								}>
-								{provider?.provider_name}
-							</Option>
-						))}
-					</Select>
+				<div className='flex items-center justify-between w-full'>
+					<div className=' mt-5 max-w-[20rem]'>
+						<Select label='Select Loan Provider'>
+							{providers.map((provider) => (
+								<Option
+									key={provider?.provider_token}
+									onClick={() =>
+										setSelectedProviderToken(provider?.provider_token)
+									}>
+									{provider?.provider_name}
+								</Option>
+							))}
+						</Select>
+					</div>
+
+					<div className='w-[20rem] '>
+						<Link
+							href={'/loan-calculator'}
+							className=' text-white py-2 grid items-center bg-greens justify-center rounded-lg'>
+							Loan Calculator
+						</Link>
+					</div>
 				</div>
 
 				{selectedProviderToken ? (
@@ -323,6 +330,14 @@ const LoanFacilityPage = () => {
 						className=' flex items-center justify-end gap-4 hover:bg-greens/20 py-3 px-5 rounded-lg hover:text-greens'>
 						<HiOutlineCreditCard size='27' />
 						<p className=''>Loan Facility</p>
+					</Link>
+
+					{/* loan calculator */}
+					<Link
+						href={'/loan-calculator'}
+						className=' flex items-center justify-end gap-4 hover:bg-greens/20 py-3 px-5 rounded-lg hover:text-greens'>
+						<HiOutlineCreditCard size='27' />
+						<p className=''>Loan Calculator</p>
 					</Link>
 
 					<div>

@@ -137,6 +137,14 @@ const DashboardPage = () => {
 						<p className=''>Loan Facility</p>
 					</Link>
 
+					{/* loan calculator */}
+					<Link
+						href={'/loan-calculator'}
+						className=' flex items-center justify-end gap-4 hover:bg-greens/20 py-3 px-5 rounded-lg hover:text-greens'>
+						<HiOutlineCreditCard size='27' />
+						<p className=''>Loan Calculator</p>
+					</Link>
+
 					<div>
 						{/* become a seller */}
 						{status ? (
