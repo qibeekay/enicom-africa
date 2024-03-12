@@ -120,6 +120,8 @@ import LoansMain from './accounts/loans/LoansMain';
 import LoansMainDetails from './accounts/loans/LoansMainDetails';
 import LoansModal from './accounts/loans/LoansModal';
 import AdminLoanModal from './admin/overview/AdminLoanModal';
+import LoanCalculatorMain from './loans/loan-calculator/LoanCalculatorMain';
+import LoanCalculatorPage from './loans/loan-calculator/loanCalculatorPage';
 
 export {
 	RegisterForm,
@@ -243,4 +245,6 @@ export {
 	LoansMainDetails,
 	LoansModal,
 	AdminLoanModal,
+	LoanCalculatorMain,
+	LoanCalculatorPage,
 };

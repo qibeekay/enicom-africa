@@ -73,6 +73,18 @@ const LoanFacilityPage = () => {
 	// 	router.push('/loan-form');
 	// };
 
+	// handles storing and navigating to their specific page
+	const handleBusiness = () => {
+		localStorage.setItem('bussiness_type', 'Bussiness');
+		router.push('/sellers');
+	};
+
+	const handleIndividual = () => {
+		// Save the word "individual" to local storage
+		localStorage.setItem('bussiness_type', 'Individual');
+		router.push('/sellers');
+	};
+
 	// fetch plans
 	const fetchPackages = async () => {
 		const fetchedPackages = (await getLoanPackages(`$${token}`)) || [];
@@ -95,21 +107,10 @@ const LoanFacilityPage = () => {
 
 	// Filter packages by selected provider token
 	const filteredPackages = selectedProviderToken
-		? packages.filter((pkg) => pkg.provider_token === selectedProviderToken)
+		? packages?.filter((pkg) => pkg?.provider_token === selectedProviderToken)
 		: [];
 
 	const closeDrawerRight = () => setOpenRight(false);
-
-	const handleBusiness = () => {
-		localStorage.setItem('bussiness_type', 'Bussiness');
-		router.push('/sellers');
-	};
-
-	const handleIndividual = () => {
-		// Save the word "individual" to local storage
-		localStorage.setItem('bussiness_type', 'Individual');
-		router.push('/sellers');
-	};
 
 	const handleLogout = () => {
 		// Clear user-related information from local storage
@@ -132,10 +133,12 @@ const LoanFacilityPage = () => {
 		setOpen(false); // Close the dialog
 	};
 
+	// stores the pkage using use context so it can be used in a different page
 	const handleGetLoan = (pkage: Package) => {
 		selectPackage(pkage); // Set the selected package
 		handleOpen1(); // Open the dialog
 	};
+
 	console.log(selectedPackage);
 
 	// Fetch mail from localStorage when the component mounts
@@ -198,11 +201,11 @@ const LoanFacilityPage = () => {
 					<Select label='Select Loan Provider'>
 						{providers.map((provider) => (
 							<Option
-								key={provider.provider_token}
+								key={provider?.provider_token}
 								onClick={() =>
-									setSelectedProviderToken(provider.provider_token)
+									setSelectedProviderToken(provider?.provider_token)
 								}>
-								{provider.provider_name}
+								{provider?.provider_name}
 							</Option>
 						))}
 					</Select>
@@ -210,22 +213,22 @@ const LoanFacilityPage = () => {
 
 				{selectedProviderToken ? (
 					<div>
-						{filteredPackages.length === 0 ? (
+						{filteredPackages?.length === 0 ? (
 							<p className='text-center mt-4'>
 								No packages available for the selected provider
 							</p>
 						) : (
 							<div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10'>
 								{/* small */}
-								{filteredPackages.map((pkage, index) => (
+								{filteredPackages?.map((pkage, index) => (
 									<div
 										key={index}
 										className='border-2 border-[#CEFFCC] hover:border-greens rounded-2xl py-5'>
 										<div className='px-5 pb-5'>
 											<p className=' text-2xl font-semibold text-greens'>
-												{pkage.plan_duration}
+												{pkage?.plan_duration}
 												<span className='text-base text-dark font-normal'>
-													({pkage.plan_digit} Months)
+													({pkage?.plan_digit} Months)
 												</span>
 											</p>
 
@@ -233,17 +236,14 @@ const LoanFacilityPage = () => {
 												<div className=' w-[3rem] h-[3rem] rounded-full overflow-hidden'>
 													<img
 														className='w-full h-full'
-														src={pkage.provider_image}
+														src={pkage?.provider_image}
 														alt=''
 													/>
 												</div>
-												<p className='py-5'>{pkage.provider_name}</p>
+												<p className='py-5'>{pkage?.provider_name}</p>
 											</div>
 
-											<p>{pkage.loan_percentage}%</p>
-											<p className=' text-2xl font-semibold text-greens'>
-												{pkage.amount}
-											</p>
+											<p>{pkage?.loan_percentage}% Interest</p>
 
 											<button
 												className='w-full py-4 border-[#CEFFCC] border-2 hover:bg-greens text-lg font-bold text-dark/50 hover:text-white rounded-lg mt-7 mb-2'
@@ -260,10 +260,6 @@ const LoanFacilityPage = () => {
 
 										<ul className='list-disc px-10 mt-5 grid gap-2'>
 											<li>{pkage.package_desc}</li>
-											<li>
-												To return {pkage.interest_amount} at end of duration{' '}
-											</li>
-											{/* <li>0.05% daily returns. Watch your money grow.</li> */}
 										</ul>
 									</div>
 								))}

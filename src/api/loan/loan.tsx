@@ -316,3 +316,33 @@ export const getSpecificLoan = async (
 		return [];
 	}
 };
+
+// loan calculator
+export const calculateLoan = async (
+	bearerToken: string,
+	planToken: string,
+	providerRate: string,
+	providerToken: string,
+	amount: string
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/loan/loan.calculator`,
+			{
+				plan_token: planToken,
+				provider_rate: providerRate,
+				provider_token: providerToken,
+				amount_intended_to_borrow: amount,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		console.error('Error fetching request:', error);
+		return [];
+	}
+};
