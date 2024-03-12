@@ -3,6 +3,7 @@ import { adminLoanRecord } from '@/api/loan/loan';
 import {
 	Button,
 	Chip,
+	Dialog,
 	Menu,
 	MenuHandler,
 	MenuItem,
@@ -10,6 +11,7 @@ import {
 	Typography,
 } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react';
+import AdminLoanModal from './AdminLoanModal';
 
 interface Loan {
 	amount_plus_intrest: string;
@@ -17,7 +19,7 @@ interface Loan {
 	fullname: string;
 	isCompletedStatus: string;
 	loanStatus: string;
-	loan_token: number;
+	loan_token: string;
 	package_plan: string;
 	requested_date: string;
 }
@@ -25,7 +27,13 @@ interface Loan {
 const OverviewTab1 = () => {
 	const [loanData, setLoanData] = useState<Loan[]>([]);
 	const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
+	const [loanToken, setLoanToken] = useState<string>('');
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [open, setOpen] = React.useState(false);
+	const handleOpen = (loanToken: string) => {
+		setOpen((cur) => !cur);
+		setLoanToken(loanToken);
+	};
 
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
@@ -105,6 +113,9 @@ const OverviewTab1 = () => {
 								<th>
 									<p className='font-normal leading-none opacity-70'>Date</p>
 								</th>
+								<th>
+									<p className='font-normal leading-none opacity-70'></p>
+								</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -154,12 +165,35 @@ const OverviewTab1 = () => {
 											</Typography>
 										</div>
 									</td>
+
+									<td>
+										<div className='mt-2 ml-4'>
+											<Button
+												variant='outlined'
+												size='sm'
+												color='blue-gray'
+												onClick={() => handleOpen(loan?.loan_token)}>
+												Details
+											</Button>
+										</div>
+									</td>
 								</tr>
 							))}
 						</tbody>
 					</table>
 				)}
 			</div>
+			<Dialog
+				size='lg'
+				open={open}
+				handler={() => handleOpen('')}
+				className='bg-transparent shadow-none text-dark'>
+				<AdminLoanModal
+					handleOpen={handleOpen}
+					loanToken={loanToken}
+					fetchLoanDatas={fetchLoanDatas}
+				/>
+			</Dialog>
 		</div>
 	);
 };

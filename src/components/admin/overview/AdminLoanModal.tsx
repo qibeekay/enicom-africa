@@ -68,7 +68,7 @@ interface Loan {
 	};
 }
 
-const LoansModal: React.FC<OverviewModalProps> = ({
+const AdminLoanModal: React.FC<OverviewModalProps> = ({
 	handleOpen,
 	loanToken,
 	fetchLoanDatas,
@@ -268,4 +268,4 @@ const LoansModal: React.FC<OverviewModalProps> = ({
 	);
 };
 
-export default LoansModal;
+export default AdminLoanModal;

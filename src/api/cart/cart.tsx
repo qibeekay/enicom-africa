@@ -137,6 +137,7 @@ export const DeleteCartItems = async (
 	}
 };
 
+// initialise full payment
 export const IntializePay = async (
 	bearerToken: string,
 	totalPrice: string,
@@ -188,6 +189,35 @@ export const CompletePay = async (
 				engineer_id: engineerId,
 				address: address,
 				total_price: total_price,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data;
+	} catch (error) {
+		toast.error('Error initializing payment');
+		console.error('Error initializing payment:', error);
+		return [];
+	}
+};
+
+// initialise installmental payment
+export const IntializeInstallPay = async (
+	bearerToken: string,
+	totalPrice: number,
+	halfPayment: number,
+	userToken: string | null
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/payment/initialize-payment`,
+			{
+				total_price: totalPrice,
+				half_payment: halfPayment,
+				usertoken: userToken,
 			},
 			{
 				headers: {
