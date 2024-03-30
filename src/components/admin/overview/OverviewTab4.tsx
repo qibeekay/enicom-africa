@@ -93,7 +93,7 @@ const OverviewTab4 = () => {
 
 				{isLoading ? (
 					<div className='px-4 mt-7'>Loading...</div>
-				) : sellers.length === 0 ? (
+				) : sellers?.length === 0 ? (
 					<div className='px-4 mt-7'>No record available.</div>
 				) : (
 					<table className='w-full min-w-max table-auto text-left'>

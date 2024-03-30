@@ -136,24 +136,6 @@ const OverviewModal: React.FC<OverviewModalProps> = ({
 								/>
 							</div>
 
-							{/* increment */}
-							<div className='flex justify-between items-center my-4'>
-								{/* - */}
-								<div className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white text-2xl cursor-pointer'>
-									<p>-</p>
-								</div>
-
-								{/* 1 */}
-								<div className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white'>
-									<p>{productsByToken?.product_quantity}</p>
-								</div>
-
-								{/* + */}
-								<div className='bg-greens rounded w-[2rem] h-[2rem] grid items-center justify-center text-white text-2xl'>
-									<p>+</p>
-								</div>
-							</div>
-
 							{/* purchase */}
 							<div className='mt-6'>
 								<button
