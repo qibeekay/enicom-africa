@@ -47,10 +47,10 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 			s.moveToIdx(10, true, animation);
 		},
 		updated(s) {
-			s.moveToIdx(s.track.details.abs + 10, true, animation);
+			s.moveToIdx(s?.track?.details?.abs + 10, true, animation);
 		},
 		animationEnded(s) {
-			s.moveToIdx(s.track.details.abs + 10, true, animation);
+			s.moveToIdx(s?.track?.details?.abs + 10, true, animation);
 		},
 		slides: {
 			// origin: 'center',
@@ -89,7 +89,7 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 		},
 
 		slideChanged(slider) {
-			setCurrentSlide(slider.track.details.rel);
+			setCurrentSlide(slider?.track?.details?.rel);
 		},
 		// created() {
 		// 	setLoaded(true);
@@ -148,7 +148,7 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 
 							{/* keen-slider__slide number-slide1 */}
 							{productsCategories
-								.filter((cat) => cat.category === category)
+								.filter((cat) => cat?.category === category)
 								.map((cat, index) => (
 									<React.Fragment key={index}>
 										{cat.products.map((product, productIndex) => (
@@ -156,7 +156,7 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 												key={productIndex}
 												className={`overflow-hidden rounded-xl w-[11rem] hover:shadow-lg hover:bg-white cursor-pointer px-2 keen-slider__slide`}
 												onClick={() =>
-													handleDetailsClick(product.product_token)
+													handleDetailsClick(product?.product_token)
 												}>
 												{/* image */}
 												{loaded && (
@@ -164,7 +164,7 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 														<div className='w-full rounded-xl overflow-hidden h-[7rem]'>
 															<img
 																className='w-full h-full object-cover'
-																src={product.product_image}
+																src={product?.product_image}
 																alt=''
 															/>
 														</div>
@@ -172,10 +172,10 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 														{/* text */}
 														<div className='px-2'>
 															<p className='my-2 text-dark line-clamp-3'>
-																{product.product_name}
+																{product?.product_name}
 															</p>
 															<h1 className='mb-4 font-semibold text-lg text-dark'>
-																{product.product_price_th}
+																{product?.product_price_th}
 															</h1>
 														</div>
 													</div>
