@@ -1,9 +1,13 @@
+'use client';
 import { HomePage } from '@/components';
+import WithAuths from '@/components/WithAuths';
 
-export default function Users() {
+const Users = () => {
 	return (
 		<div>
 			<HomePage />
 		</div>
 	);
-}
+};
+
+export default WithAuths(Users);

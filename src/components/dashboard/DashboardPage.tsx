@@ -69,6 +69,7 @@ const DashboardPage = () => {
 	const getuser = async () => {
 		try {
 			const getusers = await getUser(`$${token}`, `${usertoken}`);
+			console.log(getusers.roles);
 			setStatus(getusers.is_verified_seller);
 			setAgentStatus(getusers.is_verified_agent);
 		} catch (error) {

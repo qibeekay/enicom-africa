@@ -1,9 +1,13 @@
+'use client';
 import { OverviewPage } from '@/components';
+import WithAuths from '@/components/WithAuths';
 
-export default function Overview() {
+const Overview = () => {
 	return (
-		<div className=''>
+		<div>
 			<OverviewPage />
 		</div>
 	);
-}
+};
+
+export default WithAuths(Overview);
