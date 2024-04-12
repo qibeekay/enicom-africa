@@ -1,6 +1,6 @@
 'use client';
 import { getUser } from '@/api/products/products';
-import { Component, useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { redirect } from 'next/navigation';
 
 export default function WithAuths(Component: any) {
@@ -15,7 +15,7 @@ export default function WithAuths(Component: any) {
 		const getuser = async () => {
 			try {
 				const getusers = await getUser(`$${token}`, `${usertoken}`);
-				console.log(getusers);
+				// console.log(getusers);
 				setRoles(getusers.roles);
 			} catch (error) {
 				// console.error('Error fetching cart items:', error);
@@ -23,19 +23,19 @@ export default function WithAuths(Component: any) {
 			}
 		};
 
-		useLayoutEffect(() => {
+		useEffect(() => {
 			getuser();
 		}, []);
 
-		useLayoutEffect(() => {
-			if (roles !== null) {
+		useEffect(() => {
+			if (roles !== null && roles.length > 0) {
 				if (roles.indexOf('admin') === -1) {
 					redirect('/');
 				}
 			}
 		}, [roles]);
 
-		if (roles !== null) {
+		if (roles !== null && roles.length > 0) {
 			if (roles.indexOf('admin') === -1) {
 				return null;
 			}
