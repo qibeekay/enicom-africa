@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 import { BsBell } from 'react-icons/bs';
 import {
@@ -10,12 +10,39 @@ import {
 	OverviewTab5,
 	SearchNav,
 } from '@/components';
+import { getUsersCount } from '@/api/auth/api';
+
+interface Count {
+	getAllAgent: number;
+	getAllProductCount: number;
+	getAllSellers: number;
+	getAllUsersCount: number;
+	getLoanPartners: number;
+}
 
 const OverviewMain = () => {
+	const [count, setCount] = useState<Count | null>(null);
 	const [activeTab, setActiveTab] = useState('1');
+	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
+
 	const handleTabClick = (tab: string) => {
 		setActiveTab(tab);
 	};
+
+	// get user count
+	const getcount = async () => {
+		try {
+			const getcounts = await getUsersCount(`$${token}`);
+			setCount(getcounts);
+		} catch (error) {
+			// console.error('Error fetching cart items:', error);
+			console.log('error');
+		}
+	};
+
+	useEffect(() => {
+		getcount();
+	}, []);
 	return (
 		<div className=''>
 			<div className=''>
@@ -28,12 +55,12 @@ const OverviewMain = () => {
 						<div className='flex items-center justify-between py-2'>
 							<h1>Quick Overview</h1>
 
-							<div className='bg-white flex items-center gap-4 py-1 px-3 rounded-lg'>
+							{/* <div className='bg-white flex items-center gap-4 py-1 px-3 rounded-lg'>
 								<div className='w-4 aspect-square'>
 									<img className='w-full h-full' src='/filter.png' alt='' />
 								</div>
 								<h1>Filter by Date</h1>
-							</div>
+							</div> */}
 						</div>
 
 						<div className='flex gap-5 items-center justify-center flex-wrap'>
@@ -47,20 +74,20 @@ const OverviewMain = () => {
 									</div>
 
 									{/* icon 2 */}
-									<div className='w-4 aspect-square'>
+									{/* <div className='w-4 aspect-square'>
 										<img className='w-full h-full' src='/hide.png' alt='' />
-									</div>
+									</div> */}
 								</div>
 								{/* text */}
 								<p className='pt-1 pb-2'>Total Customers</p>
 
 								{/* numbers */}
 								<h1 className=' text-2xl text-[#3592FF] font-semibold'>
-									1,000,000
+									{count?.getAllUsersCount}
 								</h1>
 							</div>
 
-							{/* Total Disbursement */}
+							{/* Total Sellers */}
 							<div className='bg-white shadows rounded-lg px-4 py-2 w-[14rem]'>
 								{/* icon */}
 								<div className='flex justify-between items-center'>
@@ -70,20 +97,20 @@ const OverviewMain = () => {
 									</div>
 
 									{/* icon 2 */}
-									<div className='w-4 aspect-square'>
+									{/* <div className='w-4 aspect-square'>
 										<img className='w-full h-full' src='/hide.png' alt='' />
-									</div>
+									</div> */}
 								</div>
 								{/* text */}
-								<p className='pt-1 pb-2'> Total Disbursement</p>
+								<p className='pt-1 pb-2'> Total Sellers</p>
 
 								{/* numbers */}
 								<h1 className=' text-2xl text-[#BB07FA] font-semibold'>
-									$1,000,000
+									{count?.getAllSellers}
 								</h1>
 							</div>
 
-							{/* Total Inflow */}
+							{/* Total Agents */}
 							<div className='bg-white shadows rounded-lg px-4 py-2 w-[14rem]'>
 								{/* icon */}
 								<div className='flex justify-between items-center'>
@@ -93,16 +120,16 @@ const OverviewMain = () => {
 									</div>
 
 									{/* icon 2 */}
-									<div className='w-4 aspect-square'>
+									{/* <div className='w-4 aspect-square'>
 										<img className='w-full h-full' src='/hide.png' alt='' />
-									</div>
+									</div> */}
 								</div>
 								{/* text */}
-								<p className='pt-1 pb-2'> Total Inflow</p>
+								<p className='pt-1 pb-2'> Total Agents</p>
 
 								{/* numbers */}
 								<h1 className=' text-2xl text-[#04C223] font-semibold'>
-									$1,000,000
+									{count?.getAllAgent}
 								</h1>
 							</div>
 
@@ -116,22 +143,20 @@ const OverviewMain = () => {
 									</div>
 
 									{/* icon 2 */}
-									<div className='w-4 aspect-square'>
+									{/* <div className='w-4 aspect-square'>
 										<img className='w-full h-full' src='/hide.png' alt='' />
-									</div>
+									</div> */}
 								</div>
 								{/* text */}
-								<p className='pt-1 pb-2'> Total Outflow</p>
+								<p className='pt-1 pb-2'> Total Loan Partners</p>
 
 								{/* numbers */}
 								<h1 className=' text-2xl text-[#FF4040] font-semibold'>
-									$1,000,000
+									{count?.getLoanPartners}
 								</h1>
 							</div>
 						</div>
 					</div>
-
-					{/* table */}
 				</div>
 
 				{/* tabs */}

@@ -328,3 +328,27 @@ export const getAllOrders = async (
 		return [];
 	}
 };
+
+// search products
+export const searchProducts = async (bearerToken: string, search: string) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/search-product`,
+			{
+				search: search,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		// toast.error('Error fetching product');
+		console.error('Error fetching product:', error);
+		return [];
+	}
+};
+
+//

@@ -2,7 +2,6 @@
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { HiOutlineBellAlert, HiOutlineCreditCard } from 'react-icons/hi2';
 import { BsCart } from 'react-icons/bs';
 import { FaUserCircle } from 'react-icons/fa';
 import { TfiMenuAlt } from 'react-icons/tfi';
@@ -13,17 +12,20 @@ import { ToastContainer, toast } from 'react-toastify';
 
 const DasboardNav = ({ openRight }: { openRight: () => void }) => {
 	const [mobileSearchVisible, setMobileSearchVisible] = useState(false);
+	const [searchQuery, setSearchQuery] = useState('');
 	const { cartItems } = useCart();
 
-	const navigationRef = useRef<HTMLDivElement | null>(null);
+	// const navigationRef = useRef<HTMLDivElement | null>(null);
 	const searchInputRef = useRef<HTMLInputElement | null>(null);
 
 	const router = useRouter();
 
+	// re-routes to home page
 	const handleHome = () => {
 		router.push('/dashboard');
 	};
 
+	// on mobile view toggles the search input
 	const toggleMobileSearch = () => {
 		setMobileSearchVisible((prev) => !prev);
 	};
@@ -34,6 +36,18 @@ const DasboardNav = ({ openRight }: { openRight: () => void }) => {
 			searchInputRef.current.focus();
 		}
 	}, [mobileSearchVisible]);
+
+	// handle searchs
+	const handleSearch = async () => {
+		router.push(`/search-result?searchQuery=${searchQuery}`);
+	};
+
+	// handle search when enter is pressed on the keyboard
+	const handleKeyPress = (e: { key: string }) => {
+		if (e.key === 'Enter') {
+			handleSearch();
+		}
+	};
 
 	return (
 		<div className='relative w-full font-poppins text-dark '>
@@ -51,12 +65,17 @@ const DasboardNav = ({ openRight }: { openRight: () => void }) => {
 						{/* search */}
 						<div className='hidden sm:relative w-[70%] sm:w-[45%] sm:flex items-center bg-white overflow-hidden gap-3 rounded'>
 							{/* icon */}
-							<div className='bg-greens h-full grid items-center py-2 px-3 text-white'>
+							<div
+								className='bg-greens h-full grid items-center py-2 px-3 text-white cursor-pointer'
+								onClick={handleSearch}>
 								<AiOutlineSearch size={27} />
 							</div>
 							{/* input */}
 							<input
 								type='text'
+								value={searchQuery}
+								onChange={(e) => setSearchQuery(e.target.value)}
+								onKeyPress={handleKeyPress}
 								className='bg-transparent outline-none w-full placeholder:text-[10px] md:placeholder:text-base placeholder:text-dark'
 								placeholder='Search Solar Product'
 							/>
@@ -71,13 +90,18 @@ const DasboardNav = ({ openRight }: { openRight: () => void }) => {
 						{mobileSearchVisible && (
 							<div className='fixed top-[49px] z-50 w-[70%] flex items-center bg-bgGreen overflow-hidden gap-3 rounded'>
 								{/* icon */}
-								<div className='bg-greens h-full grid items-center py-2 px-3 text-white'>
+								<div
+									className='bg-greens h-full grid items-center py-2 px-3 text-white cursor-pointer'
+									onClick={handleSearch}>
 									<AiOutlineSearch size={27} />
 								</div>
 								{/* input */}
 								<input
 									ref={searchInputRef}
 									type='text'
+									value={searchQuery}
+									onChange={(e) => setSearchQuery(e.target.value)}
+									onKeyPress={handleKeyPress}
 									className='bg-transparent outline-none w-full placeholder:text-[10px] md:placeholder:text-base placeholder:text-dark'
 									placeholder='Search Solar Product'
 								/>
@@ -85,9 +109,9 @@ const DasboardNav = ({ openRight }: { openRight: () => void }) => {
 						)}
 
 						{/* notifications */}
-						<div className='grid items-center'>
+						{/* <div className='grid items-center'>
 							<HiOutlineBellAlert size={22} />
-						</div>
+						</div> */}
 
 						{/* cart */}
 						<div className='grid items-end relative'>

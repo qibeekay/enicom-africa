@@ -10,6 +10,8 @@ import { HiOutlineChevronRight } from 'react-icons/hi';
 import { DashBoardItems } from '..';
 import { useRouter } from 'next/navigation';
 import { getUser } from '@/api/products/products';
+import { getUsersAccount } from '@/api/auth/api';
+import { ToastContainer, toast } from 'react-toastify';
 
 interface Users {
 	fname: string;
@@ -24,20 +26,31 @@ interface Users {
 	is_verified_agent: boolean;
 	is_verified_agent_status: string;
 	kyc_status: boolean;
-	accountDetails: {
-		accountNumber: string;
-		accountName: string;
-	};
+}
+
+interface Account {
 	accountBalance_th: string;
 	accountBalance: string;
 	accountNumber: string;
+	accountDetails: {
+		AvailableBalance: number;
+		AvailableBalance_th: number;
+		LedgerBalance: number;
+		LedgerBalance_th: number;
+		WithdrawableBalance: number;
+		WithdrawableBalance_th: number;
+		accountNumber: string;
+	};
 }
 
 const DashboardBalance = () => {
 	const [user, setUser] = useState<Users | null>(null);
+	const [account, setAccount] = useState<Account | null>(null);
 	const [kyc, setKyc] = useState<string>('');
+	const [renitoken, setRenitoken] = useState<string>('');
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 	const [loading, setLoading] = useState<boolean>(true);
+	const [showBalance, setShowBalance] = useState<boolean>(true);
 
 	// Fetch mail from localStorage when the component mounts
 	const usertoken =
@@ -64,6 +77,7 @@ const DashboardBalance = () => {
 			const getusers = await getUser(`$${token}`, `${usertoken}`);
 			console.log(getusers);
 			setUser(getusers);
+			setRenitoken(getusers.renitoken);
 			setLoading(false);
 		} catch (error) {
 			// console.error('Error fetching cart items:', error);
@@ -74,6 +88,41 @@ const DashboardBalance = () => {
 
 	useEffect(() => {
 		getuser();
+	}, []);
+
+	// getting user account details
+	const getdetail = async () => {
+		try {
+			const getdetails = await getUsersAccount(`$${token}`, `${renitoken}`);
+			setAccount(getdetails);
+			// setUser(getusers);
+			setLoading(false);
+		} catch (error) {
+			// console.error('Error fetching cart items:', error);
+			console.log('error');
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		if (renitoken) {
+			getdetail();
+		}
+	}, [renitoken]);
+
+	// Function to toggle showing or hiding the balance
+	const toggleShowBalance = () => {
+		setShowBalance((prevShowBalance) => !prevShowBalance);
+		// Store the state of showBalance in localStorage
+		localStorage.setItem('showBalance', JSON.stringify(!showBalance));
+	};
+
+	useEffect(() => {
+		// Retrieve showBalance state from localStorage and update the state
+		const storedShowBalance = localStorage.getItem('showBalance');
+		if (storedShowBalance !== null) {
+			setShowBalance(JSON.parse(storedShowBalance));
+		}
 	}, []);
 
 	return (
@@ -116,16 +165,20 @@ const DashboardBalance = () => {
 									{/* top */}
 									<div className='flex justify-between items-center'>
 										<p className='text-sm font-light text-white/70'>Wallet</p>
-										<AiOutlineEyeInvisible />
+										<AiOutlineEyeInvisible
+											onClick={toggleShowBalance}
+											className='cursor-pointer'
+										/>
 									</div>
 
 									{/* amount */}
 									<div>
 										<h1 className='font-semibold text-2xl'>
-											N
-											{user?.accountBalance_th
-												? user.accountBalance_th
-												: '0.00'}
+											{showBalance ? ( // Conditionally render balance or asterisks based on showBalance state
+												<>N {account?.accountBalance_th || '0.00'}</>
+											) : (
+												<>******</>
+											)}
 										</h1>
 									</div>
 

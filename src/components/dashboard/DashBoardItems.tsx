@@ -49,35 +49,41 @@ const DashBoardItems = () => {
 	return (
 		<div className='mt-4 text-dark'>
 			<div>
-				{/* Orders on delivery */}
+				{/* Orders Filter */}
 				<div className='flex gap-x-7 items-center py-5 flex-wrap font-medium md:text-lg text-dark/60'>
 					<button
 						onClick={() => setSelectedFilter(null)}
-						className={`cursor-pointer ${
-							selectedFilter === null ? 'text-greens' : 'text-dark'
+						className={`cursor-pointer rounded-lg py-2 px-4 ${
+							selectedFilter === null
+								? 'bg-greens text-white'
+								: 'text-dark bg-bgGreen'
 						}`}>
 						All Orders
 					</button>
 					<button
 						onClick={() => setSelectedFilter('0')}
-						className={`cursor-pointer ${
-							selectedFilter === '0' ? 'text-greens' : 'text-dark'
+						className={`cursor-pointer rounded-lg py-2 px-4   ${
+							selectedFilter === '0'
+								? 'bg-greens text-white'
+								: 'text-dark bg-bgGreen'
 						}`}>
 						Pending Orders
 					</button>
 					<button
 						onClick={() => setSelectedFilter('1')}
-						className={`cursor-pointer ${
-							selectedFilter === '1' ? 'text-greens' : 'text-dark'
+						className={`cursor-pointer rounded-lg py-2 px-4  ${
+							selectedFilter === '1'
+								? 'bg-greens text-white'
+								: 'text-dark bg-bgGreen'
 						}`}>
 						Delivered Orders
 					</button>
 				</div>
 
 				{/* search */}
-				<div className='flex flex-col md:flex-row md:items-center gap-4'>
-					{/* order */}
-					<div className='border border-dark/50 bg-white text-dark flex items-center w-full rounded-lg overflow-hidden'>
+				{/* <div className='flex flex-col md:flex-row md:items-center gap-4'> */}
+				{/* order */}
+				{/* <div className='border border-dark/50 bg-white text-dark flex items-center w-full rounded-lg overflow-hidden'>
 						<div className='flex items-center gap-4 md:gap-7 px-3 border-r border-dark/50'>
 							<p>Order</p>
 							<HiChevronDown />
@@ -93,15 +99,15 @@ const DashBoardItems = () => {
 						<div className='text-white bg-greens h-full py-2 w-[5.5rem] grid items-center justify-center'>
 							<LiaSearchSolid size={32} />
 						</div>
-					</div>
+					</div> */}
 
-					{/* last day */}
-					<Link
+				{/* last day */}
+				{/* <Link
 						href={'/request-installer'}
 						className='bg-greens/5 hover:bg-greens hover:text-white ease-in-out duration-300 w-[30%] grid items-center justify-center py-3 rounded-lg'>
 						Request Installer
-					</Link>
-				</div>
+					</Link> */}
+				{/* </div> */}
 				{/* grid container*/}
 				<div className='grid gap-y-5 mt-4'>
 					{/* items */}

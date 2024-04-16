@@ -25,7 +25,7 @@ const Addmoney1 = () => {
 					</button>
 
 					{/* debit card */}
-					<button
+					{/* <button
 						onClick={() => setActiveTab('2')}
 						className={`w-full sm:w-auto py-2 px-10 ${
 							activeTab === '2'
@@ -33,11 +33,11 @@ const Addmoney1 = () => {
 								: 'bg-greens/10 text-dark rounded-lg'
 						}`}>
 						Debit Card
-					</button>
+					</button> */}
 				</div>
 				<div>
 					{activeTab === '1' && <AddCard />}
-					{activeTab === '2' && <AddBank />}
+					{/* {activeTab === '2' && <AddBank />} */}
 				</div>
 			</div>
 		</div>

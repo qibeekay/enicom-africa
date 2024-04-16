@@ -88,7 +88,7 @@ const OverviewTab1 = () => {
 				</div>
 				{isLoading ? (
 					<div className='px-4 mt-7'>Loading...</div>
-				) : loanData.length === 0 ? (
+				) : loanData?.length === 0 ? (
 					<div className='px-4 mt-7'>No record available.</div>
 				) : (
 					<table className='w-full min-w-max table-auto text-left'>

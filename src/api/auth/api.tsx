@@ -191,4 +191,46 @@ export const Update = async (
 	}
 };
 
-// Image
+// get users count
+export const getUsersCount = async (bearerToken: string) => {
+	try {
+		const response = await axios.get(
+			`${API_URL}/admin/personalised-dashboard`,
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		// toast.error('Error fetching product');
+		console.error('Error fetching product:', error);
+		return [];
+	}
+};
+
+// get user account details
+export const getUsersAccount = async (
+	bearerToken: string,
+	reniToken: string | undefined
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/profile/get-account-balance`,
+			{
+				renitoken: reniToken,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		// toast.error('Error fetching product');
+		console.error('Error fetching product:', error);
+		return [];
+	}
+};

@@ -122,6 +122,8 @@ import LoansModal from './accounts/loans/LoansModal';
 import AdminLoanModal from './admin/overview/AdminLoanModal';
 import LoanCalculatorMain from './loans/loan-calculator/LoanCalculatorMain';
 import LoanCalculatorPage from './loans/loan-calculator/LoanCalculatorPage';
+import SearchPage from './search/SearchPage';
+import MenuDrawer from './MenuDrawer';
 
 export {
 	RegisterForm,
@@ -247,4 +249,6 @@ export {
 	AdminLoanModal,
 	LoanCalculatorMain,
 	LoanCalculatorPage,
+	SearchPage,
+	MenuDrawer,
 };

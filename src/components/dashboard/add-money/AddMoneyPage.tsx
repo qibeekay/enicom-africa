@@ -52,7 +52,7 @@ const AddMoneyPage = () => {
 						}`}>
 						1
 					</button>
-					<hr className='w-[2rem]' />
+					{/* <hr className='w-[2rem]' />
 					<button
 						onClick={() => handleTabClick('2')}
 						className={`w-[2rem] h-[2rem] rounded-full border-dark/50 border ${
@@ -61,16 +61,16 @@ const AddMoneyPage = () => {
 								: 'border-dark/50 border text-dark/50'
 						}`}>
 						2
-					</button>
+					</button> */}
 				</div>
-				<div className='w-full bg-greens/10 h-1.5'>
+				{/* <div className='w-full bg-greens/10 h-1.5'>
 					<div
 						className={`h-1.5 ${progressBarColor} transition-width duration-700`}
 						style={{ width: `${progress}%` }}></div>
-				</div>
+				</div> */}
 				<div>
 					{activeTab === '1' && <Addmoney1 />}
-					{activeTab === '2' && <AddMoney2 />}
+					{/* {activeTab === '2' && <AddMoney2 />} */}
 				</div>
 			</div>
 		</div>
