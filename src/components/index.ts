@@ -124,6 +124,11 @@ import LoanCalculatorMain from './loans/loan-calculator/LoanCalculatorMain';
 import LoanCalculatorPage from './loans/loan-calculator/LoanCalculatorPage';
 import SearchPage from './search/SearchPage';
 import MenuDrawer from './MenuDrawer';
+import FaqsPage from './faqs/FaqsPage';
+import FaqHero from './faqs/FaqHero';
+import AboutHero from './about/AboutHero';
+import AboutPage from './about/AboutPage';
+import AboutDetails from './about/AboutDetails';
 
 export {
 	RegisterForm,
@@ -251,4 +256,9 @@ export {
 	LoanCalculatorPage,
 	SearchPage,
 	MenuDrawer,
+	FaqsPage,
+	FaqHero,
+	AboutHero,
+	AboutPage,
+	AboutDetails,
 };

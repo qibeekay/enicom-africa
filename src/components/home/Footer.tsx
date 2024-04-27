@@ -26,7 +26,7 @@ const Footer = () => {
 					{/* div */}
 					<div className='flex justify-center md:justify-between gap-10 flex-wrap mt-8'>
 						{/* products */}
-						<div className=' text-center md:text-left w-[10rem]'>
+						{/* <div className=' text-center md:text-left w-[10rem]'>
 							<h1 className='text-lg font-semibold'>Products</h1>
 							<ul className=' grid gap-y-3 mt-4'>
 								<li>
@@ -42,23 +42,17 @@ const Footer = () => {
 									<Link href={''}>Solar Bodies</Link>
 								</li>
 							</ul>
-						</div>
+						</div> */}
 
 						{/* company */}
 						<div className='text-center w-[10rem]'>
 							<h1 className='text-lg font-semibold'>Company</h1>
 							<ul className='grid gap-y-3 mt-4'>
 								<li>
-									<Link href={''}>About</Link>
+									<Link href={'/about-us'}>About</Link>
 								</li>
 								<li>
-									<Link href={''}>FAQs</Link>
-								</li>
-								<li>
-									<Link href={''}>Installers</Link>
-								</li>
-								<li>
-									<Link href={''}>Warehouses</Link>
+									<Link href={'/faqs'}>FAQs</Link>
 								</li>
 							</ul>
 						</div>

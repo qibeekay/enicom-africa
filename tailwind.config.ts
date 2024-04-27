@@ -30,6 +30,7 @@ const config: Config = withMT({
 		},
 		backgroundImage: {
 			hero: "url('/hero.png')",
+			about: "url('/abt.png')",
 		},
 		fontFamily: {
 			poppins: ['Poppins', 'sans-serif'],

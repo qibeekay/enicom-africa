@@ -20,7 +20,7 @@ const Navbar = () => {
 
 	// Check if user is logged in based on your authentication mechanism
 	useEffect(() => {
-		const userMail = localStorage.getItem('mail');
+		const userMail = localStorage.getItem('usertoken');
 		setUsermail(userMail || '');
 	});
 	const isLoggedIn = !!usermail;
@@ -41,13 +41,13 @@ const Navbar = () => {
 							<Link href={'/store'}>Store</Link>
 						</li>
 						<li>
-							<Link href={''}>Company</Link>
+							<Link href={'/company'}>Company</Link>
 						</li>
 						<li>
-							<Link href={''}>About Us</Link>
+							<Link href={'/about-us'}>About Us</Link>
 						</li>
 						<li>
-							<Link href={''}>Product</Link>
+							<Link href={'/faqs'}>FAQs</Link>
 						</li>
 						<li>
 							<Link href={''}>Contact Us</Link>
