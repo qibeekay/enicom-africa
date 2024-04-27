@@ -12,6 +12,7 @@ import { Register } from '@/api/auth/api';
 
 const RegisterForm = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [phone, setPhone] = useState('');
 	const [showPassword, setShowPassword] = useState(false);
 
 	const router = useRouter();
@@ -37,7 +38,21 @@ const RegisterForm = () => {
 
 	const handleChange = (event: any) => {
 		const { name, value } = event.target;
+
+		// If the name is 'phone', update the phone state
+		if (name === 'phone') {
+			setPhone(value);
+		}
+
+		// Update the formData state
 		setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+	};
+
+	const handleInputChange = (event: any) => {
+		const inputValue = event.target.value;
+		// Remove any non-numeric characters
+		const newValue = inputValue.replace(/\D/g, '');
+		setPhone(newValue);
 	};
 
 	const handleSubmit = async (event: FormEvent) => {
@@ -46,9 +61,17 @@ const RegisterForm = () => {
 		// Check if any field is empty
 		for (const field in formData) {
 			if (formData[field as keyof typeof formData] === '') {
-				toast.error(`Fields cannot be empty`);
-				return;
+				// Skip the check if the field is 'phone', as it's handled separately
+				if (field !== 'phone') {
+					toast.error(`Fields cannot be empty`);
+					return;
+				}
 			}
+		}
+
+		if (phone === '') {
+			toast.error('Phone number cannot be empty');
+			return;
 		}
 
 		try {
@@ -60,7 +83,7 @@ const RegisterForm = () => {
 				return;
 			}
 
-			const response = await Register(formData, `$${token}`);
+			const response = await Register({ ...formData, phone }, `$${token}`);
 			console.log('Registration response:', response);
 
 			if (response.success === true) {
@@ -114,18 +137,18 @@ const RegisterForm = () => {
 					</div>
 
 					{/* google signup */}
-					<div className='flex items-center border border-dark/50 py-2 px-5 rounded-lg gap-5 mt-7 cursor-pointer hover:border-greens '>
-						{/* logo */}
-						<div>
+					{/* <div className='flex items-center border border-dark/50 py-2 px-5 rounded-lg gap-5 mt-7 cursor-pointer hover:border-greens '> */}
+					{/* logo */}
+					{/* <div>
 							<Image src={'/google.png'} width={25} height={25} alt='google' />
 						</div>
 						<p className=' text-xs sm:text-base'>Sign up with google</p>
-					</div>
+					</div> */}
 
-					<p className='text-center my-5 text-dark'>Or</p>
+					{/* <p className='text-center my-5 text-dark'>Or</p> */}
 
 					{/* form */}
-					<div>
+					<div className='mt-7'>
 						<form className='grid gap-3' onSubmit={handleSubmit}>
 							{/* first/last name */}
 							<div className='flex flex-col sm:flex-row gap-y-3 gap-x-7 items-center'>
@@ -164,8 +187,8 @@ const RegisterForm = () => {
 								id='phone'
 								labelId='phoneLabel'
 								type='text'
-								value={formData.phone}
-								onChange={handleChange}
+								value={phone}
+								onChange={handleInputChange}
 							/>
 
 							<FormProps

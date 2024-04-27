@@ -105,18 +105,18 @@ const LoginForm = () => {
 					</div>
 
 					{/* google signup */}
-					<div className='flex items-center border border-dark/50 py-2 px-5 rounded-lg gap-5 mt-8 cursor-pointer hover:border-greens '>
-						{/* logo */}
-						<div>
+					{/* <div className='flex items-center border border-dark/50 py-2 px-5 rounded-lg gap-5 mt-8 cursor-pointer hover:border-greens '> */}
+					{/* logo */}
+					{/* <div>
 							<Image src={'/google.png'} width={25} height={25} alt='google' />
 						</div>
 						<p className=' text-xs sm:text-sm'>Sign in with google</p>
-					</div>
+					</div> */}
 
-					<p className='text-center my-5 text-dark'>Or</p>
+					{/* <p className='text-center my-5 text-dark'>Or</p> */}
 
 					{/* form */}
-					<div>
+					<div className='mt-7'>
 						<form className='grid gap-7 relative' onSubmit={handleSubmit}>
 							{/* email */}
 							<FormProps
