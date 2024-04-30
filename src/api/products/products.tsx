@@ -114,7 +114,7 @@ export const getAllProduct = async (bearerToken: string) => {
 		});
 		return response.data.data;
 	} catch (error) {
-		toast.error('Error fetching categories');
+		// toast.error('Error fetching categories');
 		console.error('Error fetching categories:', error);
 		return [];
 	}

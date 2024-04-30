@@ -190,15 +190,6 @@ const MenuDrawer = ({ openRight, setOpenRight }: Props) => {
 							</button>
 						</div>
 					</div>
-
-					{/* logout */}
-					<div className='w-full mt-7'>
-						<button className='grid justify-end w-full' onClick={handleLogout}>
-							<p className='border-greens border w-full rounded-lg text-dark py-2 px-5 text-center text-sm'>
-								Logout
-							</p>
-						</button>
-					</div>
 				</div>
 			</Drawer>
 			<Dialog

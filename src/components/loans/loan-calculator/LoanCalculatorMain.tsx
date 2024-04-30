@@ -293,8 +293,10 @@ const LoanCalculatorMain = () => {
 								</div>
 							</div>
 
-							<div className='w-full grid justify-end mt-7'>
-								<Button onClick={calcLoan} className='bg-greens text-white'>
+							<div className='w-full mt-7'>
+								<Button
+									onClick={calcLoan}
+									className='bg-greens text-white w-full'>
 									{isLoading ? 'Calculating' : 'Calculate'}
 								</Button>
 							</div>

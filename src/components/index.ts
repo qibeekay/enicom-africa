@@ -129,6 +129,11 @@ import FaqHero from './faqs/FaqHero';
 import AboutHero from './about/AboutHero';
 import AboutPage from './about/AboutPage';
 import AboutDetails from './about/AboutDetails';
+import CompanyPage from './company/CompanyPage';
+import CompanyHero from './company/CompanyHero';
+import CompanyTab from './company/CompanyTab';
+import LoanDetailsTab from './company/LoanDetailsTab';
+import OutrightTab from './company/OutrightTab';
 
 export {
 	RegisterForm,
@@ -261,4 +266,9 @@ export {
 	AboutHero,
 	AboutPage,
 	AboutDetails,
+	CompanyHero,
+	CompanyPage,
+	CompanyTab,
+	OutrightTab,
+	LoanDetailsTab,
 };

@@ -52,6 +52,9 @@ const Footer = () => {
 									<Link href={'/about-us'}>About</Link>
 								</li>
 								<li>
+									<Link href={'/company'}>Company</Link>
+								</li>
+								<li>
 									<Link href={'/faqs'}>FAQs</Link>
 								</li>
 							</ul>

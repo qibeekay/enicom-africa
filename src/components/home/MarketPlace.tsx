@@ -18,11 +18,17 @@ interface Category {
 }
 
 const MarketPlace = () => {
+	const [usermail, setUsermail] = useState('');
 	const router = useRouter();
 
 	const handleStore = () => {
 		router.push('/store');
 	};
+
+	const handleLogin = () => {
+		router.push('/login');
+	};
+
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
 	const [categories, setCategories] = useState<Category[]>([]);
@@ -35,6 +41,13 @@ const MarketPlace = () => {
 
 		fetchCategories();
 	}, [token]);
+
+	// Check if user is logged in based on your authentication mechanism
+	useEffect(() => {
+		const userMail = localStorage.getItem('usertoken');
+		setUsermail(userMail || '');
+	});
+	const isLoggedIn = !!usermail;
 	return (
 		<div className='pt-[50rem] ms:pt-[33rem] mss:pt-[15rem] text-dark font-poppins'>
 			<div>
@@ -64,7 +77,7 @@ const MarketPlace = () => {
 					<div className='grid items-center justify-center'>
 						<div
 							className='bg-greens text-white w-[10rem] grid items-center justify-center py-2 rounded cursor-pointer'
-							onClick={handleStore}>
+							onClick={isLoggedIn ? handleStore : handleLogin}>
 							<p>Start Shopping</p>
 						</div>
 					</div>

@@ -1,6 +1,13 @@
+'use client';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const Installation = () => {
+	const router = useRouter();
+
+	const handleRegister = () => {
+		router.push('/register');
+	};
 	return (
 		<div className='pt-[50rem] ms:pt-[33rem] mss:pt-[15rem] text-dark font-poppins'>
 			<div className='w-[75%] mx-auto'>
@@ -18,9 +25,11 @@ const Installation = () => {
 								we will handle that for you.
 							</p>
 
-							<div className='bg-greens text-white w-[10rem] grid items-center justify-center py-2 rounded cursor-pointer mt-8 lg:mt-16 '>
-								<p>Get Started</p>
-							</div>
+							<button
+								className='bg-greens text-white w-[10rem] grid items-center justify-center py-2 rounded cursor-pointer mt-8 lg:mt-16 '
+								onClick={handleRegister}>
+								Get Started
+							</button>
 						</div>
 
 						{/* image */}

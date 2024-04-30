@@ -106,7 +106,7 @@ const faqs = [
 	},
 ];
 
-// function to handle the material tailwind accordion
+// function to handle the material tailwind accordion icon
 function Icon({ id, open }: { id: number; open: number }) {
 	return (
 		<svg

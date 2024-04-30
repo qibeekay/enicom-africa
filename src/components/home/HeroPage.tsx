@@ -1,9 +1,26 @@
 'use client';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navbar } from '..';
+import { useRouter } from 'next/navigation';
 
 const HeroPage = () => {
+	const [usermail, setUsermail] = useState('');
+	const router = useRouter();
+
+	const handleStore = () => {
+		router.push('/store');
+	};
+
+	const handleLogin = () => {
+		router.push('/login');
+	};
+	// Check if user is logged in based on your authentication mechanism
+	useEffect(() => {
+		const userMail = localStorage.getItem('usertoken');
+		setUsermail(userMail || '');
+	});
+	const isLoggedIn = !!usermail;
 	return (
 		<div className='w-full font-poppins text-dark'>
 			<div className=' h-screen bg-hero bg-center bg-cover relative'>
@@ -36,19 +53,25 @@ const HeroPage = () => {
 						{/* buttons */}
 						<div className='flex flex-wrap items-center justify-center gap-3 sm:gap-7 mt-10'>
 							{/* buy */}
-							<div className=' bg-greens text-white rounded-md py-2 px-7 md:px-[3rem]'>
-								<p>Buy</p>
-							</div>
+							<button
+								className=' bg-greens text-white rounded-md py-2 px-7 md:px-[3rem]'
+								onClick={isLoggedIn ? handleStore : handleLogin}>
+								Buy
+							</button>
 
 							{/* sell */}
-							<div className=' bg-white text-greens rounded-md py-2 px-7 md:px-[3rem]'>
-								<p>Sell</p>
-							</div>
+							<button
+								className=' bg-white text-greens rounded-md py-2 px-7 md:px-[3rem]'
+								onClick={isLoggedIn ? handleStore : handleLogin}>
+								Sell
+							</button>
 
 							{/* marketplace */}
-							<div className=' bg-greens text-white rounded-md py-2 px-[1.5rem]'>
-								<p>View MarketPlace</p>
-							</div>
+							<button
+								className=' bg-greens text-white rounded-md py-2 px-[1.5rem]'
+								onClick={isLoggedIn ? handleStore : handleLogin}>
+								View MarketPlace
+							</button>
 						</div>
 					</div>
 				</div>
