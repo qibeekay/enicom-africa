@@ -91,6 +91,7 @@ export const Login = async (
 			localStorage.setItem('usertoken', responseData.data.usertoken);
 			localStorage.setItem('renitoken', responseData.data.renitoken);
 			localStorage.setItem('kyc_status', responseData.data.kyc_status);
+			localStorage.setItem('bvn_status', responseData.data.bvn_status);
 		}
 
 		return response.data;
@@ -128,6 +129,7 @@ export const VerifyMail = async (
 			localStorage.setItem('usertoken', responseData.data.usertoken);
 			localStorage.setItem('renitoken', responseData.data.renitoken);
 			localStorage.setItem('kyc_status', responseData.data.kyc_status);
+			localStorage.setItem('bvn_status', responseData.data.bvn_status);
 		}
 
 		// console.log('Registration successful', response.data);

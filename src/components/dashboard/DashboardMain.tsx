@@ -12,12 +12,17 @@ const DashboardMain = () => {
 		setFname(storedFname);
 	}, []);
 
+	// Function to capitalize the first letter of a string
+	const capitalizeFirstLetter = (string: string) => {
+		return string.charAt(0).toUpperCase() + string.slice(1);
+	};
+
 	return (
 		<div className='w-full font-poppins relative z-0'>
 			<div className='max-w-6xl mx-auto px-4 py-10'>
 				{/* header text */}
 				<div className='text-xl font-medium text-dark'>
-					<h1>Welcome back, {fname}</h1>
+					<h1>Welcome back, {capitalizeFirstLetter(fname)}</h1>
 				</div>
 
 				<div className='mt-4'>

@@ -61,7 +61,7 @@ const DashboardBalance = () => {
 	// Check if user is logged in based on your authentication mechanism
 	useEffect(() => {
 		// Retrieve kyc_status from local storage
-		const storedKycStatus = localStorage.getItem('kyc_status');
+		const storedKycStatus = localStorage.getItem('bvn_status');
 		setKyc(storedKycStatus || '');
 	}, []);
 

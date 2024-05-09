@@ -24,6 +24,7 @@ export const getAllCategories = async (bearerToken: string) => {
 	}
 };
 
+// create categories for products
 export const createCategory = async (
 	categoryName: string,
 	bearerToken: string
@@ -214,7 +215,7 @@ export const getUser = async (
 	}
 };
 
-// get product by token
+// get admin products by token
 export const getAdminProductByToken = async (
 	bearerToken: string,
 	productToken: string | null
@@ -351,4 +352,60 @@ export const searchProducts = async (bearerToken: string, search: string) => {
 	}
 };
 
-//
+// review a product
+export const reviewProduct = async (
+	bearerToken: string,
+	productToken: string | null,
+	productName: string | undefined,
+	ratings: number,
+	reviews: string,
+	userToken: string | null
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/review/create-review`,
+			{
+				producttoken: productToken,
+				product_name: productName,
+				ratings: ratings,
+				review: reviews,
+				usertoken: userToken,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		// toast.error('Error fetching cart items');
+		console.error('Error fetching cart items:', error);
+		return [];
+	}
+};
+
+// get a specific products reviews
+export const getProductReview = async (
+	bearerToken: string,
+	productToken: string | null
+) => {
+	try {
+		const response = await axios.post(
+			`${API_URL}/review/get-reviews`,
+			{
+				producttoken: productToken,
+			},
+			{
+				headers: {
+					Authorization: `Bearer ${bearerToken}`,
+				},
+			}
+		);
+		return response.data.data;
+	} catch (error) {
+		// toast.error('Error fetching product');
+		console.error('Error fetching product:', error);
+		return [];
+	}
+};

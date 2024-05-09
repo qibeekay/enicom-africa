@@ -85,9 +85,9 @@ const AccountNav = ({ openRight }: { openRight: () => void }) => {
 						)}
 
 						{/* notifications */}
-						<div className='grid items-center'>
+						{/* <div className='grid items-center'>
 							<HiOutlineBellAlert size={22} />
-						</div>
+						</div> */}
 
 						{/* cart */}
 						<div className='grid items-end relative'>

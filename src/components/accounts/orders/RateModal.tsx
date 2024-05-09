@@ -1,15 +1,65 @@
 'use client';
-import React, { useState } from 'react';
+import { getProductReview, reviewProduct } from '@/api/products/products';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { HiChevronLeft, HiOutlineStar, HiStar } from 'react-icons/hi2';
+import { ToastContainer, toast } from 'react-toastify';
 interface CartDetailsProps {
-	handleOpen: () => void; // Define the type of handleOpen as a function that takes no arguments and returns void.
+	handleOpen: () => void;
+	productToken: string | null;
+	productName: string | undefined;
+	getReviews: () => void;
 }
-const RateModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
+
+const RateModal: React.FC<CartDetailsProps> = ({
+	handleOpen,
+	productToken,
+	productName,
+	getReviews,
+}) => {
 	const [rating, setRating] = useState<number>(0);
+	const [review, setReview] = useState<string>('');
+	const [loading, setLoading] = useState(false);
+	const [loaded, setLoaded] = useState(false);
 
 	const handleRatingChange = (newRating: number) => {
 		setRating(newRating);
 	};
+
+	const handleReviewChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+		setReview(event.target.value);
+	};
+
+	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
+
+	// Fetch mail from localStorage when the component mounts
+	const usertoken =
+		typeof window !== 'undefined'
+			? localStorage.getItem('usertoken') || ''
+			: '';
+
+	// create reviews
+	const createReview = async () => {
+		setLoading(true);
+		try {
+			await reviewProduct(
+				`$${token}`,
+				productToken,
+				productName,
+				rating,
+				review,
+				usertoken
+			);
+			toast.success('Review submitted successfully');
+			getReviews();
+			handleOpen();
+		} catch (error) {
+			toast.error('Error Adding a review, Please Try Again');
+			// console.error('Error fetching products:', error);
+		} finally {
+			setLoading(false);
+		}
+	};
+
 	return (
 		<div className='w-full font-poppins text-dark'>
 			<div className='bg-white rounded-lg shadows py-4 px-1 md:px-8 h-auto overflow-y-scroll'>
@@ -39,23 +89,26 @@ const RateModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 						</span>
 					))}
 				</div>
-				<p className='text-center text-2xl text-dark/50 my-4'>0/5</p>
+				<p className='text-center text-2xl text-dark/50 my-4'>{rating}/5</p>
 
 				<div className='w-full'>
 					<p>Comment</p>
 					<textarea
-						name=''
+						name='review'
 						id=''
+						value={review}
+						onChange={handleReviewChange}
 						className='w-full border rounded-lg px-3 py-2 border-dark/50 h-[6rem] outline-none'></textarea>
 				</div>
 				<div className='flex justify-end'>
 					<button
 						className='bg-greens text-white px-4 py-2 mt-4 rounded-md w-[10rem]'
-						onClick={handleOpen}>
-						Post
+						onClick={createReview}>
+						{loading ? 'Loading...' : 'Review'}
 					</button>
 				</div>
 			</div>
+			<ToastContainer />
 		</div>
 	);
 };
