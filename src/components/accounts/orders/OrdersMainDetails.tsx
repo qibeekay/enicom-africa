@@ -202,13 +202,13 @@ const OrdersMainDetails = () => {
 					)}
 				</div>
 
-				<Dialog
+				{/* <Dialog
 					size='sm'
 					open={open}
 					handler={handleOpen}
 					className='bg-transparent shadow-none text-dark'>
 					<RateModal handleOpen={handleOpen} />
-				</Dialog>
+				</Dialog> */}
 			</div>
 		</div>
 	);
