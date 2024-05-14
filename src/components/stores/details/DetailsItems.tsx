@@ -135,12 +135,12 @@ const DetailsItems = () => {
 
 	// Calculate the total sum of ratings
 	reviews?.forEach((review) => {
-		totalRatingsSum += review.ratings;
+		totalRatingsSum += review?.ratings;
 	});
 
 	// Calculate the total average of ratings
 	const totalAverageRating =
-		reviews.length > 0 ? totalRatingsSum / reviews.length : 0;
+		reviews?.length > 0 ? totalRatingsSum / reviews?.length : 0;
 
 	return (
 		<div className='font-poppins my-10'>
@@ -246,7 +246,7 @@ const DetailsItems = () => {
 													/>
 												))}
 											</div>
-											<p>{reviews.length} Ratings</p>
+											<p>{reviews?.length} Ratings</p>
 										</div>
 									</div>
 
@@ -269,7 +269,7 @@ const DetailsItems = () => {
 																(ratingsCount[
 																	(5 - index) as 1 | 2 | 3 | 4 | 5
 																] /
-																	reviews.length) *
+																	reviews?.length) *
 																100
 															}%`,
 														}}></div>
