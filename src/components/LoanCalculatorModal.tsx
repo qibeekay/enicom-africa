@@ -45,6 +45,21 @@ interface Response {
 			product_size: number;
 		}
 	];
+	smallest_recommendedPv: {
+		totalPv: number;
+		min_calculateNumberOfModuleInParallel: number;
+		min_calculateNumberOfModuleInSeries: number;
+		calculateModuleCurrentInAmps: number;
+	};
+	all_recommendedPv: [
+		{
+			size: number;
+			totalPV: number;
+			calculateNumberOfModuleInParallel: number;
+			calculateNumberOfModuleInSeries: number;
+			calculateModuleCurrentInAmps: number;
+		}
+	];
 }
 
 interface CartDetailsProps {
@@ -78,6 +93,7 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 	const [hoursPerDay, setHoursPerDay] = useState<number>(0);
 	const [daysPerWeek, setDaysPerWeek] = useState<number>(0);
 	const [showProduct, setShowProduct] = useState(false);
+	const [showPv, setShowPv] = useState(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
@@ -88,6 +104,9 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 
 	const togglePlan = () => {
 		setShowProduct(!showProduct);
+	};
+	const togglePv = () => {
+		setShowPv(!showPv);
 	};
 
 	const addAppliance = () => {
@@ -325,7 +344,7 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 
 				{/* results displayed */}
 				<div className='mt-10'>
-					<div className='flex flex-col md:flex-row justify-between w-full bg-bgGreen text-dark p-4 rounded-t-lg'>
+					<div className='flex flex-col md:flex-row justify-between w-full bg-bgGreen text-dark p-4 rounded-lg'>
 						<div className=''>
 							{/* weekly load */}
 							<div className='flex flex-col xs:flex-row xs:items-center gap-3'>
@@ -341,11 +360,39 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 							{/* battery size */}
 							<div className='flex flex-col xs:flex-row xs:items-center gap-3 mt-7'>
 								{/* text */}
-								<h1 className='font-semibold'>Battery Size:</h1>
+								<h1 className='text-sm sm:text-base font-semibold'>
+									Battery Size:
+								</h1>
 
 								{/* box */}
 								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
 									<p>{response?.BatterySize || '0'}kW</p>
+								</div>
+							</div>
+
+							{/* battery number */}
+							<div className='flex flex-col xs:flex-row xs:items-center gap-3 mt-7'>
+								{/* text */}
+								<h1 className='text-sm sm:text-base font-semibold'>
+									Battery Number:
+								</h1>
+
+								{/* box */}
+								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
+									<p>{response?.totalNumberOfBatteries || '0'}</p>
+								</div>
+							</div>
+
+							{/* battery in series */}
+							<div className='flex flex-col xs:flex-row xs:items-center gap-3 mt-7'>
+								{/* text */}
+								<h1 className='text-sm sm:text-base font-semibold'>
+									Battery in Series:
+								</h1>
+
+								{/* box */}
+								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
+									<p>{response?.numbersOfBatteriesInSeries || '0'}</p>
 								</div>
 							</div>
 						</div>
@@ -354,7 +401,9 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 							{/* inverter size */}
 							<div className='flex flex-col xs:flex-row xs:items-center mt-7 md:mt-0 md:justify-end gap-3'>
 								{/* text */}
-								<h1 className='font-semibold'>Inverter Size:</h1>
+								<h1 className='text-sm sm:text-base font-semibold'>
+									Inverter Size:
+								</h1>
 
 								{/* box */}
 								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
@@ -364,22 +413,165 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 
 							<div className='flex flex-col xs:flex-row xs:items-center md:justify-end gap-3 mt-7'>
 								{/* text */}
-								<h1 className='font-semibold'>Charge Controller:</h1>
+								<h1 className='text-sm sm:text-base font-semibold'>
+									Charge Controller:
+								</h1>
 
 								{/* box */}
 								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
 									<p>{response?.numbersOfControllerRequired || '0'}</p>
 								</div>
 							</div>
+
+							{/* pv module */}
+							<div className='flex flex-col xs:flex-row xs:items-center md:justify-end gap-3 mt-7'>
+								{/* text */}
+								<h1 className='text-sm sm:text-base font-semibold'>
+									Numbers of PvModule:
+								</h1>
+
+								{/* box */}
+								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
+									<p>{response?.numberOfPvModules || '0'}</p>
+								</div>
+							</div>
+
+							{/* battery in parallel */}
+							<div className='flex flex-col xs:flex-row xs:items-center md:justify-end gap-3 mt-7'>
+								{/* text */}
+								<h1 className='text-sm sm:text-base font-semibold'>
+									Battery in parallel:
+								</h1>
+
+								{/* box */}
+								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
+									<p>{response?.numbersOfBatteryInParallel || '0'}</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className='bg-bgGreen my-5 py-4 rounded-lg'>
+						<p className='text-dark text-sm xs:text-base sm:text-lg font-semibold px-4'>
+							Smallent Recommended PV
+						</p>
+						<div className='flex flex-col md:flex-row justify-between w-full text-dark p-4'>
+							<div className=''>
+								<div className='flex flex-col xs:flex-row xs:items-center md:mt-0 md:justify-start gap-3'>
+									{/* text */}
+									<h1 className='text-sm sm:text-base font-semibold'>
+										Total PV:
+									</h1>
+
+									{/* box */}
+									<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
+										<p>{response?.smallest_recommendedPv?.totalPv || '0'}</p>
+									</div>
+								</div>
+
+								<div className='mt-7'>
+									<div className='flex flex-col xs:flex-row xs:items-center md:mt-0 md:justify-end gap-3'>
+										{/* text */}
+										<h1 className='text-sm sm:text-base font-semibold'>
+											Battery No's in parallel:
+										</h1>
+
+										{/* box */}
+										<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
+											<p>
+												{response?.smallest_recommendedPv
+													?.min_calculateNumberOfModuleInParallel || '0'}
+											</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div className=''>
+								<div className='flex flex-col xs:flex-row xs:items-center mt-7 md:mt-0 md:justify-end gap-3'>
+									{/* text */}
+									<h1 className='text-sm sm:text-base font-semibold'>
+										Battery No's in series:
+									</h1>
+
+									{/* box */}
+									<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
+										<p>
+											{response?.smallest_recommendedPv
+												?.min_calculateNumberOfModuleInSeries || '0'}
+											W
+										</p>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 					<div className='mb-10'>
+						{/* recommended pvs */}
+						<div className='bg-bgGreen py-2 px-4 mt-5 rounded-lg'>
+							<div
+								className='cursor-pointer flex items-center justify-between'
+								onClick={togglePv}>
+								<p className=' text-dark text-sm xs:text-base sm:text-lg font-semibold'>
+									View Recommended Pv's
+								</p>
+
+								{showPv ? <HiChevronUp /> : <HiChevronDown />}
+							</div>
+							{showPv && (
+								<div className='w-full mt-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7'>
+									{response?.all_recommendedPv?.map((pv, index) => (
+										<div
+											key={index}
+											className='w-full flex flex-col items-center justify-center'>
+											{/* img */}
+
+											{/* name details */}
+											<div className='flex gap-7'>
+												<div className='flex flex-col'>
+													<span className='font-semibold text-xs xs:text-sm'>
+														Size:{' '}
+													</span>
+													<span className='font-semibold text-xs xs:text-sm'>
+														Total PV:{' '}
+													</span>
+													<span className='font-semibold text-xs xs:text-sm'>
+														Module Current:{' '}
+													</span>
+													<span className='font-semibold text-xs xs:text-sm'>
+														Battery No's in series
+													</span>
+													<span className='font-semibold text-xs xs:text-sm'>
+														Battery No's in parallel
+													</span>
+												</div>
+												<div className='flex flex-col'>
+													<p className=' text-dark text-xs xs:text-sm line-clamp-1 md:line-clamp-none'>
+														{pv?.size}
+													</p>
+													<p className='text-dark text-xs xs:text-sm'>
+														{pv?.totalPV}
+													</p>
+													<p className='text-dark text-xs xs:text-sm'>
+														{pv?.calculateModuleCurrentInAmps}Amps
+													</p>
+													<p className='text-dark text-xs xs:text-sm'>
+														{pv?.calculateNumberOfModuleInSeries}
+													</p>
+													<p className='text-dark text-xs xs:text-sm'>
+														{pv?.calculateNumberOfModuleInParallel}
+													</p>
+												</div>
+											</div>
+										</div>
+									))}
+								</div>
+							)}
+						</div>
 						{/* recommended products */}
-						<div className='bg-bgGreen py-2 px-4 rounded-b-lg'>
+						<div className='bg-bgGreen py-2 px-4 rounded-lg my-5'>
 							<div
 								className='cursor-pointer flex items-center justify-between'
 								onClick={togglePlan}>
-								<p className=' text-dark text-lg font-semibold'>
+								<p className=' text-dark text-sm xs:text-base sm:text-lg font-semibold'>
 									View Recommended Products
 								</p>
 
