@@ -15,6 +15,12 @@ const DasboardNav = ({ openRight }: { openRight: () => void }) => {
 	const [searchQuery, setSearchQuery] = useState('');
 	const { cartItems } = useCart();
 
+	// Fetch mail from localStorage when the component mounts
+	const usertoken =
+		typeof window !== 'undefined'
+			? localStorage.getItem('usertoken') || ''
+			: '';
+
 	// const navigationRef = useRef<HTMLDivElement | null>(null);
 	const searchInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -22,7 +28,11 @@ const DasboardNav = ({ openRight }: { openRight: () => void }) => {
 
 	// re-routes to home page
 	const handleHome = () => {
-		router.push('/dashboard');
+		if (usertoken) {
+			router.push('/dashboard');
+		} else {
+			router.push('/');
+		}
 	};
 
 	// on mobile view toggles the search input
@@ -115,7 +125,9 @@ const DasboardNav = ({ openRight }: { openRight: () => void }) => {
 
 						{/* cart */}
 						<div className='grid items-end relative'>
-							<Link href={'/cart'} className='flex flex-col cursor-pointer'>
+							<Link
+								href={usertoken ? '/cart' : '/login'}
+								className='flex flex-col cursor-pointer'>
 								<div className='grid items-center justify-center'>
 									<BsCart size={20} />
 								</div>
@@ -128,7 +140,7 @@ const DasboardNav = ({ openRight }: { openRight: () => void }) => {
 
 						{/* account */}
 						<div className='grid items-end'>
-							<Link href={'/account'}>
+							<Link href={usertoken ? '/account' : '/login'}>
 								<div className='flex flex-col items-center text-greens'>
 									<FaUserCircle size={18} />
 								</div>

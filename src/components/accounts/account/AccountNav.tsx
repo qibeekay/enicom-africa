@@ -15,13 +15,23 @@ const AccountNav = ({ openRight }: { openRight: () => void }) => {
 	const [mobileSearchVisible, setMobileSearchVisible] = useState(false);
 	const { cartItems } = useCart();
 
+	// Fetch mail from localStorage when the component mounts
+	const usertoken =
+		typeof window !== 'undefined'
+			? localStorage.getItem('usertoken') || ''
+			: '';
+
 	const navigationRef = useRef<HTMLDivElement | null>(null);
 	const searchInputRef = useRef<HTMLInputElement | null>(null);
 
 	const router = useRouter();
 
 	const handleHome = () => {
-		router.push('/dashboard');
+		if (usertoken) {
+			router.push('/dashboard');
+		} else {
+			router.push('/');
+		}
 	};
 
 	const toggleMobileSearch = () => {

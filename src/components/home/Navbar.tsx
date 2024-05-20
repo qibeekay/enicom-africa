@@ -5,6 +5,14 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { HiBars3 } from 'react-icons/hi2';
 import { HiX } from 'react-icons/hi';
+import {
+	Dialog,
+	Menu,
+	MenuHandler,
+	MenuItem,
+	MenuList,
+} from '@material-tailwind/react';
+import LoanCalculatorModal from '../LoanCalculatorModal';
 
 const Navbar = () => {
 	const [usermail, setUsermail] = useState('');
@@ -26,6 +34,8 @@ const Navbar = () => {
 	const isLoggedIn = !!usermail;
 
 	const [nav, setNav] = useState(false);
+	const [open, setOpen] = React.useState(false);
+	const handleOpen = () => setOpen((cur) => !cur);
 	return (
 		<div>
 			<div className='flex items-center justify-between w-full bg-bgGreen px-4 lg:px-[4rem] py-4'>
@@ -47,11 +57,34 @@ const Navbar = () => {
 							<Link href={'/about-us'}>About Us</Link>
 						</li>
 						<li>
-							<Link href={'/faqs'}>FAQs</Link>
-						</li>
-						<li>
 							<Link href={''}>Contact Us</Link>
 						</li>
+						<Menu>
+							<MenuHandler>
+								<button>Resources</button>
+							</MenuHandler>
+							<MenuList>
+								<MenuItem>
+									<div
+										onClick={handleOpen}
+										className=' font-semibold text-greens '>
+										Load Calculator
+									</div>
+								</MenuItem>
+								<MenuItem>
+									<Link
+										href={'/loan-calculator'}
+										className=' font-semibold text-greens '>
+										Loan Calculator
+									</Link>
+								</MenuItem>
+								<MenuItem>
+									<Link href={'/faqs'} className='font-semibold text-greens '>
+										FAQs
+									</Link>
+								</MenuItem>
+							</MenuList>
+						</Menu>
 					</ul>
 				</div>
 
@@ -106,17 +139,40 @@ const Navbar = () => {
 								<Link href={'/store'}>Store</Link>
 							</li>
 							<li>
-								<Link href={''}>Company</Link>
+								<Link href={'/company'}>Company</Link>
 							</li>
 							<li>
-								<Link href={''}>About Us</Link>
-							</li>
-							<li>
-								<Link href={''}>Product</Link>
+								<Link href={'/about-us'}>About Us</Link>
 							</li>
 							<li>
 								<Link href={''}>Contact Us</Link>
 							</li>
+							<Menu>
+								<MenuHandler>
+									<button>Resources</button>
+								</MenuHandler>
+								<MenuList>
+									<MenuItem>
+										<div
+											onClick={handleOpen}
+											className=' font-semibold text-greens '>
+											Load Calculator
+										</div>
+									</MenuItem>
+									<MenuItem>
+										<Link
+											href={'/loan-calculator'}
+											className=' font-semibold text-greens '>
+											Loan Calculator
+										</Link>
+									</MenuItem>
+									<MenuItem>
+										<Link href={'/faqs'} className='font-semibold text-greens '>
+											FAQs
+										</Link>
+									</MenuItem>
+								</MenuList>
+							</Menu>
 						</ul>
 					</div>
 
@@ -141,6 +197,13 @@ const Navbar = () => {
 						</div>
 					</div>
 				</div>
+				<Dialog
+					size='lg'
+					open={open}
+					handler={handleOpen}
+					className='bg-transparent shadow-none text-dark'>
+					<LoanCalculatorModal handleOpen={handleOpen} />
+				</Dialog>
 			</div>
 		</div>
 	);

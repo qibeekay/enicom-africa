@@ -23,6 +23,8 @@ interface Props {
 
 const MenuDrawer = ({ openRight, setOpenRight }: Props) => {
 	const [status, setStatus] = useState('');
+	const [role, setRole] = useState<string[]>([]);
+
 	const [agentStatus, setAgentStatus] = useState('');
 
 	const closeDrawerRight = () => setOpenRight(false);
@@ -56,6 +58,7 @@ const MenuDrawer = ({ openRight, setOpenRight }: Props) => {
 			const getusers = await getUser(`$${token}`, `${usertoken}`);
 			setStatus(getusers.is_verified_seller);
 			setAgentStatus(getusers.is_verified_agent);
+			setRole(getusers.roles);
 		} catch (error) {
 			// console.error('Error fetching cart items:', error);
 			console.log('error');
@@ -66,6 +69,10 @@ const MenuDrawer = ({ openRight, setOpenRight }: Props) => {
 		getuser();
 	}, []);
 
+	const handleLogin = () => {
+		router.push('/login');
+	};
+
 	const handleLogout = () => {
 		// Clear user-related information from local storage
 		localStorage.removeItem('fname');
@@ -74,10 +81,11 @@ const MenuDrawer = ({ openRight, setOpenRight }: Props) => {
 		localStorage.removeItem('usertoken');
 		localStorage.removeItem('renitoken');
 
+		router.push('/login'); // Change '/login' to the actual path of your login page
 		// Redirect to the login page
 		toast.success('Logout Successful');
-		router.push('/login'); // Change '/login' to the actual path of your login page
 	};
+
 	return (
 		<div>
 			<Drawer
@@ -105,92 +113,102 @@ const MenuDrawer = ({ openRight, setOpenRight }: Props) => {
 						</svg>
 					</IconButton>
 				</div>
-				<div>
-					{/* dashboard */}
-					<Link
-						href={'/dashboard'}
-						className=' flex items-center justify-end gap-4 hover:bg-greens/20 py-3 px-5 rounded-lg hover:text-greens'>
-						<CgMenuGridR size='30' />
-
-						<p className=''>Dashboard</p>
-					</Link>
-
-					{/* store */}
-					<Link
-						href={'/store'}
-						className=' flex items-center justify-end gap-4 hover:bg-greens/20 py-3 px-5 rounded-lg hover:text-greens my-5'>
-						<PiShoppingBagOpenLight size='27' />
-
-						<p className=''>Store</p>
-					</Link>
-
-					{/* loan */}
-					<Link
-						href={'/loan-facility'}
-						className=' flex items-center justify-end gap-4 hover:bg-greens/20 py-3 px-5 rounded-lg hover:text-greens'>
-						<HiOutlineCreditCard size='27' />
-						<p className=''>Loan Facility</p>
-					</Link>
-
+				{usertoken ? (
 					<div>
-						{/* become a seller */}
-						{status ? (
+						{/* dashboard */}
+						<Link
+							href={'/dashboard'}
+							className=' flex items-center justify-end gap-4 hover:bg-greens/20 py-3 px-5 rounded-lg hover:text-greens'>
+							<CgMenuGridR size='30' />
+
+							<p className=''>Dashboard</p>
+						</Link>
+
+						{/* store */}
+						<Link
+							href={'/store'}
+							className=' flex items-center justify-end gap-4 hover:bg-greens/20 py-3 px-5 rounded-lg hover:text-greens my-5'>
+							<PiShoppingBagOpenLight size='27' />
+
+							<p className=''>Store</p>
+						</Link>
+
+						{/* loan */}
+						<Link
+							href={'/loan-facility'}
+							className=' flex items-center justify-end gap-4 hover:bg-greens/20 py-3 px-5 rounded-lg hover:text-greens'>
+							<HiOutlineCreditCard size='27' />
+							<p className=''>Loan Facility</p>
+						</Link>
+
+						<div>
+							{/* become a seller */}
+							{status ? (
+								<div className='w-full mt-5'>
+									<Link className='' href={'/sales'}>
+										<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
+											Sellers Dashboard
+										</p>
+									</Link>
+								</div>
+							) : (
+								<div className='w-full mt-5'>
+									<button
+										className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'
+										onClick={handleOpen}>
+										Become a Seller
+									</button>
+								</div>
+							)}
+
+							{/* become an Agent */}
+							{agentStatus ? (
+								<div className='w-full mt-5'>
+									<Link className='' href={'agent-dashboard'}>
+										<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
+											Agents Dashboard
+										</p>
+									</Link>
+								</div>
+							) : (
+								<div className='w-full mt-5'>
+									<Link className='' href={'/agent'}>
+										<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
+											Become an Agent
+										</p>
+									</Link>
+								</div>
+							)}
+
+							{/* loan calculator */}
 							<div className='w-full mt-5'>
-								<Link className='' href={'/sales'}>
+								<Link className='' href={'/loan-calculator'}>
 									<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
-										Sellers Dashboard
+										Loan Calculator
 									</p>
 								</Link>
 							</div>
-						) : (
-							<div className='w-full mt-5'>
+							{/* logout */}
+							<div className='w-full mt-7'>
 								<button
-									className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'
-									onClick={handleOpen}>
-									Become a Seller
+									className='grid justify-end w-full'
+									onClick={handleLogout}>
+									<p className='border-greens border w-full rounded-lg text-dark py-2 px-5 text-center text-sm'>
+										Logout
+									</p>
 								</button>
 							</div>
-						)}
-
-						{/* become an Agent */}
-						{agentStatus ? (
-							<div className='w-full mt-5'>
-								<Link className='' href={'agent-dashboard'}>
-									<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
-										Agents Dashboard
-									</p>
-								</Link>
-							</div>
-						) : (
-							<div className='w-full mt-5'>
-								<Link className='' href={'/agent'}>
-									<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
-										Become an Agent
-									</p>
-								</Link>
-							</div>
-						)}
-
-						{/* loan calculator */}
-						<div className='w-full mt-5'>
-							<Link className='' href={'/loan-calculator'}>
-								<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
-									Loan Calculator
-								</p>
-							</Link>
-						</div>
-						{/* logout */}
-						<div className='w-full mt-7'>
-							<button
-								className='grid justify-end w-full'
-								onClick={handleLogout}>
-								<p className='border-greens border w-full rounded-lg text-dark py-2 px-5 text-center text-sm'>
-									Logout
-								</p>
-							</button>
 						</div>
 					</div>
-				</div>
+				) : (
+					<div className='w-full mt-5'>
+						<button
+							className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'
+							onClick={handleLogin}>
+							Get Started
+						</button>
+					</div>
+				)}
 			</Drawer>
 			<Dialog
 				size='xs'
