@@ -30,6 +30,13 @@ interface Seller {
 			bussiness_name: string;
 			verification_type: string;
 			verification_number: string;
+			current_production_capacity: string;
+			fast_supply_deliveries: string;
+			effective_support_process: string;
+			error_margin_expect: string;
+			customer_support_staff: string;
+			greater_demand: string;
+			product_catalogue: string;
 		};
 		// Add other properties as needed
 	};
@@ -168,34 +175,91 @@ const SellersModal: React.FC<OverviewModalProps> = ({
 						<div className='w-full flex gap-2 mt-6'>
 							<div className='flex flex-col'>
 								<span className='font-semibold'>Business Type: </span>
-								<span className='font-semibold'>Business Name: </span>
-								<span className='font-semibold'>CAC Number: </span>
+								{sellersByToken?.bussiness_type === 'Individual' ? null : (
+									<span className='font-semibold'>Business Name: </span>
+								)}
+								{sellersByToken?.bussiness_type === 'Individual' ? null : (
+									<span className='font-semibold'>CAC Number: </span>
+								)}
 								<span className='font-semibold'>Verification Type: </span>
 								<span className='font-semibold'>Verification Number: </span>
+								<span className='font-semibold'>Production Capacity: </span>
+								<span className='font-semibold'>Delivery Speed: </span>
+								<span className='font-semibold'>Support Process: </span>
+								<span className='font-semibold'>Expected Error Margin: </span>
+								<span className='font-semibold'>Support Staff: </span>
+								<span className='font-semibold'>Price Adjustments: </span>
 								<span className='font-semibold'>Status: </span>
 								<span className='font-semibold'>Request Date: </span>
 							</div>
 							<div className='flex flex-col'>
 								<p className=' text-dark'>{sellersByToken?.bussiness_type}</p>
-								<p className=' text-dark'>
-									{
-										sellersByToken?.data?.seller_profile_credentials
-											?.bussiness_name
-									}
-								</p>
-								<p className=' text-dark'>
-									{sellersByToken?.data?.seller_profile_credentials?.cac_number}
-								</p>
+								{sellersByToken?.bussiness_type === 'Individual' ? null : (
+									<p className=' text-dark'>
+										{
+											sellersByToken?.data?.seller_profile_credentials
+												?.bussiness_name
+										}
+									</p>
+								)}
+
+								{sellersByToken?.bussiness_type === 'Individual' ? null : (
+									<p className=' text-dark'>
+										{
+											sellersByToken?.data?.seller_profile_credentials
+												?.cac_number
+										}
+									</p>
+								)}
+
 								<p className=' text-dark'>
 									{
 										sellersByToken?.data?.seller_profile_credentials
 											?.verification_type
 									}
 								</p>
+
 								<p className=' text-dark'>
 									{
 										sellersByToken?.data?.seller_profile_credentials
 											?.verification_number
+									}
+								</p>
+
+								<p className=' text-dark'>
+									{
+										sellersByToken?.data?.seller_profile_credentials
+											?.current_production_capacity
+									}
+								</p>
+								<p className=' text-dark'>
+									{
+										sellersByToken?.data?.seller_profile_credentials
+											?.fast_supply_deliveries
+									}
+								</p>
+								<p className=' text-dark'>
+									{
+										sellersByToken?.data?.seller_profile_credentials
+											?.effective_support_process
+									}
+								</p>
+								<p className=' text-dark'>
+									{
+										sellersByToken?.data?.seller_profile_credentials
+											?.error_margin_expect
+									}
+								</p>
+								<p className=' text-dark'>
+									{
+										sellersByToken?.data?.seller_profile_credentials
+											?.customer_support_staff
+									}
+								</p>
+								<p className=' text-dark'>
+									{
+										sellersByToken?.data?.seller_profile_credentials
+											?.greater_demand
 									}
 								</p>
 								<p className=' text-dark'>
@@ -204,6 +268,21 @@ const SellersModal: React.FC<OverviewModalProps> = ({
 								<p className=' text-dark'>{sellersByToken?.requested_date}</p>
 							</div>
 						</div>
+
+						<div>
+							<p className='font-semibold'>Product Catalog</p>
+							<div className='w-[25rem] h-[15rem]'>
+								<img
+									className='w-full'
+									src={`https://enicom.iccflifeskills.com.ng/uploads/${sellersByToken?.data?.seller_profile_credentials?.product_catalogue}`}
+									alt={
+										sellersByToken?.data?.seller_profile_credentials
+											?.product_catalogue
+									}
+								/>
+							</div>
+						</div>
+
 						{sellersByToken?.bussiness_type === 'Individual' ? null : (
 							<div>
 								<p className='font-semibold'>Utility Bill</p>

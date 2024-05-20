@@ -73,7 +73,7 @@ const LoginForm = () => {
 	};
 
 	return (
-		<div className='w-full min-h-screen bg-bgGreen py-10'>
+		<div className='w-full min-h-screen bg-bgGreen py-10 flex flex-col items-center justify-center'>
 			<div className='bg-white w-[95%] sm:w-[80%] md:w-[60%] lg:w-[50%] py-7 px-4 sm:p-7 rounded-3xl mx-auto text-dark'>
 				{/* form-container */}
 				<div>

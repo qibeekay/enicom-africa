@@ -53,6 +53,13 @@ export const verifyIndividual = async (
 		bussiness_type: string;
 		verification_type: string;
 		verification_number: string;
+		current_production_capacity: string;
+		fast_supply_deliveries: string;
+		effective_support_process: string;
+		error_margin_expect: string;
+		customer_support_staff: string;
+		greater_demand: string;
+		product_catalogue: string;
 		usertoken: string;
 	},
 	bearerToken: string
@@ -99,6 +106,13 @@ export const verifyBusiness = async (
 		verification_number: string;
 		cac_number: string;
 		utility_bill: string;
+		current_production_capacity: string;
+		fast_supply_deliveries: string;
+		effective_support_process: string;
+		error_margin_expect: string;
+		customer_support_staff: string;
+		greater_demand: string;
+		product_catalogue: string;
 		usertoken: string;
 	},
 	bearerToken: string

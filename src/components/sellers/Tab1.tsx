@@ -18,26 +18,36 @@ interface UploadResponse {
 
 const Tab1 = () => {
 	const [img, setImg] = useState<File | null>(null);
+	const [img1, setImg1] = useState<File | null>(null);
 	const [bussinessType, setBussinessType] = useState<string>('');
 	const [uploadResponse, setUploadResponse] = useState<UploadResponse | null>(
 		null
 	);
-	const [verificationType, setVerificationType] = useState<string>('');
+	const [uploadResponse1, setUploadResponse1] = useState<UploadResponse | null>(
+		null
+	);
 
+	const [verificationType, setVerificationType] = useState<string>('');
+	const [uploading, setUploading] = useState(false);
+	const [uploading1, setUploading1] = useState(false);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
 	// auth token
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
-	const onDrop = useCallback(
+	const onDrop1 = useCallback(
 		async (acceptedFiles: File[]) => {
 			const selectedFile = acceptedFiles[0];
 
+			// Set loading state to true when upload starts
+			setUploading(true);
+
 			// Validate MIME type and file extension
+			const validFileTypes = ['image/jpeg', 'image/png'];
 			if (
 				selectedFile &&
-				(selectedFile.type.startsWith('image/') ||
-					selectedFile.type.startsWith('video/'))
+				(validFileTypes.includes(selectedFile.type) ||
+					/\.(jpg|jpeg|png)$/i.test(selectedFile.name))
 			) {
 				setImg(selectedFile);
 
@@ -63,24 +73,91 @@ const Tab1 = () => {
 				} catch (error) {
 					// console.error('Image upload failed:', error);
 					toast.error('Image upload failed');
-					setUploadResponse({ success: false, message: 'Image upload failed' });
+					setUploadResponse({
+						success: false,
+						message: 'Image upload failed',
+					});
 				}
 			} else {
 				console.warn('Invalid file format or extension');
 				toast.warn('Invalid file format or extension');
 			}
+			// Set loading state back to false when upload completes
+			setUploading(false);
 		},
 		[token]
 	);
 
-	const { getRootProps, getInputProps } = useDropzone({
-		onDrop,
-		accept: ['image/*'] as any, // Specify the accepted file types
-		maxFiles: 1, // Limit the number of files to 1
-	});
+	const onDrop2 = useCallback(
+		async (acceptedFiles: File[]) => {
+			const selectedFile = acceptedFiles[0];
+
+			// Set loading state to true when upload starts
+			setUploading1(true);
+
+			// Validate MIME type and file extension
+			const validFileTypes = ['image/jpeg', 'image/png'];
+			if (
+				selectedFile &&
+				(validFileTypes.includes(selectedFile.type) ||
+					/\.(jpg|jpeg|png)$/i.test(selectedFile.name))
+			) {
+				setImg1(selectedFile);
+
+				// Upload the file immediately after it is selected
+				const formData = new FormData();
+				formData.append('image', selectedFile);
+
+				try {
+					const uploadResponse = await fetch(
+						'https://enicom.iccflifeskills.com.ng/v0.1/api/upload_image',
+						{
+							method: 'POST',
+							headers: {
+								Authorization: `Bearer $${token}`,
+							},
+							body: formData,
+						}
+					);
+
+					const result = await uploadResponse.json();
+					setUploadResponse1(result);
+					toast.success('Image uploaded');
+				} catch (error) {
+					// console.error('Image upload failed:', error);
+					toast.error('Image upload failed');
+					setUploadResponse1({
+						success: false,
+						message: 'Image upload failed',
+					});
+				}
+			} else {
+				console.warn('Invalid file format or extension');
+				toast.warn('Invalid file format or extension');
+			}
+			// Set loading state back to false when upload completes
+			setUploading1(false);
+		},
+		[token]
+	);
+
+	const { getRootProps: getRootProps1, getInputProps: getInputProps1 } =
+		useDropzone({
+			onDrop: onDrop1,
+			accept: ['image/*'] as any,
+			maxFiles: 1,
+		});
+
+	const { getRootProps: getRootProps2, getInputProps: getInputProps2 } =
+		useDropzone({
+			onDrop: onDrop2,
+			accept: ['image/*'] as any,
+			maxFiles: 1,
+		});
 
 	const imageUrl = uploadResponse?.data?.image;
-	console.log(imageUrl);
+	const imageUrl1 = uploadResponse1?.data?.image;
+	// console.log(imageUrl);
 
 	// Check if user is logged in based on your authentication mechanism
 	useEffect(() => {
@@ -108,6 +185,13 @@ const Tab1 = () => {
 		bussiness_type: '',
 		verification_type: '',
 		verification_number: '',
+		current_production_capacity: '',
+		fast_supply_deliveries: '',
+		effective_support_process: '',
+		error_margin_expect: '',
+		customer_support_staff: '',
+		greater_demand: '',
+		product_catalogue: '',
 		usertoken: usertoken,
 	});
 
@@ -122,6 +206,13 @@ const Tab1 = () => {
 			bussiness_type: '',
 			verification_type: '',
 			verification_number: '',
+			current_production_capacity: '',
+			fast_supply_deliveries: '',
+			effective_support_process: '',
+			error_margin_expect: '',
+			customer_support_staff: '',
+			greater_demand: '',
+			product_catalogue: '',
 			usertoken: usertoken,
 		});
 	};
@@ -163,6 +254,7 @@ const Tab1 = () => {
 			// Ensure that usertoken is a string and not null
 			const userToken = formData.usertoken || '';
 			const profileImage = imageUrl || '';
+			const catalogueImage = imageUrl1 || '';
 
 			const response = await verifyIndividual(
 				{
@@ -170,6 +262,7 @@ const Tab1 = () => {
 					profile_image: profileImage,
 					bussiness_type: bussinessType,
 					verification_type: verificationType,
+					product_catalogue: catalogueImage,
 					usertoken: userToken,
 				},
 				`$${token}`
@@ -269,6 +362,7 @@ const Tab1 = () => {
 									{/* image upload */}
 									<div className='max-w-xl relative z-0'>
 										<p>Upload your Picture</p>
+										{uploading && <p>Uploading image...</p>}
 										<label
 											// {...getRootProps()}
 											className='flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none'>
@@ -312,7 +406,7 @@ const Tab1 = () => {
 												)}
 											</span>
 											<input
-												{...getInputProps()}
+												{...getInputProps1()}
 												type='file'
 												name='file_upload'
 												className='hidden'
@@ -369,6 +463,150 @@ const Tab1 = () => {
 											className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
 											placeholder='Type here'
 										/>
+									</div>
+
+									{/* production capacity */}
+									<div>
+										<label htmlFor='amount'>Current Production Capacity</label>
+										<input
+											type='text'
+											name='current_production_capacity'
+											value={formData.current_production_capacity}
+											onChange={handleChange}
+											className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
+											placeholder='Type here'
+										/>
+									</div>
+
+									{/* fast supply deliveries */}
+									<div>
+										<label htmlFor='amount'>Delivery Speed</label>
+										<input
+											type='text'
+											name='fast_supply_deliveries'
+											value={formData.fast_supply_deliveries}
+											onChange={handleChange}
+											className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
+											placeholder='How fast do you supply deliveries'
+										/>
+									</div>
+
+									{/* Effective support */}
+									<div>
+										<label htmlFor='amount'>Support Process</label>
+										<input
+											type='text'
+											name='effective_support_process'
+											value={formData.effective_support_process}
+											onChange={handleChange}
+											className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
+											placeholder='How effective is your support process'
+										/>
+									</div>
+
+									{/* error margin */}
+									<div>
+										<label htmlFor='amount'>Expected Error Margin</label>
+										<input
+											type='text'
+											name='error_margin_expect'
+											value={formData.error_margin_expect}
+											onChange={handleChange}
+											className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
+											placeholder='What is your expected error margin'
+										/>
+									</div>
+
+									{/* customer support */}
+									<div>
+										<label htmlFor='amount'>Customer Staff Details</label>
+										<input
+											type='text'
+											name='customer_support_staff'
+											value={formData.customer_support_staff}
+											onChange={handleChange}
+											className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
+											placeholder='Customer support statff we can contact'
+										/>
+									</div>
+
+									{/* greater demands */}
+									<div>
+										<label htmlFor='amount'>Price Adjustment</label>
+										<input
+											type='text'
+											name='greater_demand'
+											value={formData.greater_demand}
+											onChange={handleChange}
+											className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
+											placeholder='When there is greater demands, How do you adjust your price'
+										/>
+									</div>
+
+									{/* upload product catalogue*/}
+									<div className='max-w-xl relative z-0'>
+										<p>Upload your Product Catalogue</p>
+										{uploading1 && <p>Uploading image...</p>}
+										<label
+											// {...getRootProps()}
+											className='flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none'>
+											<span className='flex items-center space-x-2'>
+												<svg
+													xmlns='http://www.w3.org/2000/svg'
+													className='w-6 h-6 text-gray-600'
+													fill='none'
+													viewBox='0 0 24 24'
+													stroke='currentColor'
+													strokeWidth='2'>
+													<path
+														strokeLinecap='round'
+														strokeLinejoin='round'
+														d='M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12'
+													/>
+												</svg>
+												{img1 ? (
+													<div className='flex items-center'>
+														{/* <img
+														src={URL.createObjectURL(file)}
+														alt={file.name}
+														className='w-8 h-8 object-cover rounded-full'
+													/> */}
+														<span className='font-medium text-gray-600'>
+															{img1.name} is selected.{' '}
+															<span
+																className='text-blue-600 underline cursor-pointer'
+																onClick={() => setImg1(null)}>
+																Remove
+															</span>
+														</span>
+													</div>
+												) : (
+													<span className='font-medium text-gray-600'>
+														Drop files to Attach, or{' '}
+														<span className='text-blue-600 underline'>
+															browse
+														</span>
+													</span>
+												)}
+											</span>
+											<input
+												{...getInputProps2()}
+												type='file'
+												name='file_upload'
+												className='hidden'
+											/>
+										</label>
+
+										{/* Display the uploaded image */}
+										{imageUrl1 && (
+											<div className=' w-[5rem] aspect-square overflow-hidden bg-orange-500 absolute right-5 top-5'>
+												<img
+													src={`https://enicom.iccflifeskills.com.ng/uploads/${imageUrl1}`}
+													alt={imageUrl1}
+													className='w-full h-full object-cover'
+												/>
+											</div>
+										)}
 									</div>
 
 									{/* button */}
