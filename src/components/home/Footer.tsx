@@ -86,9 +86,41 @@ const Footer = () => {
 							</div>
 						</div>
 					</div>
+					<div className='w-full pt-16 pb-10'>
+						<ul className='w-full flex items-center justify-center gap-10'>
+							<li>
+								<Link href={'/terms-of-use'} className='text-white/70'>
+									Terms of use
+								</Link>
+							</li>
+							<li>
+								<Link href={'/credit-policy-notice'} className='text-white/70'>
+									Credit Policy notice
+								</Link>
+							</li>
+							<li>
+								<Link
+									href={'/non-disclosure-agreement'}
+									className='text-white/70'>
+									Non Disclosure Agreement
+								</Link>
+							</li>
+							<li>
+								<Link href={'/cookie-policy'} className='text-white/70'>
+									Cookies Policy
+								</Link>
+							</li>
+							<li>
+								<Link href={'/website-acceptable'} className='text-white/70'>
+									Acceptable Use Policy
+								</Link>
+							</li>
+						</ul>
 
-					<p className='py-10'></p>
-					<p className='text-center text-lg pb-10'>Enicom Africa @ 2023</p>
+						<p className='text-center text-lg pb-10 pt-4'>
+							Enicom Africa @ 2023
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>
