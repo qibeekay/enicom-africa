@@ -28,6 +28,9 @@ interface Appliance {
 interface Response {
 	inverterSize: number;
 	inverterSize_th: string;
+	inverter_unit: string;
+	chargeControllerSize: number;
+	chargeController_unit: string;
 	numbersOfBatteriesInSeries: number;
 	numbersOfBatteryInParallel: number;
 	numbersOfControllerRequired: number;
@@ -37,6 +40,7 @@ interface Response {
 	totalWeeklyLoad_th: string;
 	BatterySize: number;
 	BatterySize_th: string;
+	battery_unit: string;
 	numberOfPvModules: number;
 	recommendedPvModules: number;
 	recommendedProducts: [
@@ -370,7 +374,10 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 
 								{/* box */}
 								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
-									<p>{response?.BatterySize_th || '0'}W</p>
+									<p>
+										{response?.BatterySize_th || '0'}
+										{response?.battery_unit}
+									</p>
 								</div>
 							</div>
 
@@ -411,7 +418,10 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 
 								{/* box */}
 								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
-									<p>{response?.inverterSize_th || '0'}W</p>
+									<p>
+										{response?.inverterSize_th || '0'}
+										{response?.inverter_unit}
+									</p>
 								</div>
 							</div>
 
@@ -423,7 +433,10 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 
 								{/* box */}
 								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
-									<p>{response?.numbersOfControllerRequired || '0'}</p>
+									<p>
+										{response?.chargeControllerSize || '0'}
+										{response?.chargeController_unit}
+									</p>
 								</div>
 							</div>
 
@@ -478,6 +491,18 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 							</div>
 							<div className=''>
 								<div className='flex flex-col xs:flex-row xs:items-center mt-7 md:mt-0 md:justify-end gap-3'>
+									{/* text */}
+									<h1 className='text-sm sm:text-base font-semibold'>
+										PV Size:
+									</h1>
+
+									{/* box */}
+									<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
+										<p>{response?.recommendedPV?.size || '0'}</p>
+									</div>
+								</div>
+
+								<div className='flex flex-col xs:flex-row xs:items-center mt-7 md:mt-7 md:justify-end gap-3'>
 									{/* text */}
 									<h1 className='text-sm sm:text-base font-semibold'>
 										PV No's in series:
