@@ -27,13 +27,16 @@ interface Appliance {
 }
 interface Response {
 	inverterSize: number;
+	inverterSize_th: string;
 	numbersOfBatteriesInSeries: number;
 	numbersOfBatteryInParallel: number;
 	numbersOfControllerRequired: number;
 	totalNumberOfPvModules: number;
 	totalNumberOfBatteries: number;
 	totalWeeklyLoad: number;
+	totalWeeklyLoad_th: string;
 	BatterySize: number;
+	BatterySize_th: string;
 	numberOfPvModules: number;
 	recommendedPvModules: number;
 	recommendedProducts: [
@@ -353,7 +356,7 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 
 								{/* box */}
 								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
-									<p>{response?.totalWeeklyLoad || '0'}W</p>
+									<p>{response?.totalWeeklyLoad_th || '0'}W</p>
 								</div>
 							</div>
 
@@ -366,7 +369,7 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 
 								{/* box */}
 								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
-									<p>{response?.BatterySize || '0'}kW</p>
+									<p>{response?.BatterySize_th || '0'}kW</p>
 								</div>
 							</div>
 
@@ -407,7 +410,7 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 
 								{/* box */}
 								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
-									<p>{response?.inverterSize || '0'}W</p>
+									<p>{response?.inverterSize_th || '0'}W</p>
 								</div>
 							</div>
 
@@ -452,7 +455,7 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 					</div>
 					<div className='bg-bgGreen my-5 py-4 rounded-lg'>
 						<p className='text-dark text-sm xs:text-base sm:text-lg font-semibold px-4'>
-							Smallent Recommended PV
+							Recommended PV
 						</p>
 						<div className='flex flex-col md:flex-row justify-between w-full text-dark p-4'>
 							<div className=''>
@@ -472,7 +475,7 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 									<div className='flex flex-col xs:flex-row xs:items-center md:mt-0 md:justify-end gap-3'>
 										{/* text */}
 										<h1 className='text-sm sm:text-base font-semibold'>
-											Battery No's in parallel:
+											PV No's in parallel:
 										</h1>
 
 										{/* box */}
@@ -489,7 +492,7 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 								<div className='flex flex-col xs:flex-row xs:items-center mt-7 md:mt-0 md:justify-end gap-3'>
 									{/* text */}
 									<h1 className='text-sm sm:text-base font-semibold'>
-										Battery No's in series:
+										PV No's in series:
 									</h1>
 
 									{/* box */}
@@ -497,7 +500,6 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 										<p>
 											{response?.smallest_recommendedPv
 												?.min_calculateNumberOfModuleInSeries || '0'}
-											W
 										</p>
 									</div>
 								</div>
@@ -511,7 +513,7 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 								className='cursor-pointer flex items-center justify-between'
 								onClick={togglePv}>
 								<p className=' text-dark text-sm xs:text-base sm:text-lg font-semibold'>
-									View Recommended Pv's
+									PV Recommendations
 								</p>
 
 								{showPv ? <HiChevronUp /> : <HiChevronDown />}
@@ -537,10 +539,10 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 														Module Current:{' '}
 													</span>
 													<span className='font-semibold text-xs xs:text-sm'>
-														Battery No's in series
+														PV No's in series
 													</span>
 													<span className='font-semibold text-xs xs:text-sm'>
-														Battery No's in parallel
+														PV No's in parallel
 													</span>
 												</div>
 												<div className='flex flex-col'>

@@ -134,6 +134,11 @@ import CompanyHero from './company/CompanyHero';
 import CompanyTab from './company/CompanyTab';
 import LoanDetailsTab from './company/LoanDetailsTab';
 import OutrightTab from './company/OutrightTab';
+import CookiePage from './terms-fold/CookiePage';
+import CreditPage from './terms-fold/CreditPage';
+import TermsPage from './terms-fold/TermsPage';
+import DisclosePage from './terms-fold/DisclosePage';
+import AccessPage from './terms-fold/AccessPage';
 
 export {
 	RegisterForm,
@@ -271,4 +276,9 @@ export {
 	CompanyTab,
 	OutrightTab,
 	LoanDetailsTab,
+	AccessPage,
+	CookiePage,
+	CreditPage,
+	DisclosePage,
+	TermsPage,
 };
