@@ -87,7 +87,7 @@ const Footer = () => {
 						</div>
 					</div>
 					<div className='w-full pt-16 pb-10'>
-						<ul className='w-full flex items-center justify-center gap-10'>
+						<ul className='w-full flex flex-wrap text-sm items-center justify-center gap-x-10 gap-y-4'>
 							<li>
 								<Link href={'/terms-of-use'} className='text-white/70'>
 									Terms of use
