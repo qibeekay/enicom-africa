@@ -70,6 +70,7 @@ interface Response {
 	];
 	battery: {
 		dailyLoad: number;
+		systemVolts: number;
 		data: {
 			volts: number;
 			volts_unit: string;
@@ -465,13 +466,13 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 							<div className='flex flex-col xs:flex-row xs:items-center md:justify-end gap-3 mt-7'>
 								{/* text */}
 								<h1 className='text-sm sm:text-base font-semibold'>
-									Battery Volts:
+									Systems Volts:
 								</h1>
 
 								{/* box */}
 								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
 									<p>
-										{response?.battery?.data?.volts || '0'}{' '}
+										{response?.battery?.systemVolts || '0'}{' '}
 										{response?.battery?.data?.volts_unit}
 									</p>
 								</div>
