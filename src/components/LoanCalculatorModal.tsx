@@ -69,11 +69,39 @@ interface Response {
 		}
 	];
 	battery: {
+		dailyLoad: number;
 		data: {
 			volts: number;
+			volts_unit: string;
+			amps_unit: string;
 			amps: number;
 			series: number;
 			parallel: number;
+			total: number;
+		};
+	};
+	PV: {
+		allPV: [
+			{
+				volts: number;
+				watt: number;
+				size: number;
+				total: number;
+				PVp: number;
+				PVs: number;
+				amps: number;
+				RequiredChargeControllerCurrent: number;
+			}
+		];
+		recommended: {
+			volts: number;
+			watt: number;
+			size: number;
+			total: number;
+			PVp: number;
+			PVs: number;
+			amps: number;
+			RequiredChargeControllerCurrent: number;
 		};
 	};
 }
@@ -365,11 +393,11 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 							{/* weekly load */}
 							<div className='flex flex-col xs:flex-row xs:items-center gap-3'>
 								{/* text */}
-								<h1 className='font-semibold'>Total weekly load:</h1>
+								<h1 className='font-semibold'>Daily Load:</h1>
 
 								{/* box */}
 								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
-									<p>{response?.totalWeeklyLoad_th || '0'}W</p>
+									<p>{response?.battery?.dailyLoad.toFixed(2) || '0'}W</p>
 								</div>
 							</div>
 
@@ -381,9 +409,10 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 								</h1>
 
 								{/* box */}
-								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
+								<div className='text-dark bg-white grid items-center w-full xs:w-[8rem] py-1 px-3'>
 									<p>
 										{response?.battery.data.amps || '0'}
+										{response?.battery?.data?.amps_unit}
 										{/* {response?.battery_unit} */}
 									</p>
 								</div>
@@ -398,7 +427,7 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 
 								{/* box */}
 								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
-									<p>{response?.totalNumberOfBatteries || '0'}</p>
+									<p>{response?.battery?.data?.total || '0'}</p>
 								</div>
 							</div>
 
@@ -441,21 +470,9 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 
 								{/* box */}
 								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
-									<p>{response?.battery?.data?.volts || '0'}</p>
-								</div>
-							</div>
-
-							<div className='flex flex-col xs:flex-row xs:items-center md:justify-end gap-3 mt-7'>
-								{/* text */}
-								<h1 className='text-sm sm:text-base font-semibold'>
-									Charge Controller:
-								</h1>
-
-								{/* box */}
-								<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
 									<p>
-										{response?.chargeControllerSize || '0'}
-										{response?.chargeController_unit}
+										{response?.battery?.data?.volts || '0'}{' '}
+										{response?.battery?.data?.volts_unit}
 									</p>
 								</div>
 							</div>
@@ -488,7 +505,21 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 
 									{/* box */}
 									<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
-										<p>{response?.recommendedPV?.totalPv || '0'}</p>
+										<p>{response?.PV?.recommended?.total || '0'}</p>
+									</div>
+								</div>
+
+								<div className='mt-7'>
+									<div className='flex flex-col xs:flex-row xs:items-center md:mt-0 md:justify-start gap-3'>
+										{/* text */}
+										<h1 className='text-sm sm:text-base font-semibold'>
+											Module Current:
+										</h1>
+
+										{/* box */}
+										<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
+											<p>{response?.PV?.recommended?.amps.toFixed(2) || '0'}</p>
+										</div>
 									</div>
 								</div>
 
@@ -501,10 +532,7 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 
 										{/* box */}
 										<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
-											<p>
-												{response?.recommendedPV
-													?.min_calculateNumberOfModuleInParallel || '0'}
-											</p>
+											<p>{response?.PV?.recommended?.PVp || '0'}</p>
 										</div>
 									</div>
 								</div>
@@ -518,10 +546,25 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 
 									{/* box */}
 									<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
-										<p>{response?.recommendedPV?.size || '0'}</p>
+										<p>{response?.PV?.recommended?.size || '0'}W</p>
 									</div>
 								</div>
 
+								<div className='flex flex-col xs:flex-row xs:items-center mt-7 md:mt-7 md:justify-end gap-3'>
+									{/* text */}
+									<h1 className='text-sm sm:text-base font-semibold'>
+										Controller Charge:
+									</h1>
+
+									{/* box */}
+									<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
+										<p>
+											{response?.PV?.recommended?.RequiredChargeControllerCurrent.toFixed(
+												2
+											) || '0'}
+										</p>
+									</div>
+								</div>
 								<div className='flex flex-col xs:flex-row xs:items-center mt-7 md:mt-7 md:justify-end gap-3'>
 									{/* text */}
 									<h1 className='text-sm sm:text-base font-semibold'>
@@ -530,10 +573,7 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 
 									{/* box */}
 									<div className='text-dark bg-white grid items-center w-full xs:w-[5rem] py-1 px-3'>
-										<p>
-											{response?.recommendedPV
-												?.min_calculateNumberOfModuleInSeries || '0'}
-										</p>
+										<p>{response?.PV?.recommended?.PVs || '0'}</p>
 									</div>
 								</div>
 							</div>
@@ -553,7 +593,7 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 							</div>
 							{showPv && (
 								<div className='w-full mt-5 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-7'>
-									{response?.PVRecommendations?.map((pv, index) => (
+									{response?.PV?.allPV?.map((pv, index) => (
 										<div
 											key={index}
 											className='w-full flex flex-col items-center justify-center'>
@@ -572,27 +612,33 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 														Module Current:{' '}
 													</span>
 													<span className='font-semibold text-xs xs:text-sm'>
-														PV No's in series
+														PV No's in series:
 													</span>
 													<span className='font-semibold text-xs xs:text-sm'>
-														PV No's in parallel
+														PV No's in parallel:
+													</span>
+													<span className='font-semibold text-xs xs:text-sm'>
+														Charge Controller:
 													</span>
 												</div>
 												<div className='flex flex-col'>
 													<p className=' text-dark text-xs xs:text-sm line-clamp-1 md:line-clamp-none'>
-														{pv?.size}
+														{pv?.size}W
 													</p>
 													<p className='text-dark text-xs xs:text-sm'>
-														{pv?.totalPV}
+														{pv?.total}
 													</p>
 													<p className='text-dark text-xs xs:text-sm'>
-														{pv?.calculateModuleCurrentInAmps}Amps
+														{pv?.amps.toFixed(2)}Amps
 													</p>
 													<p className='text-dark text-xs xs:text-sm'>
-														{pv?.calculateNumberOfModuleInSeries}
+														{pv?.PVs}
 													</p>
 													<p className='text-dark text-xs xs:text-sm'>
-														{pv?.calculateNumberOfModuleInParallel}
+														{pv?.PVp}
+													</p>
+													<p className='text-dark text-xs xs:text-sm'>
+														{pv?.RequiredChargeControllerCurrent.toFixed(2)}
 													</p>
 												</div>
 											</div>
