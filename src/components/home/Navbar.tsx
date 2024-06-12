@@ -50,9 +50,9 @@ const Navbar = () => {
 						<li>
 							<Link href={'/store'}>Store</Link>
 						</li>
-						<li>
+						{/* <li>
 							<Link href={'/company'}>Company</Link>
-						</li>
+						</li> */}
 						<li>
 							<Link href={'/about-us'}>About Us</Link>
 						</li>
@@ -138,9 +138,9 @@ const Navbar = () => {
 							<li>
 								<Link href={'/store'}>Store</Link>
 							</li>
-							<li>
+							{/* <li>
 								<Link href={'/company'}>Company</Link>
-							</li>
+							</li> */}
 							<li>
 								<Link href={'/about-us'}>About Us</Link>
 							</li>

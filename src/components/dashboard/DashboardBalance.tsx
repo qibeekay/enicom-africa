@@ -242,19 +242,20 @@ const DashboardBalance = () => {
 							</div>
 						</div>
 					) : (
-						<div
-							className='bg-greens rounded-lg p-4 text-white cursor-pointer'
-							onClick={kycClick}>
-							<p>Verify Account</p>
-							<p className='text-xs mt-2 text-white/70'>
-								Complete your registration process to get your account number
-								and enjoy our loan facility
-							</p>
-							<div className='flex items-center justify-end mt-2'>
-								<HiOutlineChevronRight />
-								<HiOutlineChevronRight />
-							</div>
-						</div>
+						<div></div>
+						// <div
+						// 	className='bg-greens rounded-lg p-4 text-white cursor-pointer'
+						// 	onClick={kycClick}>
+						// 	<p>Verify Account</p>
+						// 	<p className='text-xs mt-2 text-white/70'>
+						// 		Complete your registration process to get your account number
+						// 		and enjoy our loan facility
+						// 	</p>
+						// 	<div className='flex items-center justify-end mt-2'>
+						// 		<HiOutlineChevronRight />
+						// 		<HiOutlineChevronRight />
+						// 	</div>
+						// </div>
 					)}
 				</div>
 
