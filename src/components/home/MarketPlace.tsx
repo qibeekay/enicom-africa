@@ -60,21 +60,20 @@ const MarketPlace = () => {
 						ease your financial burdens
 					</p>
 
-					<div className=' ms:px-[4rem] shadow my-10'>
-						{/* <Categories /> */}
-					</div>
+					{/* <div className=' ms:px-[4rem] shadow my-10'>
+					</div> */}
 
-					<div className='px-4 lg:px-[4rem]'>
-						{/* Render sliders for all available categories */}
-						{categories.map((category, index) => (
-							<div key={index} className='max-w-6xl mx-auto px-4'>
-								{/* <h1 className='text-xl font-medium'>{category.category}</h1> */}
-								<StoreBaterries category={category.category} />
-							</div>
-						))}
-					</div>
+					{/* <div className='px-4 lg:px-[4rem]'> */}
+					{/* Render sliders for all available categories */}
+					{/* {categories.map((category, index) => ( */}
+					{/* <div key={index} className='max-w-6xl mx-auto px-4'> */}
+					{/* <h1 className='text-xl font-medium'>{category.category}</h1> */}
+					{/* <StoreBaterries category={category.category} /> */}
+					{/* </div>- */}
+					{/* ))} */}
+					{/* </div> */}
 
-					<div className='grid items-center justify-center'>
+					<div className='grid items-center justify-center mt-4'>
 						<div
 							className='bg-greens text-white w-[10rem] grid items-center justify-center py-2 rounded cursor-pointer'
 							onClick={isLoggedIn ? handleStore : handleLogin}>

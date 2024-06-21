@@ -29,7 +29,7 @@ const HeroPage = () => {
 					{/* nav bar */}
 					<Navbar />
 					{/* hero */}
-					<div className='relative z-10 text-center flex flex-col items-center justify-center mt-10'>
+					<div className='relative z-10 text-center flex flex-col items-center justify-center h-full mt-[15rem]'>
 						{/* image */}
 						<div className=' grid items-center justify-center '>
 							<div className='w-[15rem]'>
@@ -40,7 +40,7 @@ const HeroPage = () => {
 						{/* heading */}
 						<h1
 							className='text-white font-semibold text-3xl sm:text-4xl w-[80%] md:w-[60%] lg:w-[55%] xl:w-[45%] sm:leading-[3rem]
-                        '>
+                        py-4 '>
 							Lighting up the nation, Empowering Lives.
 						</h1>
 

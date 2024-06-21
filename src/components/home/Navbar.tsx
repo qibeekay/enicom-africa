@@ -85,7 +85,7 @@ const Navbar = () => {
 								</MenuItem>
 							</MenuList>
 						</Menu>
-						<Menu>
+						{/* <Menu>
 							<MenuHandler>
 								<button>Become a Partner</button>
 							</MenuHandler>
@@ -112,7 +112,7 @@ const Navbar = () => {
 									</Link>
 								</MenuItem>
 							</MenuList>
-						</Menu>
+						</Menu> */}
 					</ul>
 				</div>
 
