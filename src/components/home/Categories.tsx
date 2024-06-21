@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { useKeenSlider } from 'keen-slider/react';
 import 'keen-slider/keen-slider.min.css';
-import { Arrow } from '@/components';
 import Arrow2 from '../Arrow2';
 
 const Categories = () => {
@@ -97,6 +96,7 @@ const Categories = () => {
 			setLoaded(true);
 		},
 	});
+
 	return (
 		<div className='w-full'>
 			<div className='navigation-wrapper'>

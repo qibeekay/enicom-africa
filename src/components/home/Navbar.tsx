@@ -85,6 +85,34 @@ const Navbar = () => {
 								</MenuItem>
 							</MenuList>
 						</Menu>
+						<Menu>
+							<MenuHandler>
+								<button>Become a Partner</button>
+							</MenuHandler>
+							<MenuList>
+								<MenuItem>
+									<Link
+										href={'/installers'}
+										className=' font-semibold text-greens '>
+										Installers
+									</Link>
+								</MenuItem>
+								<MenuItem>
+									<Link
+										href={'/Sellers'}
+										className=' font-semibold text-greens '>
+										Sellers
+									</Link>
+								</MenuItem>
+								<MenuItem>
+									<Link
+										href={'/finance'}
+										className='font-semibold text-greens '>
+										Finance
+									</Link>
+								</MenuItem>
+							</MenuList>
+						</Menu>
 					</ul>
 				</div>
 

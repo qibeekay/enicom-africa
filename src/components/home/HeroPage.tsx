@@ -41,38 +41,37 @@ const HeroPage = () => {
 						<h1
 							className='text-white font-semibold text-3xl sm:text-4xl w-[80%] md:w-[60%] lg:w-[55%] xl:w-[45%] sm:leading-[3rem]
                         '>
-							A conducive marketplace for Solar Energy
+							Lighting up the nation, Empowering Lives.
 						</h1>
 
 						{/*  paragraph */}
 						<p className='text-white w-[80%] md:w-[60%] lg:w-[40%] text-sm mt-2'>
-							Buy and sell various solar equipments with us. Do so with topmost
-							financial ease, freedom and credibility
+							Enjoy an easy life with the energy of the future.
 						</p>
 
 						{/* buttons */}
-						<div className='flex flex-wrap items-center justify-center gap-3 sm:gap-7 mt-10'>
-							{/* buy */}
-							<button
+						{/* <div className='flex flex-wrap items-center justify-center gap-3 sm:gap-7 mt-10'> */}
+						{/* buy */}
+						{/* <button
 								className=' bg-greens text-white rounded-md py-2 px-7 md:px-[3rem]'
 								onClick={isLoggedIn ? handleStore : handleLogin}>
 								Buy
-							</button>
+							</button> */}
 
-							{/* sell */}
-							<button
+						{/* sell */}
+						{/* <button
 								className=' bg-white text-greens rounded-md py-2 px-7 md:px-[3rem]'
 								onClick={isLoggedIn ? handleStore : handleLogin}>
 								Sell
-							</button>
+							</button> */}
 
-							{/* marketplace */}
-							<button
+						{/* marketplace */}
+						{/* <button
 								className=' bg-greens text-white rounded-md py-2 px-[1.5rem]'
 								onClick={isLoggedIn ? handleStore : handleLogin}>
 								View MarketPlace
-							</button>
-						</div>
+							</button> */}
+						{/* </div> */}
 					</div>
 				</div>
 			</div>

@@ -11,7 +11,7 @@ import {
 
 const CompanyHero = () => {
 	return (
-		<div className='w-full font-poppins text-dark'>
+		<div className='w-full font-poppins text-dark mt-16'>
 			<div className='relative'>
 				{/* <div className=' absolute w-full h-screen bg-[#011D00]/60 z-0'></div> */}
 				{/* <div className='relative z-10 py-[2.5rem]'>

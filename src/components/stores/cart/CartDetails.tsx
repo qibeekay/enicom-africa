@@ -195,7 +195,9 @@ const CartDetails = () => {
 
 					{/* buttons */}
 					{cartItems?.length === 0 ? (
-						<p>Your cart is empty</p>
+						<p className='w-full absolute left-[50%] -translate-x-[50%]'>
+							Your cart is empty
+						</p>
 					) : (
 						<div className=' sm:w-[20rem] md:w-[45%] bg-white shadows rounded-lg h-fit p-4'>
 							<p className=' text-xl font-medium '>Cart Summary</p>

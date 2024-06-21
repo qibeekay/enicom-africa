@@ -36,7 +36,7 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 	const router = useRouter();
 
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
-	const animation = { duration: 30000, easing: (t: number) => t };
+	const animation = { duration: 50000, easing: (t: number) => t };
 
 	const [sliderRef, instanceRef] = useKeenSlider({
 		initial: 0,

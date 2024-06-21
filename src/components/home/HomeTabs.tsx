@@ -53,10 +53,10 @@ const HomeTabs = () => {
 								}`}>
 								<IoStorefrontOutline size={25} />
 							</div>
-							<p className='text-center py-2'>Installation</p>
+							<p className='text-center py-2'>Become a Partner</p>
 							<p className='text-center'>
-								We also help in installing these equipments where you need them
-								and also safe keeping for sellers
+								Gain access to a broad customer base through our Solar
+								Marketplace by partnering with us.
 							</p>
 						</div>
 					</div>
@@ -79,7 +79,7 @@ const HomeTabs = () => {
 								}`}>
 								<IoStorefrontOutline size={25} />
 							</div>
-							<p className='text-center py-2'>Loan Facility</p>
+							<p className='text-center py-2'>Solar Finacing options</p>
 							<p className='text-center'>
 								We help those in collaboration with our credit partners to help
 								ease the financial burden in purchasing these equipments

@@ -98,13 +98,13 @@ const Footer = () => {
 									Credit Policy notice
 								</Link>
 							</li>
-							<li>
+							{/* <li>
 								<Link
 									href={'/non-disclosure-agreement'}
 									className='text-white/70'>
 									Non Disclosure Agreement
 								</Link>
-							</li>
+							</li> */}
 							<li>
 								<Link href={'/cookie-policy'} className='text-white/70'>
 									Cookies Policy
@@ -117,8 +117,13 @@ const Footer = () => {
 							</li>
 						</ul>
 
-						<p className='text-center text-lg pb-10 pt-4'>
-							Enicom Africa @ 2023
+						<p className='text-center text-lg pt-4'>CopyWrite Enicom Africa</p>
+
+						<p className='text-center text-sm mt-4 pb-10'>
+							Developed by{' '}
+							<Link href={'https://firewitch.tech/'} className=' text-blue-500'>
+								FireSwitch Technologies
+							</Link>
 						</p>
 					</div>
 				</div>
