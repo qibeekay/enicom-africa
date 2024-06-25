@@ -1,5 +1,5 @@
 'use client';
-import { CalculateLoad } from '@/api/load/load';
+import { CalculateLoad, getAppliances } from '@/api/load/load';
 import {
 	Button,
 	Input,
@@ -7,7 +7,7 @@ import {
 	Select,
 	Typography,
 } from '@material-tailwind/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import {
 	HiChevronDown,
@@ -167,6 +167,16 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 		setLoadItems([...loadItems, newAppliance]);
 		toggleForm(); // Close the form after adding an appliance
 	};
+
+	// get all appliances
+	const fetchAppliances = async () => {
+		const fetchedProviders = (await getAppliances(`$${token}` || '')) || [];
+		// setProviders(fetchedProviders); // You can uncomment and use this if needed
+	};
+
+	useEffect(() => {
+		fetchAppliances();
+	}, []);
 
 	const resetForm = () => {
 		setSelectedName('');

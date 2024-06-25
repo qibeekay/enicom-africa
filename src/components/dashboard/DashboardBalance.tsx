@@ -59,17 +59,17 @@ const DashboardBalance = () => {
 			: '';
 
 	// Check if user is logged in based on your authentication mechanism
-	useEffect(() => {
-		// Retrieve kyc_status from local storage
-		const storedKycStatus = localStorage.getItem('bvn_status');
-		setKyc(storedKycStatus || '');
-	}, []);
+	// useEffect(() => {
+	// 	// Retrieve kyc_status from local storage
+	// 	const storedKycStatus = localStorage.getItem('bvn_status');
+	// 	setKyc(storedKycStatus || '');
+	// }, []);
 
-	const router = useRouter();
+	// const router = useRouter();
 
-	const kycClick = () => {
-		router.push('/kyc');
-	};
+	// const kycClick = () => {
+	// 	router.push('/kyc');
+	// };
 
 	// getting specific user data
 	const getuser = async () => {
@@ -91,47 +91,47 @@ const DashboardBalance = () => {
 	}, []);
 
 	// getting user account details
-	const getdetail = async () => {
-		try {
-			const getdetails = await getUsersAccount(`$${token}`, `${renitoken}`);
-			setAccount(getdetails);
-			// setUser(getusers);
-			setLoading(false);
-		} catch (error) {
-			// console.error('Error fetching cart items:', error);
-			console.log('error');
-			setLoading(false);
-		}
-	};
+	// const getdetail = async () => {
+	// 	try {
+	// 		const getdetails = await getUsersAccount(`$${token}`, `${renitoken}`);
+	// 		setAccount(getdetails);
+	// 		// setUser(getusers);
+	// 		setLoading(false);
+	// 	} catch (error) {
+	// 		// console.error('Error fetching cart items:', error);
+	// 		console.log('error');
+	// 		setLoading(false);
+	// 	}
+	// };
 
-	useEffect(() => {
-		if (renitoken) {
-			getdetail();
-		}
-	}, [renitoken]);
+	// useEffect(() => {
+	// 	if (renitoken) {
+	// 		getdetail();
+	// 	}
+	// }, [renitoken]);
 
 	// Function to toggle showing or hiding the balance
-	const toggleShowBalance = () => {
-		setShowBalance((prevShowBalance) => !prevShowBalance);
-		// Store the state of showBalance in localStorage
-		localStorage.setItem('showBalance', JSON.stringify(!showBalance));
-	};
+	// const toggleShowBalance = () => {
+	// 	setShowBalance((prevShowBalance) => !prevShowBalance);
+	// 	// Store the state of showBalance in localStorage
+	// 	localStorage.setItem('showBalance', JSON.stringify(!showBalance));
+	// };
 
-	useEffect(() => {
-		// Retrieve showBalance state from localStorage and update the state
-		const storedShowBalance = localStorage.getItem('showBalance');
-		if (storedShowBalance !== null) {
-			setShowBalance(JSON.parse(storedShowBalance));
-		}
-	}, []);
+	// useEffect(() => {
+	// 	// Retrieve showBalance state from localStorage and update the state
+	// 	const storedShowBalance = localStorage.getItem('showBalance');
+	// 	if (storedShowBalance !== null) {
+	// 		setShowBalance(JSON.parse(storedShowBalance));
+	// 	}
+	// }, []);
 
 	return (
 		<div className='w-full font-poppins'>
 			<div>
 				{/* header */}
-				<div className='flex md:items-center flex-wrap justify-between mb-3'>
-					{/* Balance / transaction history  */}
-					<div>
+				{/* <div className='flex md:items-center flex-wrap justify-between mb-3'> */}
+				{/* Balance / transaction history  */}
+				{/* <div>
 						{kyc === 'true' ? (
 							<div className='flex items-center gap-4 md:gap-10'>
 								<h1 className='text-dark font-medium text-lg'>Balances</h1>
@@ -145,34 +145,34 @@ const DashboardBalance = () => {
 						) : (
 							<h1 className='text-dark font-medium text-lg'>Verification</h1>
 						)}
-					</div>
+					</div> */}
 
-					{/* View Details */}
-					<div>
+				{/* View Details */}
+				{/* <div>
 						<Link href={''} className='underline text-dark'>
 							View Details
 						</Link>
 					</div>
-				</div>
+				</div> */}
 
 				{/* wallet */}
-				<div>
-					{kyc === 'true' ? (
-						<div className='flex flex-col md:flex-row xl:flex-row items-center gap-4 md:gap-20 lg:gap-10 xl:gap-20'>
-							{/* wallet balance */}
-							<div className='bg-greens text-white w-full sm:w-[20rem] md:w-full p-4 rounded-lg'>
-								<div>
-									{/* top */}
-									<div className='flex justify-between items-center'>
+				{/* <div> */}
+				{/* {kyc === 'true' ? ( */}
+				{/* <div className='flex flex-col md:flex-row xl:flex-row items-center gap-4 md:gap-20 lg:gap-10 xl:gap-20'> */}
+				{/* wallet balance */}
+				{/* <div className='bg-greens text-white w-full sm:w-[20rem] md:w-full p-4 rounded-lg'> */}
+				{/* <div> */}
+				{/* top */}
+				{/* <div className='flex justify-between items-center'>
 										<p className='text-sm font-light text-white/70'>Wallet</p>
 										<AiOutlineEyeInvisible
 											onClick={toggleShowBalance}
 											className='cursor-pointer'
 										/>
-									</div>
+									</div> */}
 
-									{/* amount */}
-									<div>
+				{/* amount */}
+				{/* <div>
 										<h1 className='font-semibold text-2xl'>
 											{showBalance ? ( // Conditionally render balance or asterisks based on showBalance state
 												<>N {account?.accountBalance_th || '0.00'}</>
@@ -180,12 +180,12 @@ const DashboardBalance = () => {
 												<>******</>
 											)}
 										</h1>
-									</div>
+									</div> */}
 
-									{/* bottom */}
-									<div className='flex justify-between items-center text-white/70'>
-										{/* withdraw */}
-										<div className='flex items-center'>
+				{/* bottom */}
+				{/* <div className='flex justify-between items-center text-white/70'> */}
+				{/* withdraw */}
+				{/* <div className='flex items-center'>
 											<div>
 												<AiOutlineSwap />
 											</div>
@@ -194,10 +194,10 @@ const DashboardBalance = () => {
 												className='underline text-sm font-light '>
 												Withdraw
 											</Link>
-										</div>
+										</div> */}
 
-										{/* Add Money */}
-										<div className='flex items-center'>
+				{/* Add Money */}
+				{/* <div className='flex items-center'>
 											<FiPlus />
 											<Link href={'/add-money'} className='underline text-sm '>
 												Add Money
@@ -205,13 +205,13 @@ const DashboardBalance = () => {
 										</div>
 									</div>
 								</div>
-							</div>
+							</div> */}
 
-							{/* borrowed balance */}
-							<div className='bg-greens/5 text-dark w-full sm:w-[20rem] md:w-full p-4 rounded-lg'>
-								<div>
-									{/* top */}
-									<div className='flex justify-between items-center'>
+				{/* borrowed balance */}
+				{/* <div className='bg-greens/5 text-dark w-full sm:w-[20rem] md:w-full p-4 rounded-lg'>
+								<div> */}
+				{/* top */}
+				{/* <div className='flex justify-between items-center'>
 										<p className='flex items-center text-sm gap-5'>
 											<span>Total Borrowed </span>
 											<AiOutlineEyeInvisible />
@@ -219,45 +219,45 @@ const DashboardBalance = () => {
 										<p className='flex items-center text-sm'>
 											<FiPlus /> Pay back loan
 										</p>
-									</div>
+									</div> */}
 
-									{/* amount */}
-									<div>
+				{/* amount */}
+				{/* <div>
 										<h1 className='font-semibold text-2xl py-1'>N0.00</h1>
-									</div>
+									</div> */}
 
-									{/* bottom */}
-									<div className='flex justify-between items-center'>
-										{/* date */}
-										<div className='flex items-center text-sm text-dark'>
-											{/* <p>28/12/2022</p> */}
-										</div>
+				{/* bottom */}
+				{/* <div className='flex justify-between items-center'> */}
+				{/* date */}
+				{/* <div className='flex items-center text-sm text-dark'> */}
+				{/* <p>28/12/2022</p> */}
+				{/* </div> */}
 
-										{/* due date */}
-										<div className='flex items-center text-sm '>
+				{/* due date */}
+				{/* <div className='flex items-center text-sm '>
 											<p className='text-[#FD0F0F]'>days remaining</p>
 										</div>
 									</div>
-								</div>
-							</div>
+								</div> */}
+				{/* </div>
+						</div> */}
+				{/* ) : ( */}
+				{/* <div></div> */}
+				{/* // <div */}
+				{/* className='bg-greens rounded-lg p-4 text-white cursor-pointer' */}
+				{/* onClick={kycClick}> */}
+				{/* <p>Verify Account</p> */}
+				{/* <p className='text-xs mt-2 text-white/70'> */}
+				{/* Complete your registration process to get your account number */}
+				{/* and enjoy our loan facility */}
+				{/* </p> */}
+				{/* <div className='flex items-center justify-end mt-2'> */}
+				{/* <HiOutlineChevronRight /> */}
+				{/* <HiOutlineChevronRight />
 						</div>
-					) : (
-						<div></div>
-						// <div
-						// 	className='bg-greens rounded-lg p-4 text-white cursor-pointer'
-						// 	onClick={kycClick}>
-						// 	<p>Verify Account</p>
-						// 	<p className='text-xs mt-2 text-white/70'>
-						// 		Complete your registration process to get your account number
-						// 		and enjoy our loan facility
-						// 	</p>
-						// 	<div className='flex items-center justify-end mt-2'>
-						// 		<HiOutlineChevronRight />
-						// 		<HiOutlineChevronRight />
-						// 	</div>
-						// </div>
-					)}
-				</div>
+						</div> */}
+				{/* )} */}
+				{/* </div> */}
 
 				{/* items */}
 				<div>
