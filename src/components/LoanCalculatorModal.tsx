@@ -25,6 +25,10 @@ interface Appliance {
 	days_per_week: number;
 	type: string;
 }
+interface Appliances {
+	name: string;
+	watts: number;
+}
 interface Response {
 	inverterSize: number;
 	inverterSize_th: string;
@@ -111,25 +115,10 @@ interface CartDetailsProps {
 	handleOpen: () => void; // Define the type of handleOpen as a function that takes no arguments and returns void.
 }
 
-const appliances = [
-	'Refrigerator',
-	'Television',
-	'Washing Machine',
-	'Light Bulbs (LED)',
-	'Laptop',
-	'Air Conditioner',
-	'Pressing Iron',
-	'Standing Fan',
-	'Pumping Machine',
-	'Water Dispenser',
-	'Home Theater',
-	'Electric Heaters',
-	'Water Heaters',
-];
-
 const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 	const [formVisible, setFormVisible] = useState(false);
 	const [loadItems, setLoadItems] = useState<Appliance[]>([]);
+	const [appliances, setAppliances] = useState<Appliances[]>([]);
 	const [response, setResponse] = useState<Response | null>(null);
 	const [selectedName, setSelectedName] = useState<string>('');
 	const [type, setType] = useState<string>('');
@@ -155,10 +144,15 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 	};
 
 	const addAppliance = () => {
+		// Assign default watts based on selectedName if no input watts
+		const defaultWatts =
+			appliances.find((appliance) => appliance.name === selectedName)?.watts ||
+			0;
+
 		// Add your validation logic if needed
 		const newAppliance: Appliance = {
 			name: selectedName,
-			watts: watts,
+			watts: watts || defaultWatts, // Use input watts if provided, else default
 			Qty: quantity,
 			hours_per_day: hoursPerDay,
 			days_per_week: daysPerWeek,
@@ -170,8 +164,16 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 
 	// get all appliances
 	const fetchAppliances = async () => {
-		const fetchedProviders = (await getAppliances(`$${token}` || '')) || [];
-		// setProviders(fetchedProviders); // You can uncomment and use this if needed
+		try {
+			const fetchedAppliances = (await getAppliances(`$${token}` || '')) || [];
+			const applianceNames = fetchedAppliances.map(
+				(appliance: any) => appliance
+			);
+			setAppliances(applianceNames);
+		} catch (error) {
+			toast.error('Error fetching appliances');
+			console.error('Error fetching appliances:', error);
+		}
 	};
 
 	useEffect(() => {
@@ -227,9 +229,9 @@ const LoanCalculatorModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 									label='Select'
 									value={selectedName}
 									onChange={(e) => setSelectedName(e || '')}>
-									{appliances.map((appliance, index) => (
-										<Option key={index} value={appliance}>
-											{appliance}
+									{appliances.map((appliance) => (
+										<Option key={appliance.name} value={appliance.name}>
+											{appliance.name}
 										</Option>
 									))}
 								</Select>

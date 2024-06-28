@@ -28,8 +28,8 @@ export const CalculateLoad = async (bearerToken: string, load: LoadItem[]) => {
 		);
 		return response.data;
 	} catch (error) {
-		toast.error('Error initializing payment');
-		console.error('Error initializing payment:', error);
+		// toast.error('Error initializing payment');
+		console.error('Error:', error);
 		return [];
 	}
 };
