@@ -4,6 +4,7 @@ import { AccountMainSide, PaymentMainDetails } from '@/components';
 import { MdLiveHelp } from 'react-icons/md';
 import { HiEllipsisVertical } from 'react-icons/hi2';
 import AccountSideMobile from '../account/AccountSideMobile';
+import { IoLogoWhatsapp } from 'react-icons/io';
 const PaymentMain = () => {
 	const [isSideMenuOpen, setSideMenuOpen] = useState(false);
 
@@ -23,7 +24,7 @@ const PaymentMain = () => {
 				<PaymentMainDetails />
 				{/* absolute */}
 				<div className='fixed right-10 z-50 bottom-10 cursor-pointer text-greens '>
-					<MdLiveHelp size={45} />
+					<IoLogoWhatsapp size={45} />
 				</div>
 			</div>
 		</div>

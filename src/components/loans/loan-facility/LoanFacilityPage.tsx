@@ -147,10 +147,10 @@ const LoanFacilityPage = () => {
 			<DasboardNav openRight={() => setOpenRight(true)} />
 
 			<div className='max-w-6xl px-4 mx-auto pt-10 pb-20'>
-				<p className='text-lg font-medium pt-2'>View Loan Package</p>
+				<p className='text-lg font-medium pt-2'>Loan Provider and Calculator</p>
 				<p>
-					Check the category your purchase loan falls, and view the duration and
-					payback dates
+					Choose your preferred finance partner and calculate your loan options
+					all in one place.
 				</p>
 
 				<div className='flex items-center justify-between w-full'>

@@ -11,9 +11,10 @@ import { useRouter } from 'next/navigation';
 import { useCart } from '@/components/CartContext';
 interface CartDetailsProps {
 	handleOpen: () => void; // Define the type of handleOpen as a function that takes no arguments and returns void.
+	tabOpen: (value: boolean) => void;
 }
 
-const PurchaseModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
+const PurchaseModal: React.FC<CartDetailsProps> = ({ handleOpen, tabOpen }) => {
 	const { setTab } = useTabContext();
 	const [open, setOpen] = React.useState(false);
 	const handleOpen1 = () => setOpen((cur) => !cur);
@@ -43,9 +44,8 @@ const PurchaseModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 			if (response.success === false) {
 				toast.warn(response.message);
 			} else {
-				// The toast notification should be success, not error
 				toast.success('Payment initialized successfully');
-				setTab('2');
+				tabOpen(true);
 			}
 		} catch (error) {
 			toast.error('Error initializing payment');
@@ -79,8 +79,7 @@ const PurchaseModal: React.FC<CartDetailsProps> = ({ handleOpen }) => {
 							<div>
 								<p className='text-lg sm:text-2xl font-semibold'>Pay Now</p>
 								<p className='text-sm sm:text-base pb-5'>
-									You can pay now from your wallet or bank account if you can
-									afford the product
+									Secure your purchase with our easy and secure payment options.
 								</p>
 
 								<p className='font-semibold  sm:text-lg'>

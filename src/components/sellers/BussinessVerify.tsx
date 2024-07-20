@@ -72,6 +72,7 @@ const BussinessVerify = () => {
 
 					const result = await uploadResponse.json();
 					setUploadResponse(result);
+					setUploading(false);
 					toast.success('Image uploaded');
 				} catch (error) {
 					// console.error('Image upload failed:', error);
@@ -432,7 +433,6 @@ const BussinessVerify = () => {
 						{/* image upload */}
 						<div className='max-w-xl relative z-0'>
 							<p>Upload your Picture</p>
-							{uploading && <p>Uploading image...</p>}
 							<label
 								// {...getRootProps1()}
 								className='flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none'>
@@ -491,6 +491,8 @@ const BussinessVerify = () => {
 									/>
 								</div>
 							)}
+
+							{uploading && <p>Uploading image...</p>}
 						</div>
 
 						{/* Verification type */}
@@ -564,7 +566,6 @@ const BussinessVerify = () => {
 						{/* utility bill upload */}
 						<div className='max-w-xl relative z-0'>
 							<p>Upload your Utility Bill</p>
-							{uploading1 && <p>Uploading image...</p>}
 							<label
 								// {...getRootProps2()}
 								className='flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none'>
@@ -623,6 +624,8 @@ const BussinessVerify = () => {
 									/>
 								</div>
 							)}
+
+							{uploading1 && <p>Uploading image...</p>}
 						</div>
 
 						{/* production capacity */}
@@ -706,7 +709,6 @@ const BussinessVerify = () => {
 						{/* upload product catalogue*/}
 						<div className='max-w-xl relative z-0'>
 							<p>Upload your Product Catalogue</p>
-							{uploading2 && <p>Uploading image...</p>}
 							<label
 								// {...getRootProps()}
 								className='flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none'>
@@ -765,6 +767,8 @@ const BussinessVerify = () => {
 									/>
 								</div>
 							)}
+
+							{uploading2 && <p>Uploading image...</p>}
 						</div>
 
 						{/* button */}

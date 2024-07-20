@@ -14,6 +14,7 @@ import { useCart } from '@/components/CartContext';
 import axios from 'axios';
 import { getUser } from '@/api/products/products';
 import { useRouter } from 'next/navigation';
+import { IoLogoWhatsapp } from 'react-icons/io';
 
 const CartDetails = () => {
 	const [open, setOpen] = React.useState(false);
@@ -110,11 +111,18 @@ const CartDetails = () => {
 
 	// console.log(total_price_th);
 
+	const handleStore = () => {
+		router.push('/store');
+	};
+
 	return (
 		<div className='font-poppins my-10 relative'>
 			<div className='max-w-6xl px-4 mx-auto'>
 				{/* flex */}
-				<div className='flex flex-col lg:flex-row gap-6'>
+				<div
+					className={`flex flex-col gap-6 ${
+						cartItems?.length === 0 ? 'flex-col' : 'lg:flex-row'
+					}`}>
 					{/* item */}
 					<div className='w-full flex flex-col gap-y-6'>
 						{/* items info */}
@@ -195,9 +203,32 @@ const CartDetails = () => {
 
 					{/* buttons */}
 					{cartItems?.length === 0 ? (
-						<p className='w-full absolute left-[50%] -translate-x-[50%]'>
-							Your cart is empty
-						</p>
+						<div className='px-4 relative w-full justify-center mt-[5rem] ms:mt-0'>
+							<div className=''>
+								<div className='flex flex-col items-center justify-center'>
+									<div className='w-full ms:w-[30rem] aspect-square'>
+										<img
+											className='w-full h-full object-cover'
+											src='/cart.jpg'
+											alt=''
+										/>
+									</div>
+									<p className='font-semibold mt-7'>Cart is empty!</p>
+									<p className='ms:w-[35rem] text-center'>
+										Looks like you have not added anything to you cart. Explore
+										our marketplace to find what you need
+									</p>
+								</div>
+
+								<div className='mt-7 flex items-center justify-center'>
+									<div
+										className='bg-greens text-white w-[10rem] grid items-center justify-center py-2 rounded cursor-pointer'
+										onClick={handleStore}>
+										<p>Start Shopping</p>
+									</div>
+								</div>
+							</div>
+						</div>
 					) : (
 						<div className=' sm:w-[20rem] md:w-[45%] bg-white shadows rounded-lg h-fit p-4'>
 							<p className=' text-xl font-medium '>Cart Summary</p>
@@ -209,7 +240,7 @@ const CartDetails = () => {
 							</div>
 
 							{/* Delivery fees included */}
-							<p className=' mt-5'>Delivery fees included</p>
+							{/* <p className=' mt-5'>Delivery fees included</p> */}
 
 							{/* purchase */}
 							<button
@@ -233,7 +264,7 @@ const CartDetails = () => {
 
 			{/* absolute */}
 			<div className='fixed right-2 md:right-10 z-50 bottom-5 md:bottom-10 cursor-pointer text-greens '>
-				<MdLiveHelp size={45} />
+				<IoLogoWhatsapp size={45} />
 			</div>
 		</div>
 	);

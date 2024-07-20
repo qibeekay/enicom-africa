@@ -3,7 +3,7 @@ import { getAllProduct, getUser } from '@/api/products/products';
 import { DasboardNav, MenuDrawer, StoreBaterries } from '@/components';
 import LoanCalculatorModal from '@/components/LoanCalculatorModal';
 import React, { useEffect, useState } from 'react';
-import { IoIosCalculator } from 'react-icons/io';
+import { IoIosCalculator, IoLogoWhatsapp } from 'react-icons/io';
 import { MdLiveHelp } from 'react-icons/md';
 import { Dialog } from '@material-tailwind/react';
 import { useRouter } from 'next/navigation';
@@ -71,7 +71,7 @@ const StorePage = () => {
 
 			{/* absolute */}
 			<div className='fixed right-10 z-50 bottom-10 cursor-pointer text-greens '>
-				<MdLiveHelp size={45} />
+				<IoLogoWhatsapp size={45} />
 			</div>
 
 			<MenuDrawer openRight={openRight} setOpenRight={setOpenRight} />

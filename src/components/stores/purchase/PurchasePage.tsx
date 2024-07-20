@@ -11,8 +11,13 @@ import WalletsPurchase from './WalletsPurchase';
 const PurchasePage = () => {
 	const { activeTab, setTab } = useTabContext();
 	const [progress, setProgress] = useState(35);
+	const [isTab1Complete, setIsTab1Complete] = useState(false);
+	const [isTab2Complete, setIsTab2Complete] = useState(false);
+	const [isTab3Complete, setIsTab3Complete] = useState(false);
 
 	const handleTabClick = (tab: string) => {
+		if (tab === '1' && !isTab1Complete) return;
+		if (tab === '2' && !isTab2Complete) return;
 		setTab(tab);
 		// Calculate the progress based on the clicked tab
 		let newProgress = 0;
@@ -55,7 +60,7 @@ const PurchasePage = () => {
 							activeTab === '1'
 								? ' font-semibold bg-greens border-greens text-white'
 								: 'border-dark/50 border text-dark/50'
-						}`}>
+						} ${isTab1Complete ? '' : 'cursor-not-allowed opacity-50'}`}>
 						1
 					</button>
 					<hr className='w-[2rem]' />
@@ -65,7 +70,7 @@ const PurchasePage = () => {
 							activeTab === '2'
 								? 'font-semibold bg-greens border-greens text-white'
 								: 'border-dark/50 border text-dark/50'
-						}`}>
+						} ${isTab2Complete ? '' : 'cursor-not-allowed opacity-50'}`}>
 						2
 					</button>
 					<hr className='w-[2rem]' />
@@ -75,7 +80,7 @@ const PurchasePage = () => {
 							activeTab === '3'
 								? 'font-semibold bg-greens border-greens text-white'
 								: 'border-dark/50 border text-dark/50'
-						}`}>
+						} ${isTab3Complete ? '' : 'cursor-not-allowed opacity-50'}`}>
 						3
 					</button>
 				</div>
@@ -85,7 +90,9 @@ const PurchasePage = () => {
 						style={{ width: `${progress}%` }}></div>
 				</div>
 				<div>
-					{activeTab === '1' && <Purchase1 />}
+					{activeTab === '1' && (
+						<Purchase1 setIsTab1Complete={setIsTab1Complete} />
+					)}
 					{activeTab === '2' && <WalletsPurchase />}
 					{activeTab === '3' && <Purchase3 />}
 				</div>

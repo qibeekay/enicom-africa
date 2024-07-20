@@ -16,7 +16,11 @@ import { CompletePay, IntializePay } from '@/api/cart/cart';
 import { ToastContainer, toast } from 'react-toastify';
 import { useFormData } from './FormDataContext';
 
-const Purchase1 = () => {
+interface props {
+	setIsTab1Complete: (value: boolean) => void;
+}
+
+const Purchase1 = ({ setIsTab1Complete }: props) => {
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen((cur) => !cur);
 
@@ -189,7 +193,7 @@ const Purchase1 = () => {
 					open={open}
 					handler={handleOpen}
 					className='bg-transparent shadow-none text-dark'>
-					<PurchaseModal handleOpen={handleOpen} />
+					<PurchaseModal handleOpen={handleOpen} tabOpen={setIsTab1Complete} />
 				</Dialog>
 			</div>
 		</div>

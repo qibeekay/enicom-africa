@@ -36,7 +36,7 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 	const router = useRouter();
 
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
-	const animation = { duration: 50000, easing: (t: number) => t };
+	// const animation = { duration: 50000, easing: (t: number) => t };
 
 	const [sliderRef, instanceRef] = useKeenSlider({
 		initial: 0,
@@ -44,14 +44,8 @@ const StoreBaterries: React.FC<StoreBaterriesProps> = ({ category }) => {
 		mode: 'free-snap',
 		created(s) {
 			setLoaded(true);
-			s.moveToIdx(10, true, animation);
 		},
-		updated(s) {
-			s.moveToIdx(s?.track?.details?.abs + 10, true, animation);
-		},
-		animationEnded(s) {
-			s.moveToIdx(s?.track?.details?.abs + 10, true, animation);
-		},
+
 		slides: {
 			// origin: 'center',
 			perView: 2.5,

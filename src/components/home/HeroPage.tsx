@@ -29,7 +29,7 @@ const HeroPage = () => {
 					{/* nav bar */}
 					<Navbar />
 					{/* hero */}
-					<div className='relative z-10 text-center flex flex-col items-center justify-center h-full mt-[15rem]'>
+					<div className='relative z-10 text-center flex flex-col items-center justify-center h-full pt-[5rem]'>
 						{/* image */}
 						<div className=' grid items-center justify-center '>
 							<div className='w-[15rem]'>
@@ -48,30 +48,6 @@ const HeroPage = () => {
 						<p className='text-white w-[80%] md:w-[60%] lg:w-[40%] text-sm mt-2'>
 							Enjoy an easy life with the energy of the future.
 						</p>
-
-						{/* buttons */}
-						{/* <div className='flex flex-wrap items-center justify-center gap-3 sm:gap-7 mt-10'> */}
-						{/* buy */}
-						{/* <button
-								className=' bg-greens text-white rounded-md py-2 px-7 md:px-[3rem]'
-								onClick={isLoggedIn ? handleStore : handleLogin}>
-								Buy
-							</button> */}
-
-						{/* sell */}
-						{/* <button
-								className=' bg-white text-greens rounded-md py-2 px-7 md:px-[3rem]'
-								onClick={isLoggedIn ? handleStore : handleLogin}>
-								Sell
-							</button> */}
-
-						{/* marketplace */}
-						{/* <button
-								className=' bg-greens text-white rounded-md py-2 px-[1.5rem]'
-								onClick={isLoggedIn ? handleStore : handleLogin}>
-								View MarketPlace
-							</button> */}
-						{/* </div> */}
 					</div>
 				</div>
 			</div>

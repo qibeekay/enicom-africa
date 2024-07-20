@@ -18,9 +18,8 @@ const HomeCalculator = () => {
 							We have the Load Calculator
 						</h1>
 						<p className='pt-5 lg:pt-10'>
-							We help provide adequate solar equipments for your load. we save
-							ypu the stress of looking for solar equipment combinations
-							adequate for yor load.
+							Use our Load calculator to find out the solar system capacity you
+							need.
 						</p>
 
 						<div

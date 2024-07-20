@@ -6,11 +6,11 @@ import { IoStorefrontOutline } from 'react-icons/io5';
 const HomeTabs = () => {
 	const [activeTab, setActiveTab] = useState('1');
 	return (
-		<div className='relative px-4 xs:px-0 '>
-			<div className='absolute -top-[2rem] xs:-top-[5rem] lg:left-[50%] lg:-translate-x-[50%]'>
-				<div className=' w-full flex items-center justify-center flex-wrap lg:flex-nowrap gap-4 xs:gap-10'>
+		<div className='relative px-4 xs:px-0 max-w-6xl mx-auto'>
+			<div className='w-full absolute -top-[2rem] xs:-top-[5rem] lg:left-[50%] lg:-translate-x-[50%]'>
+				<div className=' w-full grid grid-cols-1 md:grid-cols-2 ll:grid-cols-3 items-start justify-center gap-4  xs:gap-10 px-4 ms:px-20 md:px-4'>
 					{/* market place */}
-					<div className='w-full xs:w-[17rem]'>
+					<div className='w-full h-full'>
 						<div
 							onClick={() => setActiveTab('1')}
 							className={` cursor-pointer sm:w-auto py-10 px-4 shadows flex rounded-3xl flex-col items-center justify-center ${
@@ -29,14 +29,17 @@ const HomeTabs = () => {
 							</div>
 							<p className='text-center py-2'>Marketplace</p>
 							<p className='text-center'>
-								Buy and sell various solar equipments in our marketplace,
-								ranging from batteries to panels and so on
+								Discover a diverse range of solar products and services tailored
+								to your needs. Whether you are looking to buy high-quality solar
+								panels or seeking professional installation services, our
+								marketplace has you covered. We ensure that you find the perfect
+								solution for your home or business.
 							</p>
 						</div>
 					</div>
 
 					{/* Installation */}
-					<div className='w-full xs:w-[17rem]'>
+					<div className='w-full h-full'>
 						<div
 							onClick={() => setActiveTab('2')}
 							className={`w-full cursor-pointer sm:w-auto py-10 px-4 shadows flex rounded-3xl flex-col items-center justify-center ${
@@ -55,14 +58,16 @@ const HomeTabs = () => {
 							</div>
 							<p className='text-center py-2'>Become a Partner</p>
 							<p className='text-center'>
-								Gain access to a broad customer base through our Solar
-								Marketplace by partnering with us.
+								Leverage our platform to expand your reach, enhance your
+								business, and drive the adoption of clean energy. Join our
+								network of financial partners, Sellers and Agents to advance
+								Solar energy solutions.
 							</p>
 						</div>
 					</div>
 
 					{/* Loan Facility */}
-					<div className='w-full xs:w-[17rem]'>
+					<div className='w-full h-full'>
 						<div
 							onClick={() => setActiveTab('3')}
 							className={`w-full cursor-pointer sm:w-auto py-10 px-4 shadows flex rounded-3xl flex-col items-center justify-center ${
@@ -81,8 +86,13 @@ const HomeTabs = () => {
 							</div>
 							<p className='text-center py-2'>Solar Finacing options</p>
 							<p className='text-center'>
-								We help those in collaboration with our credit partners to help
-								ease the financial burden in purchasing these equipments
+								Through our partnerships with leading finance institutions, we
+								offer financing solutions to make your transition to solar
+								energy seamless and affordable. Our Options are flexible, making
+								it easier for you to invest in high-quality solar products.
+								Whether you're a homeowner, business, or institution, our
+								financing options empower you to embrace sustainable energy,
+								while effectively managing your budget.
 							</p>
 						</div>
 					</div>

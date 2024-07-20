@@ -69,7 +69,7 @@ export const uploadProduct = async (
 		product_condition: string;
 		product_capacity: string;
 		product_voltage: string;
-		product_amps: string;
+		product_unit: string;
 		product_watts: string;
 		product_rating: string;
 		product_quantity: string;

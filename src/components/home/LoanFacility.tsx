@@ -9,7 +9,7 @@ const LoanFacility = () => {
 		router.push('/register');
 	};
 	return (
-		<div className='pt-[50rem] ms:pt-[33rem] mss:pt-[15rem] text-dark'>
+		<div className='pt-[75rem] sm:pt-[65rem] md:pt-[45rem] ll:pt-[25rem] text-dark font-poppins'>
 			<div>
 				<div>
 					<h1 className='text-center text-4xl font-semibold mb-4'>

@@ -49,15 +49,15 @@ const MarketPlace = () => {
 	});
 	const isLoggedIn = !!usermail;
 	return (
-		<div className='pt-[50rem] ms:pt-[33rem] mss:pt-[15rem] text-dark font-poppins'>
+		<div className='pt-[75rem] sm:pt-[65rem] md:pt-[45rem] ll:pt-[25rem] text-dark font-poppins'>
 			<div>
 				<div>
 					<h1 className='text-center text-4xl font-semibold mb-4'>
 						Our Marketplace
 					</h1>
 					<p className='text-center'>
-						Our bank partners help create various plans for credit facilities to
-						ease your financial burdens
+						Your one-stop destination for all things solar. View our marketplace
+						to start your solar journey.
 					</p>
 
 					{/* <div className=' ms:px-[4rem] shadow my-10'>
@@ -76,7 +76,7 @@ const MarketPlace = () => {
 					<div className='grid items-center justify-center mt-4'>
 						<div
 							className='bg-greens text-white w-[10rem] grid items-center justify-center py-2 rounded cursor-pointer'
-							onClick={isLoggedIn ? handleStore : handleLogin}>
+							onClick={handleStore}>
 							<p>Start Shopping</p>
 						</div>
 					</div>

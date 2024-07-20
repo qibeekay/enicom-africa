@@ -54,6 +54,7 @@ const Tab3 = () => {
 	const [selectedCategories, setSelectedCategories] = useState<Category[]>([]);
 	const [query, setQuery] = useState<string>('');
 	const [isLoading, setIsLoading] = useState<boolean>(false);
+	const [uploading, setUploading] = useState(false);
 	const { setTab } = useTabContext();
 	const [open, setOpen] = React.useState(false);
 	const [open1, setOpen1] = React.useState(false);
@@ -68,6 +69,9 @@ const Tab3 = () => {
 	const onDrop = useCallback(
 		async (acceptedFiles: File[]) => {
 			const selectedFile = acceptedFiles[0];
+
+			// Set loading state to true when upload starts
+			setUploading(true);
 
 			// Validate MIME type and file extension
 			if (
@@ -95,6 +99,7 @@ const Tab3 = () => {
 
 					const result = await uploadResponse.json();
 					setUploadResponse(result);
+					setUploading(false);
 					toast.success('Image uploaded');
 				} catch (error) {
 					// console.error('Image upload failed:', error);
@@ -162,7 +167,7 @@ const Tab3 = () => {
 		product_desc: '',
 		product_condition: '',
 		product_voltage: '',
-		product_amps: '',
+		product_unit: '',
 		product_watts: '',
 		product_rating: '',
 		product_capacity: '',
@@ -181,7 +186,7 @@ const Tab3 = () => {
 			product_desc: '',
 			product_condition: '',
 			product_voltage: '',
-			product_amps: '',
+			product_unit: '',
 			product_watts: '',
 			product_rating: '',
 			product_capacity: '',
@@ -361,12 +366,13 @@ const Tab3 = () => {
 
 								{/* product amps */}
 								<div>
-									<label htmlFor='amount'>Product Amps</label>
+									<label htmlFor='amount'>Product Unit</label>
 									<input
 										type='text'
-										name='product_amps'
-										value={formData.product_amps}
+										name='product_unit'
+										value={formData.product_unit}
 										onChange={handleChange}
+										placeholder='eg. Amps'
 										className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
 									/>
 								</div>
@@ -594,7 +600,7 @@ const Tab3 = () => {
 
 									{/* Display the uploaded image */}
 									{uploadedImageUrl && (
-										<div className=' w-[5rem] aspect-square overflow-hidden bg-orange-500 absolute right-5 top-5'>
+										<div className=' w-[5rem] aspect-square overflow-hidden absolute right-5 top-5'>
 											<img
 												src={`https://enicom.iccflifeskills.com.ng/uploads/${uploadedImageUrl}`}
 												alt={uploadedImageUrl}
@@ -602,6 +608,8 @@ const Tab3 = () => {
 											/>
 										</div>
 									)}
+
+									{uploading && <p>Uploading image...</p>}
 								</div>
 
 								{/* product description */}
