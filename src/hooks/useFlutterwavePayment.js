@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
 import { useEffect, useState } from 'react';
 
