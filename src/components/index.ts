@@ -139,6 +139,9 @@ import CreditPage from './terms-fold/CreditPage';
 import TermsPage from './terms-fold/TermsPage';
 import DisclosePage from './terms-fold/DisclosePage';
 import AccessPage from './terms-fold/AccessPage';
+import FinancePage from './solar-finance/FinancePage';
+import SfinanceHero from './solar-finance/SfinanceHero';
+import FinanceDetails from './solar-finance/FinanceDetails';
 
 export {
 	RegisterForm,
@@ -281,4 +284,7 @@ export {
 	CreditPage,
 	DisclosePage,
 	TermsPage,
+	SfinanceHero,
+	FinancePage,
+	FinanceDetails,
 };

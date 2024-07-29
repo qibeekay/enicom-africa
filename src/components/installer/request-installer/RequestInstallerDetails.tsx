@@ -137,19 +137,19 @@ const RequestInstallerDetails = () => {
 		}
 	};
 
-	const getuser = async () => {
-		try {
-			const getusers = await getUser(`$${token}`, `${usertoken}`);
-			// setStatus(getusers.is_verified_seller);
-		} catch (error) {
-			// console.error('Error fetching cart items:', error);
-			console.log('error');
-		}
-	};
+	// const getuser = async () => {
+	// 	try {
+	// 		const getusers = await getUser(`$${token}`, `${usertoken}`);
+	// 		// setStatus(getusers.is_verified_seller);
+	// 	} catch (error) {
+	// 		// console.error('Error fetching cart items:', error);
+	// 		console.log('error');
+	// 	}
+	// };
 
-	useEffect(() => {
-		getuser();
-	}, []);
+	// useEffect(() => {
+	// 	getuser();
+	// }, []);
 
 	return (
 		<div className='w-full h-screen overflow-scroll text-dark no-scrollbar font-poppins'>

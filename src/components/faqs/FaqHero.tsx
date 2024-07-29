@@ -84,7 +84,7 @@ const faqs = [
 		id: 13,
 		question: 'How do I apply?',
 		answer:
-			"You can apply by filling out the Get Your 'Offer form', providing all the required details. This 'Offer form' will be a hyperlink.",
+			"You can apply by filling out the Get Your 'Offer form', providing all the required details.",
 	},
 	{
 		id: 14,
@@ -96,7 +96,7 @@ const faqs = [
 		id: 15,
 		question: 'Is ENICOM available everywhere in Nigeria?',
 		answer:
-			"ENICOM currently operates in Lagos, Nigeria. Fill the 'Get Offer' form with the preferred location and we'll work to get you a solution. You can send us a message on Facebook, Twitter (X) and IG our (social media handles will be added) or send an email to (enicom.africa@yahoo.com) on our socials. Our contact numbers 0xooooooo.",
+			"ENICOM currently operates in Lagos, Nigeria. Fill the 'Get Offer' form with the preferred location and we'll work to get you a solution. You can send us a message on Facebook, Twitter (X) and IG our (social media handles will be added) or send an email to (enicom.africa@yahoo.com) on our socials. Our contact numbers +234 (0) 9018899999, +234 (0 ) 9122222299.",
 	},
 	{
 		id: 16,

@@ -273,24 +273,40 @@ const Tab3 = () => {
 		}
 	};
 
-	// api to get user data
-	const getuser = async () => {
-		try {
-			const getusers = await getUser(`$${token}`, `${usertoken}`);
-			// Check if the user is not verified
-			if (getusers.is_verified_seller === false) {
+	useEffect(() => {
+		// Retrieve the data from local storage
+		const userData = localStorage.getItem('userResponse');
+		console.log('data', userData);
+
+		if (userData) {
+			// Parse the data to convert it into a JavaScript object
+			const userObject = JSON.parse(userData);
+
+			if (userObject.is_verified_seller === false) {
 				// Show a dialog to prompt the user to register as a seller
 				setOpen(true);
 			}
-		} catch (error) {
-			// console.error('Error fetching cart items:', error);
-			console.log('error');
 		}
-	};
-
-	useEffect(() => {
-		getuser();
 	}, []);
+
+	// api to get user data
+	// const getuser = async () => {
+	// 	try {
+	// 		const getusers = await getUser(`$${token}`, `${usertoken}`);
+	// 		// Check if the user is not verified
+	// 		if (getusers.is_verified_seller === false) {
+	// 			// Show a dialog to prompt the user to register as a seller
+	// 			setOpen(true);
+	// 		}
+	// 	} catch (error) {
+	// 		// console.error('Error fetching cart items:', error);
+	// 		console.log('error');
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	getuser();
+	// }, []);
 
 	const handleBusiness = () => {
 		localStorage.setItem('bussiness_type', 'Bussiness');

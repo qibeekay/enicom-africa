@@ -4,7 +4,7 @@ import {
 	getLoanPackages,
 	verifyLoanKyc,
 } from '@/api/loan/loan';
-import { DasboardNav, MenuDrawer } from '@/components';
+import { DasboardNav, LoanForm1, MenuDrawer } from '@/components';
 import { useRouter } from 'next/navigation';
 import React, { FormEvent, useEffect, useState } from 'react';
 import {
@@ -88,13 +88,10 @@ const LoanFacilityPage = () => {
 		? packages?.filter((pkg) => pkg?.provider_token === selectedProviderToken)
 		: [];
 
-	const [open1, setOpen1] = React.useState(false);
-	const handleOpen1 = () => setOpen1((cur) => !cur);
-
 	// stores the pkage using use context so it can be used in a different page
 	const handleGetLoan = (pkage: Package) => {
 		selectPackage(pkage); // Set the selected package
-		handleOpen1(); // Open the dialog
+		router.push('/loan-form');
 	};
 
 	// console.log(selectedPackage);
@@ -105,52 +102,37 @@ const LoanFacilityPage = () => {
 			? localStorage.getItem('usertoken') || ''
 			: '';
 
-	// api to get users data
-	const getuser = async () => {
-		try {
-			const getusers = await getUser(`$${token}`, `${usertoken}`);
-			setRenitoken(getusers.renitoken);
-		} catch (error) {
-			// console.error('Error fetching cart items:', error);
-			console.log('error');
-		}
-	};
-
-	// fetch user when it mounts
 	useEffect(() => {
-		getuser();
+		// Retrieve the data from local storage
+		const userData = localStorage.getItem('userResponse');
+		console.log('data', userData);
+
+		if (userData) {
+			// Parse the data to convert it into a JavaScript object
+			const userObject = JSON.parse(userData);
+
+			// Access and set renitoken
+			setRenitoken(userObject.renitoken);
+		}
 	}, []);
 
-	const verifyingLoan = async (e: FormEvent) => {
-		e.preventDefault();
-		try {
-			setIsLoading(true);
-
-			const verifiedLoan = await verifyLoanKyc(renitoken, bvn, `$${token}`);
-			toast.success('Bvn submitted succesfully');
-			setVerifiedLoanData(verifiedLoan.data);
-
-			router.push('/loan-form');
-			// setIsLoading(false);
-		} catch (error) {
-			// console.error('Error fetching cart items:', error);
-			toast.error('error submitting bvn');
-			console.log('error');
-			// setIsLoading(false);
-		} finally {
-			setIsLoading(false);
-		}
-	};
+	// filteredPackages?.map;
 
 	return (
 		<React.Fragment>
 			<DasboardNav openRight={() => setOpenRight(true)} />
 
 			<div className='max-w-6xl px-4 mx-auto pt-10 pb-20'>
-				<p className='text-lg font-medium pt-2'>Loan Provider and Calculator</p>
+				<p className='text-lg font-medium pt-2'>
+					Select from our Financing Partners{' '}
+				</p>
 				<p>
 					Choose your preferred finance partner and calculate your loan options
 					all in one place.
+				</p>
+				<p className='text-sm'>
+					Terms and Conditions apply (Financing is subject to approval based on
+					the terms and conditions set by the chosen financial institution)
 				</p>
 
 				<div className='flex items-center justify-between w-full'>
@@ -185,50 +167,7 @@ const LoanFacilityPage = () => {
 							</p>
 						) : (
 							<div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10'>
-								{/* small */}
-								{filteredPackages?.map((pkage, index) => (
-									<div
-										key={index}
-										className='border-2 border-[#CEFFCC] hover:border-greens rounded-2xl py-5'>
-										<div className='px-5 pb-5'>
-											<p className=' text-2xl font-semibold text-greens'>
-												{pkage?.plan_duration}
-												<span className='text-base text-dark font-normal'>
-													({pkage?.plan_digit} Months)
-												</span>
-											</p>
-
-											<div className=' flex items-center gap-2'>
-												<div className=' w-[3rem] h-[3rem] rounded-full overflow-hidden'>
-													<img
-														className='w-full h-full'
-														src={pkage?.provider_image}
-														alt=''
-													/>
-												</div>
-												<p className='py-5'>{pkage?.provider_name}</p>
-											</div>
-
-											<p>{pkage?.loan_percentage}% Interest</p>
-
-											<button
-												className='w-full py-4 border-[#CEFFCC] border-2 hover:bg-greens text-lg font-bold text-dark/50 hover:text-white rounded-lg mt-7 mb-2'
-												onClick={() => handleGetLoan(pkage)}>
-												Get Loan
-											</button>
-										</div>
-
-										<div className='flex items-center gap-4'>
-											<hr className='w-full bg-black h-0.5' />
-											<p>Package</p>
-											<hr className='w-full bg-black h-0.5' />
-										</div>
-
-										<ul className='list-disc px-10 mt-5 grid gap-2'>
-											<li>{pkage.package_desc}</li>
-										</ul>
-									</div>
-								))}
+								<LoanForm1 filteredPackages={filteredPackages} />
 							</div>
 						)}
 					</div>
@@ -240,49 +179,6 @@ const LoanFacilityPage = () => {
 			</div>
 
 			<MenuDrawer openRight={openRight} setOpenRight={setOpenRight} />
-
-			{/* verify bvn modal */}
-			<Dialog
-				size='xs'
-				open={open1}
-				handler={handleOpen1}
-				className='bg-white shadow-none text-dark p-6'>
-				<DialogHeader>Verify Bvn</DialogHeader>
-				<form action=''>
-					<div className='grid mt-4'>
-						{/* bvn */}
-						<div>
-							<label htmlFor='bvn'>
-								<input
-									type='text'
-									className='w-full mt-1 outline-none border py-2 border-dark rounded-lg px-4'
-									placeholder='Please enter you bvn'
-									value={bvn}
-									onChange={(e) => setBvn(e.target.value)}
-								/>
-							</label>
-						</div>
-						{/* submit */}
-					</div>
-				</form>
-				<DialogFooter>
-					<Button
-						variant='text'
-						color='red'
-						onClick={handleOpen1}
-						className='mr-1'>
-						<span>Cancel</span>
-					</Button>
-
-					<Button
-						variant='outlined'
-						color='green'
-						onClick={verifyingLoan}
-						className='w-fit'>
-						{isLoading ? 'Submitting' : 'Submit'}
-					</Button>
-				</DialogFooter>
-			</Dialog>
 		</React.Fragment>
 	);
 };

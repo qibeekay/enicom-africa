@@ -282,7 +282,7 @@ const AgentsPage = () => {
 
 			<div className='max-w-6xl mx-auto p-4'>
 				<div>
-					<h1>Business Information</h1>
+					<h1>Installers Information</h1>
 
 					<form action='' className='mt-5 w-[90%] md:w-[60%] mx-auto'>
 						<div className='flex flex-col gap-6'>
@@ -496,7 +496,7 @@ const AgentsPage = () => {
 							</div>
 
 							{/* education background */}
-							<div>
+							{/* <div>
 								<label htmlFor='EducationalBackground'>
 									Educational Background
 								</label>
@@ -508,7 +508,7 @@ const AgentsPage = () => {
 									className='w-full outline-none border border-dark rounded-lg py-2 px-4 mt-2'
 									placeholder='Type here'
 								/>
-							</div>
+							</div> */}
 
 							{/* experience */}
 							<div>

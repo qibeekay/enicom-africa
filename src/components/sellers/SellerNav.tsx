@@ -109,7 +109,7 @@ const SellerNav = () => {
 						<div className='w-full mt-7'>
 							<Link className='' href={''}>
 								<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
-									Become an Agent
+									Become an Installer
 								</p>
 							</Link>
 						</div>

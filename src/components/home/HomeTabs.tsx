@@ -7,7 +7,7 @@ const HomeTabs = () => {
 	const [activeTab, setActiveTab] = useState('1');
 	return (
 		<div className='relative px-4 xs:px-0 max-w-6xl mx-auto'>
-			<div className='w-full absolute -top-[2rem] xs:-top-[5rem] lg:left-[50%] lg:-translate-x-[50%]'>
+			<div className='w-full absolute -top-[2rem] xs:-top-[2rem] lg:left-[50%] lg:-translate-x-[50%]'>
 				<div className=' w-full grid grid-cols-1 md:grid-cols-2 ll:grid-cols-3 items-start justify-center gap-4  xs:gap-10 px-4 ms:px-20 md:px-4'>
 					{/* market place */}
 					<div className='w-full h-full'>

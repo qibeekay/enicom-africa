@@ -8,8 +8,18 @@ import {
 	MenuItem,
 	MenuList,
 } from '@material-tailwind/react';
+import { useRouter } from 'next/navigation';
 
 const CompanyHero = () => {
+	const router = useRouter();
+
+	const handleStore = () => {
+		router.push('/store');
+	};
+
+	const handleSolarFin = () => {
+		router.push('/solar-finance');
+	};
 	return (
 		<div className='w-full font-poppins text-dark mt-16'>
 			<div className='relative'>
@@ -21,11 +31,17 @@ const CompanyHero = () => {
 				{/* hero */}
 				<div className='max-w-6xl mx-auto px-4'>
 					<h1 className='font-semibold text-4xl text-center mb-7'>
-						What we Do
+						Discover our offerings
 					</h1>
 
+					<p className='text-center text-xl mb-10'>
+						Whether for your home or business, discover how we make solar energy
+						accessible and affordable through our innovative marketplace and
+						sustainable finance options.
+					</p>
+
 					{/* flex details */}
-					<div className='flex flex-col md:flex-row items-center gap-10'>
+					<div className='flex flex-col md:flex-row items-start gap-10'>
 						{/* flex 1 */}
 						<div className='w-full bg-white shadows rounded-3xl'>
 							{/* image */}
@@ -34,16 +50,26 @@ const CompanyHero = () => {
 							</div>
 							{/* text */}
 							<div className='px-4'>
-								<p className='font-semibold my-3'>I am a HomeOwner/Customer</p>
+								<p className='font-semibold my-3'>Individual</p>
 								<p className='grid gap-3 text-sm sm:text-base'>
-									Enicom recognizes the pain point of homeowners and customers.
-									we are dedicated to revolutionizing solar solutions for
-									homeowners and customers, providing accessibility, and
-									affordability right to your doorstep.{' '}
+									Want to make a switch to better energy solution and join the
+									5% of people enjoying reliable, and sustainable power, you can
+									make a switch to become a solar system owner. Get your
+									customised solar solutions based on your energy need.
 									<span>
-										Discover how Enicom can help you power your home sustainably
-										and affordably.
+										Whether you're looking to lower your energy bill, get more
+										reliable and affordable power solution, avoid excessive cost
+										from running on generator, and prevent health and
+										environmental harms caused by the pollutions emitted form
+										generators, we are here to help you every step of the way.
 									</span>
+									<span>
+										Our solution is tailored to meets the power needs of your
+										home and residential building to suit your lifestyle and
+										budget.
+									</span>
+									<span>Ready to start?</span>
+									<span>Discover how Enicom can help you achieve this.</span>
 								</p>
 							</div>
 
@@ -73,7 +99,9 @@ const CompanyHero = () => {
 													marketplace.
 												</p>
 											</div>
-											<button className='bg-bgGreen py-1.5 px-5 rounded-3xl flex items-center gap-3'>
+											<button
+												className='bg-bgGreen py-1.5 px-5 rounded-3xl flex items-center gap-3'
+												onClick={handleStore}>
 												Continue
 												<FiChevronsRight />
 											</button>
@@ -96,7 +124,9 @@ const CompanyHero = () => {
 													ways for owning equipments
 												</p>
 											</div>
-											<button className='bg-bgGreen py-1.5 px-5 rounded-3xl flex items-center gap-3'>
+											<button
+												className='bg-bgGreen py-1.5 px-5 rounded-3xl flex items-center gap-3'
+												onClick={handleSolarFin}>
 												Continue
 												<FiChevronsRight />
 											</button>
@@ -114,15 +144,23 @@ const CompanyHero = () => {
 							</div>
 							{/* text */}
 							<div className='px-4'>
-								<p className='font-semibold my-3'>
-									I am a Business/Service provider
+								<p className='font-semibold my-3'>Business</p>
+								<p className='grid gap-3 text-sm sm:text-base'>
+									Boost your business bottom-line by powering your operations
+									with solar solutions that offer sustainable energy, reliable
+									and better financial benefits.
 								</p>
 								<p className='grid gap-3 text-sm sm:text-base'>
-									Enicom has created an online marketplace to help small, medium
-									and large businesses sell their Solar products and services to
-									a wide range of customers every day. Whether you are a
-									Supplier, Installer or Seller, our platform can help you scale
-									up your business and increase revenue.
+									As a small business owner looking to expand, or large
+									corporations, our team of experts will work closely with you
+									to design and implement energy systems that align with your
+									business objectives and maximize your return on investment.
+								</p>
+								<p className='grid gap-3 text-sm sm:text-base'>
+									Ready to start?
+								</p>
+								<p className='grid gap-3 text-sm sm:text-base'>
+									Discover how Enicom can help you achieve this.
 								</p>
 							</div>
 
@@ -189,36 +227,6 @@ const CompanyHero = () => {
 								{/* text */}
 								<p className='mt-2'>Equipments are delivered</p>
 							</div>
-						</div>
-
-						{/* details */}
-						<div className='mt-16'>
-							<h1 className='text-center font-semibold text-base sm:text-lg'>
-								What you must know about Solar Financing
-							</h1>
-							<p className='w-full text-sm md:w-[85%] text-center mx-auto mt-3'>
-								Solar energy systems can be expensive, costing thousands or even
-								tens of thousands of naira. It's completely understandable to
-								feel hesitant about investing in solar energy because of the
-								high upfront costs involved. Fortunately, there are financing
-								options available that can help homeowners benefit from solar
-								energy savings, without having to pay a huge sum of money
-								upfront. Some of these financing options offer little to no down
-								payment, making it easier for homeowners to switch to solar
-								energy even if they don’t have a lump sum of savings.
-							</p>
-						</div>
-
-						{/* details with tab */}
-						<div className='mt-16'>
-							<h1 className='text-center font-semibold text-base sm:text-lg grid'>
-								Three Model Structure to fit everyone’s journey,
-								<span>Enabling sustainable energy & seamless solar</span>
-							</h1>
-							<p className='w-full text-sm md:w-[85%] text-center mx-auto mt-3'>
-								Empower your energy choice with our tailored solar solutions
-								that fits every journey.
-							</p>
 						</div>
 					</div>
 				</div>

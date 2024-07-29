@@ -64,15 +64,14 @@ const Footer = () => {
 						<div className='text-center w-[10rem]'>
 							<h1 className='text-lg font-semibold'>Address and Contact</h1>
 							<ul className='grid gap-y-3 mt-4'>
+								<li>Address to physical office or quarters</li>
 								<li>
-									<Link href={''}>Address to physical office or quarters</Link>
+									<Link href={'mailto:Enicom.africa@yahoo.com'}>
+										Enicom.africa@yahoo.com
+									</Link>
 								</li>
-								<li>
-									<Link href={''}>Email Address</Link>
-								</li>
-								<li>
-									<Link href={''}>Phone Number</Link>
-								</li>
+								<li>+234 (0) 9018899999</li>
+								<li>+234 (0 ) 9122222299</li>
 							</ul>
 						</div>
 

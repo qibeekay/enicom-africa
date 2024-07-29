@@ -95,22 +95,6 @@ const CartDetails = () => {
 		router.push('/purchase');
 	};
 
-	const getuser = async () => {
-		try {
-			const getusers = await getUser(`$${token}`, `${usertoken}`);
-			console.log(getusers);
-		} catch (error) {
-			// console.error('Error fetching cart items:', error);
-			console.log('error');
-		}
-	};
-
-	useEffect(() => {
-		getuser();
-	}, []);
-
-	// console.log(total_price_th);
-
 	const handleStore = () => {
 		router.push('/store');
 	};

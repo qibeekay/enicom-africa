@@ -9,7 +9,7 @@ const Installation = () => {
 		router.push('/register');
 	};
 	return (
-		<div className='pt-[75rem] sm:pt-[65rem] md:pt-[45rem] ll:pt-[25rem] text-dark font-poppins'>
+		<div className='pt-[77rem] sm:pt-[67rem] md:pt-[47rem] ll:pt-[27rem] text-dark font-poppins'>
 			<div className='w-[75%] mx-auto'>
 				<div>
 					{/* div */}

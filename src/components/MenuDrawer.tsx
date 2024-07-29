@@ -22,10 +22,10 @@ interface Props {
 }
 
 const MenuDrawer = ({ openRight, setOpenRight }: Props) => {
-	const [status, setStatus] = useState('');
+	const [status, setStatus] = useState(false);
 	const [role, setRole] = useState<string[]>([]);
 
-	const [agentStatus, setAgentStatus] = useState('');
+	const [agentStatus, setAgentStatus] = useState(false);
 
 	const closeDrawerRight = () => setOpenRight(false);
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
@@ -53,21 +53,40 @@ const MenuDrawer = ({ openRight, setOpenRight }: Props) => {
 			? localStorage.getItem('usertoken') || ''
 			: '';
 
-	const getuser = async () => {
-		try {
-			const getusers = await getUser(`$${token}`, `${usertoken}`);
-			setStatus(getusers.is_verified_seller);
-			setAgentStatus(getusers.is_verified_agent);
-			setRole(getusers.roles);
-		} catch (error) {
-			// console.error('Error fetching cart items:', error);
-			console.log('error');
-		}
-	};
-
 	useEffect(() => {
-		getuser();
+		// Retrieve the data from local storage
+		const userData = localStorage.getItem('userResponse');
+		console.log('data', userData);
+
+		if (userData) {
+			// Parse the data to convert it into a JavaScript object
+			const userObject = JSON.parse(userData);
+
+			// Access and set the seller status
+			setStatus(userObject.is_verified_seller);
+			setAgentStatus(userObject.is_verified_agent);
+			setRole(userObject.roles);
+		}
 	}, []);
+
+	console.log(status);
+	console.log(agentStatus);
+
+	// const getuser = async () => {
+	// 	try {
+	// 		const getusers = await getUser(`$${token}`, `${usertoken}`);
+	// 		setStatus(getusers.is_verified_seller);
+	// 		setAgentStatus(getusers.is_verified_agent);
+	// 		setRole(getusers.roles);
+	// 	} catch (error) {
+	// 		// console.error('Error fetching cart items:', error);
+	// 		console.log('error');
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	getuser();
+	// }, []);
 
 	const handleLogin = () => {
 		router.push('/login');
@@ -166,7 +185,7 @@ const MenuDrawer = ({ openRight, setOpenRight }: Props) => {
 								<div className='w-full mt-5'>
 									<Link className='' href={'agent-dashboard'}>
 										<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
-											Agents Dashboard
+											Installers Dashboard
 										</p>
 									</Link>
 								</div>
@@ -174,7 +193,7 @@ const MenuDrawer = ({ openRight, setOpenRight }: Props) => {
 								<div className='w-full mt-5'>
 									<Link className='' href={'/agent'}>
 										<p className='bg-greens w-full rounded-lg text-white py-3 px-5 text-center text-sm'>
-											Become an Agent
+											Become an Installer
 										</p>
 									</Link>
 								</div>

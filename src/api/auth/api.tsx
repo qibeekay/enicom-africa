@@ -215,13 +215,13 @@ export const getUsersCount = async (bearerToken: string) => {
 // get user account details
 export const getUsersAccount = async (
 	bearerToken: string,
-	reniToken: string | undefined
+	userToken: string | undefined
 ) => {
 	try {
 		const response = await axios.post(
-			`${API_URL}/profile/get-account-balance`,
+			`${API_URL}/wallet/balance`,
 			{
-				renitoken: reniToken,
+				usertoken: userToken,
 			},
 			{
 				headers: {
@@ -232,7 +232,7 @@ export const getUsersAccount = async (
 		return response.data.data;
 	} catch (error) {
 		// toast.error('Error fetching product');
-		console.error('Error fetching product:', error);
+		console.error('Error fetching details:', error);
 		return [];
 	}
 };

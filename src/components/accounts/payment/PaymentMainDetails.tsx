@@ -38,22 +38,22 @@ const PaymentMainDetails = () => {
 			: '';
 
 	// getting specific user data
-	const getuser = async () => {
-		try {
-			const getusers = await getUser(`$${token}`, `${usertoken}`);
-			console.log(getusers);
-			setUser(getusers);
-			setLoading(false);
-		} catch (error) {
-			// console.error('Error fetching cart items:', error);
-			console.log('error');
-			setLoading(false);
-		}
-	};
+	// const getuser = async () => {
+	// 	try {
+	// 		const getusers = await getUser(`$${token}`, `${usertoken}`);
+	// 		console.log(getusers);
+	// 		setUser(getusers);
+	// 		setLoading(false);
+	// 	} catch (error) {
+	// 		// console.error('Error fetching cart items:', error);
+	// 		console.log('error');
+	// 		setLoading(false);
+	// 	}
+	// };
 
-	useEffect(() => {
-		getuser();
-	}, []);
+	// useEffect(() => {
+	// 	getuser();
+	// }, []);
 
 	if (loading) {
 		return <div>Loading...</div>; // Render loading indicator if data is still fetching

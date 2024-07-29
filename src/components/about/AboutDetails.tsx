@@ -3,6 +3,11 @@ import { Dialog } from '@material-tailwind/react';
 import Link from 'next/link';
 import React from 'react';
 import LoanCalculatorModal from '../LoanCalculatorModal';
+import { FaMoneyBillWave } from 'react-icons/fa';
+import { IoShieldCheckmark } from 'react-icons/io5';
+import { FaPeopleGroup } from 'react-icons/fa6';
+import { MdOutlineHeadsetMic } from 'react-icons/md';
+import { BsTools } from 'react-icons/bs';
 
 const AboutDetails = () => {
 	const [open, setOpen] = React.useState(false);
@@ -11,66 +16,124 @@ const AboutDetails = () => {
 		<div className='w-full font-poppins text-dark bg-bgGreen'>
 			<div className=' max-w-6xl px-4 mx-auto py-10'>
 				<div className='w-full'>
-					<h1 className='text-center text-2xl font-semibold mb-10'>
-						We provide a complete range of solar PV solutions
-					</h1>
-
 					{/* grids */}
-					<div className='w-full flex flex-wrap gap-7 items-center justify-center lg:justify-between'>
+					<div className='w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center justify-center gap-10 text-center'>
 						{/* grid-items */}
 						<div className='flex flex-col items-center justify-center gap-2'>
 							{/* img */}
-							<div className=' w-12 aspect-square overflow-hidden'>
-								<img
-									className='w-full h-full'
-									src='/carbon_operations-field.png'
-									alt=''
-								/>
+							<div>
+								<IoShieldCheckmark size={50} />
 							</div>
 							{/* text */}
-							<p className='font-medium'>Operation & Maintenance</p>
+							<p className='text-lg font-medium'>Quality</p>
+							<p className=' mt-2'>
+								Purchase high quality solar systems and equipment customized to
+								your energy needs
+							</p>
 						</div>
 
 						{/* grid-items */}
 						<div className='flex flex-col items-center justify-center gap-2'>
 							{/* img */}
-							<div className=' w-12 aspect-square overflow-hidden'>
-								<img
-									className='w-full h-full'
-									src='/wpf_maintenance.png'
-									alt=''
-								/>
+							<div>
+								<FaPeopleGroup size={50} />
 							</div>
 							{/* text */}
-							<p className='font-medium'>Turnkey Installation</p>
+							<p className='text-lg font-medium'>Consultation</p>
+							<p className=' mt-2'>
+								We provide specialized consultations on the solar installation
+								process.
+							</p>
 						</div>
 
 						{/* grid-items */}
 						<div className='flex flex-col items-center justify-center gap-2'>
 							{/* img */}
-							<div className=' w-12 aspect-square overflow-hidden'>
-								<img
-									className='w-full h-full'
-									src='/streamline_customer-support-1.png'
-									alt=''
-								/>
+							<div>
+								<FaMoneyBillWave size={50} />
 							</div>
 							{/* text */}
-							<p className='font-medium'>Solar Consulting Services</p>
+							<p className='text-lg font-medium'>Flexible Finance Options</p>
+							<p className=' mt-2'>
+								Own your system at an affordable price choosing from our list of
+								financial partners offering flexible payment options.{' '}
+							</p>
 						</div>
 
 						{/* grid-items */}
 						<div className='flex flex-col items-center justify-center gap-2'>
 							{/* img */}
-							<div className=' w-12 aspect-square overflow-hidden'>
-								<img
-									className='w-full h-full'
-									src='/solar_card-linear.png'
-									alt=''
-								/>
+							<div>
+								<BsTools size={45} />
 							</div>
 							{/* text */}
-							<p className='font-medium'>Financing</p>
+							<p className='text-lg font-medium'>Turnkey Installation</p>
+							<p className=' mt-2'>
+								Our expert team handles every aspect of your installation
+								process, from initial site assessment and system design to
+								installation and final testing.
+							</p>
+						</div>
+
+						<div className='flex flex-col items-center justify-center gap-2'>
+							{/* img */}
+							<div>
+								<MdOutlineHeadsetMic size={50} />
+							</div>
+							{/* text */}
+							<p className='text-lg font-medium'>Consultin Service</p>
+							<p className=' mt-2'>
+								We provide you with expert advice and customised solutions for
+								your energy needs. For guidance on system selection, financial
+								planning, optimizing your energy use, our team of consultants
+								will guide you every step of the way.
+							</p>
+						</div>
+					</div>
+
+					{/* mission */}
+					<div className='text-center mt-10'>
+						<h1 className='text-xl font-semibold py-4'>Our Mission</h1>
+						<div className='flex flex-col gap-7 sm:w-[90%] md:[w-80%] lg:[w-60%] xl:[45%] mx-auto'>
+							<p className='text-xl'>
+								To provide access to renewable energy solutions through
+								innovative technology and affordable acquisition options.
+							</p>
+							<p>
+								Millions of people across Africa still do not have access to
+								electricity. This staggering number underscores the urgent need
+								for innovative solutions in the energy sector.
+							</p>
+							<p>
+								Countries across Africa face three significant challenges in
+								electricity distribution: providing a reliable electricity
+								supply to more people, ensuring affordability, and reducing
+								widespread reliance on high carbon emitters.
+							</p>
+							<p>
+								At Enicom, our purpose is to help people switch to better energy
+								by providing access to funding and trusted, reliable,
+								high-quality solar solutions. Enicom bridges this gap by
+								connecting buyers to verified sellers and installers while
+								offering flexible payment options for you to own your solar
+								systems.
+							</p>
+						</div>
+					</div>
+
+					{/* vision */}
+					<div className='text-center mt-10'>
+						<h1 className='text-xl font-semibold py-4'>Our Vision</h1>
+						<div className='flex flex-col gap-7 sm:w-[90%] md:[w-80%] lg:[w-60%] xl:[45%] mx-auto'>
+							<p className='text-xl'>
+								To be the recognized leader in the renewable energy solutions
+								across Africa.
+							</p>
+							<p>
+								Our commitment is to lead in providing solutions through
+								innovative technology, ensuring that every home and organization
+								has access to clean and affordable energy.
+							</p>
 						</div>
 					</div>
 
@@ -88,33 +151,36 @@ const AboutDetails = () => {
 							{/* list */}
 							<ul className=' list-disc mt-5 grid gap-1 pl-4 text-sm lg:text-base'>
 								<li>
-									To ensure seamless process in accessing Solar finance options.
+									To provide seamless process in the acquisition of a Solar
+									System.
 								</li>
 								<li>
-									To treat our customers, vendors, partners respectfully, fairly
-									and responsively.
+									To offer swift customer service with a guaranteed response
+									time of within 24hrs, ensuring your needs are addressed
+									promptly.
 								</li>
 								<li>
-									Help customers in the entire implementation process and
-									ensuring process is hassle free and seamless to the customer.
+									To provide personalized solar installation quotes within 24 to
+									48 hours of receiving all required information about
+									customer’s property and energy needs.
 								</li>
 								<li>
-									Provide customer service support as required by the customer.
+									Through our communication channels, we further provide
+									assistance and support to customers on product selection,
+									compatibility, installation and maintenance, helping you make
+									decisions and optimize the performance of your solar systems.
 								</li>
 								<li>
-									Carry out each project as though we own the system, using high
-									quality products, thorough installation techniques and
-									continuous monitoring to increase the project's lifetime
-									worth.
+									That products purchased from our marketplace are high-quality
+									solar products, including panels, inverters, batteries, and
+									other accessories and are from reputable manufacturers and
+									suppliers.
 								</li>
 								<li>
-									Provide Clean and affordable energy to home and business
-									owners.
-								</li>
-								<li>
-									To expand access to clean energy with financing solutions that
-									enables homeowners and businesses to go solar, driving
-									business growth, and environmental sustainability.
+									That all products purchased from our marketplace come with
+									manufacturer’s warranties because of our want to provide you
+									at every purchase you make, with peace of mind and protection
+									against defects or malfunctions.
 								</li>
 							</ul>
 						</div>

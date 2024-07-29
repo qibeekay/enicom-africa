@@ -207,9 +207,10 @@ export const getUser = async (
 				},
 			}
 		);
+		// Store the entire response in local storage
+		localStorage.setItem('userResponse', JSON.stringify(response.data.data));
 		return response.data.data;
 	} catch (error) {
-		// toast.error('Error fetching product');
 		console.error('Error fetching product:', error);
 		return [];
 	}

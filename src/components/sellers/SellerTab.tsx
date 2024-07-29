@@ -28,21 +28,21 @@ const SellerTab = () => {
 	const handleTabClick = (tab: string) => {
 		setTab(tab);
 		// Calculate the progress based on the clicked tab
-		let newProgress = 0;
-		switch (tab) {
-			case '1':
-				newProgress = 35;
-				break;
-			case '2':
-				newProgress = 70;
-				break;
-			case '3':
-				newProgress = 100;
-				break;
-			default:
-				newProgress = 0;
-		}
-		setProgress(newProgress);
+		// let newProgress = 0;
+		// switch (tab) {
+		// 	case '1':
+		// 		newProgress = 35;
+		// 		break;
+		// 	case '2':
+		// 		newProgress = 70;
+		// 		break;
+		// 	case '3':
+		// 		newProgress = 100;
+		// 		break;
+		// 	default:
+		// 		newProgress = 0;
+		// }
+		// setProgress(newProgress);
 	};
 
 	const router = useRouter();
@@ -53,29 +53,41 @@ const SellerTab = () => {
 	// Determine the progress bar color based on the progress
 	// const progressBarColor = progress < 100 ? 'bg-greens' : 'bg-greens';
 
-	const getuser = async () => {
-		try {
-			const getusers = await getUser(`$${token}`, `${usertoken}`);
-			setStatus(getusers.is_verified_seller);
-			setAgentStatus(getusers.is_verified_agent);
-			setLoading(false);
-		} catch (error) {
-			// console.error('Error fetching cart items:', error);
-			console.log('error');
-			setLoading(false);
-		}
-	};
-
-	console.log(agentStatus);
-
-	// useEffect to fetch user data when the component mounts
 	useEffect(() => {
-		getuser();
+		// Retrieve the data from local storage
+		const userData = localStorage.getItem('userResponse');
+		console.log('data', userData);
+
+		if (userData) {
+			// Parse the data to convert it into a JavaScript object
+			const userObject = JSON.parse(userData);
+
+			// Access and set the seller status
+			setStatus(userObject.is_verified_seller);
+			setAgentStatus(`${userObject.is_verified_agent}`);
+		}
 	}, []);
 
-	if (loading) {
-		return <div className='max-w-6xl px-4 mx-auto'>Loading...</div>; // Render loading indicator if data is still fetching
-	}
+	// const getuser = async () => {
+	// 	try {
+	// 		const getusers = await getUser(`$${token}`, `${usertoken}`);
+	// 		setStatus(getusers.is_verified_seller);
+	// 		setAgentStatus(getusers.is_verified_agent);
+	// 		setLoading(false);
+	// 	} catch (error) {
+	// 		// console.error('Error fetching cart items:', error);
+	// 		console.log('error');
+	// 		setLoading(false);
+	// 	}
+	// };
+
+	// console.log(agentStatus);
+
+	// // useEffect to fetch user data when the component mounts
+	// useEffect(() => {
+	// 	getuser();
+	// }, []);
+
 	return (
 		<div>
 			<div className='relative font-poppins pb-10'>

@@ -40,13 +40,18 @@ const HeroPage = () => {
 						{/* heading */}
 						<h1
 							className='text-white font-semibold text-3xl sm:text-4xl w-[80%] md:w-[60%] lg:w-[55%] xl:w-[45%] sm:leading-[3rem]
-                        py-4 '>
-							Lighting up the nation, Empowering Lives.
+                        pt-4 '>
+							Enabling Better Living through access to Solar and Flexible
+							Finance solutions.
 						</h1>
 
 						{/*  paragraph */}
-						<p className='text-white w-[80%] md:w-[60%] lg:w-[40%] text-sm mt-2'>
-							Enjoy an easy life with the energy of the future.
+						<p className='text-white w-[80%] md:w-[60%] lg:w-[40%] text-sm mt-2 mb-2'>
+							Connect with verified sellers and installers near you.
+						</p>
+						<p className='text-white w-[80%] md:w-[60%] lg:w-[40%] text-lg mt-2'>
+							Tired and frustrated by the epileptic power situation in your
+							area, make a switch with us today.
 						</p>
 					</div>
 				</div>

@@ -28,25 +28,40 @@ const AccountSideMobile: React.FC<CloseProps> = ({ close }) => {
 			? localStorage.getItem('usertoken') || ''
 			: '';
 
-	const getuser = async () => {
-		try {
-			const getusers = await getUser(`$${token}`, `${usertoken}`);
-			setStatus(getusers.is_verified_seller);
-			setAgentStatus(getusers.is_verified_agent);
-			setLoading(false);
-		} catch (error) {
-			// console.error('Error fetching cart items:', error);
-			console.log('error');
-			setLoading(false);
+	useEffect(() => {
+		// Retrieve the data from local storage
+		const userData = localStorage.getItem('userResponse');
+		console.log('data', userData);
+
+		if (userData) {
+			// Parse the data to convert it into a JavaScript object
+			const userObject = JSON.parse(userData);
+
+			// Access and set the seller status
+			setStatus(userObject.is_verified_seller);
+			setAgentStatus(`${userObject.is_verified_agent}`);
 		}
-	};
+	}, []);
+
+	// const getuser = async () => {
+	// 	try {
+	// 		const getusers = await getUser(`$${token}`, `${usertoken}`);
+	// 		setStatus(getusers.is_verified_seller);
+	// 		setAgentStatus(getusers.is_verified_agent);
+	// 		setLoading(false);
+	// 	} catch (error) {
+	// 		// console.error('Error fetching cart items:', error);
+	// 		console.log('error');
+	// 		setLoading(false);
+	// 	}
+	// };
 
 	// console.log(agentStatus);
 
 	// useEffect to fetch user data when the component mounts
-	useEffect(() => {
-		getuser();
-	}, []);
+	// useEffect(() => {
+	// 	getuser();
+	// }, []);
 	return (
 		<div className='md:hidden fixed bg-white shadows py-5 w-[20rem] rounded-lg h-screen text-dark'>
 			<div className=''>

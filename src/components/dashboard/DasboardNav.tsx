@@ -9,6 +9,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCart } from '../CartContext';
 import { ToastContainer, toast } from 'react-toastify';
+import { getUser } from '@/api/products/products';
 
 const DasboardNav = ({ openRight }: { openRight: () => void }) => {
 	const [mobileSearchVisible, setMobileSearchVisible] = useState(false);
@@ -23,6 +24,7 @@ const DasboardNav = ({ openRight }: { openRight: () => void }) => {
 
 	// const navigationRef = useRef<HTMLDivElement | null>(null);
 	const searchInputRef = useRef<HTMLInputElement | null>(null);
+	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
 	const router = useRouter();
 
@@ -34,6 +36,20 @@ const DasboardNav = ({ openRight }: { openRight: () => void }) => {
 			router.push('/');
 		}
 	};
+
+	// getting specific user data
+	const getuser = async () => {
+		try {
+			const getusers = await getUser(`$${token}`, `${usertoken}`);
+			console.log(getusers);
+		} catch (error) {
+			console.log('error');
+		}
+	};
+
+	useEffect(() => {
+		getuser();
+	}, []);
 
 	// on mobile view toggles the search input
 	const toggleMobileSearch = () => {

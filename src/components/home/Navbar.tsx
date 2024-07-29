@@ -48,36 +48,19 @@ const Navbar = () => {
 				<div className='hidden lg:grid'>
 					<ul className='flex gap-x-7 font-medium'>
 						<li>
-							<Link href={'/store'}>Store</Link>
+							<Link href={'/store'}>Home</Link>
 						</li>
-						{/* <li>
-							<Link href={'/company'}>Company</Link>
-						</li> */}
 						<li>
 							<Link href={'/about-us'}>About Us</Link>
 						</li>
 						<li>
-							<Link href={''}>Contact Us</Link>
+							<Link href={'/loan-calculator'}>Loan Calculator</Link>
 						</li>
 						<Menu>
 							<MenuHandler>
-								<button>Resources</button>
+								<button>Learning Centre</button>
 							</MenuHandler>
 							<MenuList>
-								<MenuItem>
-									<div
-										onClick={handleOpen}
-										className=' font-semibold text-greens '>
-										Load Calculator
-									</div>
-								</MenuItem>
-								<MenuItem>
-									<Link
-										href={'/loan-calculator'}
-										className=' font-semibold text-greens '>
-										Loan Calculator
-									</Link>
-								</MenuItem>
 								<MenuItem>
 									<Link href={'/faqs'} className='font-semibold text-greens '>
 										FAQs
@@ -85,7 +68,7 @@ const Navbar = () => {
 								</MenuItem>
 							</MenuList>
 						</Menu>
-						{/* <Menu>
+						<Menu>
 							<MenuHandler>
 								<button>Become a Partner</button>
 							</MenuHandler>
@@ -112,7 +95,10 @@ const Navbar = () => {
 									</Link>
 								</MenuItem>
 							</MenuList>
-						</Menu> */}
+						</Menu>
+						<li>
+							<Link href={''}>Contact Us</Link>
+						</li>
 					</ul>
 				</div>
 
@@ -164,36 +150,19 @@ const Navbar = () => {
 					<div className='mt-16'>
 						<ul className=' grid gap-8 font-bold text-2xl xs:text-4xl text-center'>
 							<li>
-								<Link href={'/store'}>Store</Link>
+								<Link href={'/store'}>Home</Link>
 							</li>
-							{/* <li>
-								<Link href={'/company'}>Company</Link>
-							</li> */}
 							<li>
 								<Link href={'/about-us'}>About Us</Link>
 							</li>
 							<li>
-								<Link href={''}>Contact Us</Link>
+								<Link href={'/loan-calculator'}>Loan Calculator</Link>
 							</li>
 							<Menu>
 								<MenuHandler>
-									<button>Resources</button>
+									<button>Learning Centre</button>
 								</MenuHandler>
 								<MenuList>
-									<MenuItem>
-										<div
-											onClick={handleOpen}
-											className=' font-semibold text-greens '>
-											Load Calculator
-										</div>
-									</MenuItem>
-									<MenuItem>
-										<Link
-											href={'/loan-calculator'}
-											className=' font-semibold text-greens '>
-											Loan Calculator
-										</Link>
-									</MenuItem>
 									<MenuItem>
 										<Link href={'/faqs'} className='font-semibold text-greens '>
 											FAQs
@@ -201,6 +170,37 @@ const Navbar = () => {
 									</MenuItem>
 								</MenuList>
 							</Menu>
+							<Menu>
+								<MenuHandler>
+									<button>Become a Partner</button>
+								</MenuHandler>
+								<MenuList>
+									<MenuItem>
+										<Link
+											href={'/installers'}
+											className=' font-semibold text-greens '>
+											Installers
+										</Link>
+									</MenuItem>
+									<MenuItem>
+										<Link
+											href={'/Sellers'}
+											className=' font-semibold text-greens '>
+											Sellers
+										</Link>
+									</MenuItem>
+									<MenuItem>
+										<Link
+											href={'/finance'}
+											className='font-semibold text-greens '>
+											Finance
+										</Link>
+									</MenuItem>
+								</MenuList>
+							</Menu>
+							<li>
+								<Link href={''}>Contact Us</Link>
+							</li>
 						</ul>
 					</div>
 

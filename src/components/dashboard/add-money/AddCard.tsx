@@ -49,24 +49,39 @@ const AddCard = () => {
 			? localStorage.getItem('usertoken') || ''
 			: '';
 
-	// getting specific user data
-	const getuser = async () => {
-		try {
-			const getusers = await getUser(`$${token}`, `${usertoken}`);
-			console.log(getusers);
-			setUser(getusers);
-			setRenitoken(getusers.renitoken);
-			setLoading(false);
-		} catch (error) {
-			// console.error('Error fetching cart items:', error);
-			console.log('error');
-			setLoading(false);
-		}
-	};
-
 	useEffect(() => {
-		getuser();
+		// Retrieve the data from local storage
+		const userData = localStorage.getItem('userResponse');
+		console.log('data', userData);
+
+		if (userData) {
+			// Parse the data to convert it into a JavaScript object
+			const userObject = JSON.parse(userData);
+
+			// Access and set the renitokens
+
+			setRenitoken(`${userObject.renitoken}`);
+		}
 	}, []);
+
+	// getting specific user data
+	// const getuser = async () => {
+	// 	try {
+	// 		const getusers = await getUser(`$${token}`, `${usertoken}`);
+	// 		console.log(getusers);
+	// 		setUser(getusers);
+	// 		setRenitoken(getusers.renitoken);
+	// 		setLoading(false);
+	// 	} catch (error) {
+	// 		// console.error('Error fetching cart items:', error);
+	// 		console.log('error');
+	// 		setLoading(false);
+	// 	}
+	// };
+
+	// useEffect(() => {
+	// 	getuser();
+	// }, []);
 
 	// getting user account details
 	const getdetail = async () => {
