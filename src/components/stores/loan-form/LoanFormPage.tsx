@@ -69,7 +69,7 @@ const LoanFormPage = () => {
 						style={{ width: `${progress}%` }}></div>
 				</div>
 				<div>
-					{activeTab === '1' && <LoanForm1 />}
+					{activeTab === '1' && <div>Okay</div>}
 					{activeTab === '2' && <LoanForm2 />}
 				</div>
 			</div>
