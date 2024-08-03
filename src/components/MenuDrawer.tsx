@@ -69,9 +69,6 @@ const MenuDrawer = ({ openRight, setOpenRight }: Props) => {
 		}
 	}, []);
 
-	console.log(status);
-	console.log(agentStatus);
-
 	// const getuser = async () => {
 	// 	try {
 	// 		const getusers = await getUser(`$${token}`, `${usertoken}`);

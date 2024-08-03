@@ -1,12 +1,20 @@
 'use client';
-import React, { FormEvent, useCallback, useRef, useState } from 'react';
+import React, {
+	FormEvent,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from 'react';
 import { HiChevronDown, HiChevronUp } from 'react-icons/hi2';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import { ToastContainer, toast } from 'react-toastify';
 import { applyLoan } from '@/api/loan/loan';
 import { useTabContext } from '@/components/TabContext';
 import { useLoanPackage } from '@/components/loans/loan-facility/LoanPackageContext';
-import { Option, Select } from '@material-tailwind/react';
+import { Option, Select as Selects } from '@material-tailwind/react';
+import Select, { MultiValue } from 'react-select';
+import { getAllProduct } from '@/api/products/products';
 
 interface UploadResponse {
 	success: boolean;
@@ -51,6 +59,24 @@ interface filter {
 	filteredPackages: any;
 }
 
+interface Product {
+	product_name: string;
+	product_price_th: string;
+	product_image: string;
+	// Add other properties as needed
+}
+
+interface ProductOption {
+	value: string;
+	label: string;
+	price: number;
+}
+
+interface Category {
+	category: string;
+	products: Product[];
+}
+
 const LoanForm1 = ({ filteredPackages }: filter) => {
 	const [showCollateralForm, setShowCollateralForm] = useState(false);
 	const [showGuarantor1, setShowGuarantor1] = useState(false);
@@ -62,17 +88,12 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 	const [uploading, setUploading] = useState(false);
 	const [uploading1, setUploading1] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
-	const [uploadResponse, setUploadResponse] = useState<UploadResponse | null>(
-		null
-	);
-	const [uploadResponse1, setUploadResponse1] = useState<UploadResponse | null>(
-		null
-	);
+	const [allProducts, setAllProducts] = useState<
+		{ value: string; label: string }[]
+	>([]);
 
 	// Access the selectPackage function from the loan package context
 	const { selectedPackage, verifiedLoanData } = useLoanPackage();
-
-	const { setTab } = useTabContext();
 
 	// auth token
 	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
@@ -83,149 +104,8 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 			? localStorage.getItem('usertoken') || ''
 			: '';
 
-	// handle upload 1
-	const onDrop1 = useCallback(
-		async (acceptedFiles: File[]) => {
-			const selectedFile = acceptedFiles[0];
-
-			// Set loading state to true when upload starts
-			setUploading(true);
-
-			// Validate MIME type and file extension
-			const validFileTypes = ['image/jpeg', 'image/png'];
-			if (
-				selectedFile &&
-				(validFileTypes.includes(selectedFile.type) ||
-					/\.(jpg|jpeg|png)$/i.test(selectedFile.name))
-			) {
-				setImg(selectedFile);
-
-				// Upload the file immediately after it is selected
-				const formData = new FormData();
-				formData.append('image', selectedFile);
-
-				try {
-					const uploadResponse = await fetch(
-						'https://enicom.iccflifeskills.com.ng/v0.1/api/upload_image',
-						{
-							method: 'POST',
-							headers: {
-								Authorization: `Bearer $${token}`,
-							},
-							body: formData,
-						}
-					);
-
-					const result = await uploadResponse.json();
-					setUploadResponse(result);
-					toast.success('Image uploaded');
-				} catch (error) {
-					// console.error('Image upload failed:', error);
-					toast.error('Image upload failed');
-					setUploadResponse({
-						success: false,
-						message: 'Image upload failed',
-					});
-				}
-			} else {
-				console.warn('Invalid file format or extension');
-				toast.warn('Invalid file format or extension');
-			}
-			// Set loading state back to false when upload completes
-			setUploading(false);
-		},
-		[token]
-	);
-
-	// handle upload 2
-	const onDrop2 = useCallback(
-		async (acceptedFiles: File[]) => {
-			const selectedFile = acceptedFiles[0];
-
-			// Set loading state to true when upload starts
-			setUploading1(true);
-
-			// Validate MIME type and file extension
-			const validFileTypes = ['image/jpeg', 'image/png'];
-			if (
-				selectedFile &&
-				(validFileTypes.includes(selectedFile.type) ||
-					/\.(jpg|jpeg|png)$/i.test(selectedFile.name))
-			) {
-				setImg1(selectedFile);
-
-				// Upload the file immediately after it is selected
-				const formData = new FormData();
-				formData.append('image', selectedFile);
-
-				try {
-					const uploadResponse = await fetch(
-						'https://enicom.iccflifeskills.com.ng/v0.1/api/upload_image',
-						{
-							method: 'POST',
-							headers: {
-								Authorization: `Bearer $${token}`,
-							},
-							body: formData,
-						}
-					);
-
-					const result = await uploadResponse.json();
-					setUploadResponse1(result);
-
-					// Update the proof_of_ownership property of the Collecteral object
-					setCollecterals((prevState) => {
-						const updatedCollecterals = [...prevState];
-						updatedCollecterals[0].proof_of_ownership = result?.data?.image;
-						return updatedCollecterals;
-					});
-
-					toast.success('Image uploaded');
-				} catch (error: any) {
-					toast.error('Image upload failed');
-					setUploadResponse1({
-						success: false,
-						message: 'Image upload failed',
-					});
-				}
-			} else {
-				console.warn('Invalid file format or extension');
-				toast.warn('Invalid file format or extension');
-			}
-			// Set loading state back to false when upload completes
-			setUploading1(false);
-		},
-		[token]
-	);
-
-	const { getRootProps: getRootProps1, getInputProps: getInputProps1 } =
-		useDropzone({
-			onDrop: onDrop1,
-			accept: ['image/*'] as any,
-			maxFiles: 1,
-		});
-
-	const { getRootProps: getRootProps2, getInputProps: getInputProps2 } =
-		useDropzone({
-			onDrop: onDrop2,
-			accept: ['image/*'] as any,
-			maxFiles: 1,
-		});
-
-	const imageUrl = uploadResponse?.data?.image;
-	const imageUrl1 = uploadResponse1?.data?.image;
-	console.log(imageUrl1);
-
-	const toggleCollateralForm = () => {
-		setShowCollateralForm(!showCollateralForm);
-	};
-
 	const toggleGuarantorForm1 = () => {
 		setShowGuarantor1(!showGuarantor1);
-	};
-
-	const toggleGuarantorForm2 = () => {
-		setShowGuarantor2(!showGuarantor2);
 	};
 
 	// storing value of guarantors in an array state
@@ -257,50 +137,6 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 		},
 	]);
 
-	// handle the change collecteral object collection
-	const handleCollecteralChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-		setCollecterals((prevState) => {
-			const updatedCollecterals = prevState.map((collecteral, index) => {
-				if (index === 0) {
-					return { ...collecteral, [name]: value };
-				}
-				return collecteral;
-			});
-			return updatedCollecterals;
-		});
-	};
-
-	// handle the change first guarantor object collection
-	const handleGuarantor1Change = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-		setGuarantors((prevState) => {
-			const updatedGuarantors = [...prevState];
-			updatedGuarantors[0][name as keyof Guarantor] = value; // Type assertion here
-			return updatedGuarantors;
-		});
-	};
-
-	// handle the change second guarantor object collection
-	const handleGuarantor2Change = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const { name, value } = e.target;
-		setGuarantors((prevState) => {
-			const updatedGuarantors = [...prevState];
-			updatedGuarantors[1][name as keyof Guarantor] = value; // Type assertion here
-			return updatedGuarantors;
-		});
-	};
-
-	// store the first and second guarantor objects in an array
-	const addGuarantorsToArray = () => {
-		setGuarantors([guarantors[0], guarantors[1]]);
-	};
-
-	console.log(guarantors);
-	console.log(collecterals);
-	console.log(selectedPackage);
-	console.log(verifiedLoanData);
-
 	// other form data
 	const [formData, setFormData] = useState({
 		amount_intended_to_borrow: '',
@@ -329,91 +165,147 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 		// Additional logic if needed
 	};
 
-	// handle loan final applications
-	const handleLoanApply = async (e: FormEvent) => {
-		e.preventDefault();
+	const [selectedProducts, setSelectedProducts] = useState<
+		MultiValue<ProductOption>
+	>([]);
+	const [totalPurchaseAmount, setTotalPurchaseAmount] = useState<number>(0);
+
+	const fetchProducts = async () => {
 		try {
 			setIsLoading(true);
+			const fetchedProducts = await getAllProduct(`$${token}`);
 
-			// Call the CompletePay function
-			const paymentResult = await applyLoan(
-				`$${token}`,
-				`${usertoken}`,
-				selectedPackage?.plan_token,
-				selectedPackage?.provider_token,
-				formData.amount_intended_to_borrow,
-				verifiedLoanData,
-				selectedPackage?.loan_percentage,
-				imageUrl ?? '',
-				formData.purpose_of_loan,
-				formData.occupation,
-				guarantors,
-				collecterals
+			const allProducts = fetchedProducts.reduce(
+				(acc: ProductOption[], category: Category) => {
+					const transformedProducts = category.products.map((product) => ({
+						value: product.product_name,
+						label: `${product.product_name} - ${product.product_price_th}`,
+						price: parseFloat(product.product_price_th), // Include price for calculation
+					}));
+					return [...acc, ...transformedProducts];
+				},
+				[]
 			);
 
-			if (paymentResult.success === false) {
-				toast.warn(paymentResult.message);
-			} else {
-				// The toast notification should be success, not error
-				toast.success('Payment successfully');
-				setTab('2');
-
-				// Reset form data after successful upload
-				setFormData({
-					amount_intended_to_borrow: '',
-					occupation: '',
-					purpose_of_loan: '',
-				});
-
-				setGuarantors([
-					{
-						name: '',
-						email: '',
-						phone: '',
-						address: '',
-						relationship: '',
-					},
-					{
-						name: '',
-						email: '',
-						phone: '',
-						address: '',
-						relationship: '',
-					},
-				]);
-
-				setCollecterals([
-					{
-						collecteral_name: '',
-						years_of_usage: '',
-						watts: '',
-						price_bought: '',
-						proof_of_ownership: '',
-					},
-				]);
-				setImg(null);
-				setImg1(null);
-				setUploadResponse(null);
-				setUploadResponse1(null);
-			}
-
-			// You can add additional logic based on the payment result, e.g., show a success message
-
-			// Optionally, close the modal or navigate to a success page
+			setAllProducts(allProducts);
+			setIsLoading(false);
 		} catch (error) {
-			// Handle errors, e.g., show an error message
-			toast.error('Error processing payment:');
-			console.error('Error processing payment:', error);
-		} finally {
+			console.error('Error fetching products:', error);
+			toast.error('Error fetching products');
 			setIsLoading(false);
 		}
 	};
+
+	useEffect(() => {
+		fetchProducts();
+	}, []);
+
+	const handleProductChange = (
+		selectedOptions: MultiValue<{ value: string; label: string }>
+	) => {
+		const productOptions = selectedOptions.map((option) => {
+			const [value, label] = option.value.split(' - ');
+			return { value, label, price: parseFloat(value.replace('$', '')) };
+		});
+
+		setSelectedProducts(productOptions);
+
+		const totalAmount = productOptions.reduce(
+			(acc, product) => acc + product.price,
+			0
+		);
+		setTotalPurchaseAmount(totalAmount);
+	};
+
+	console.log(totalPurchaseAmount);
+
+	// handle loan final applications
+	// const handleLoanApply = async (e: FormEvent) => {
+	// 	e.preventDefault();
+	// 	try {
+	// 		setIsLoading(true);
+
+	// 		// Call the CompletePay function
+	// 		const paymentResult = await applyLoan(
+	// 			`$${token}`,
+	// 			`${usertoken}`,
+	// 			selectedPackage?.plan_token,
+	// 			selectedPackage?.provider_token,
+	// 			formData.amount_intended_to_borrow,
+	// 			verifiedLoanData,
+	// 			selectedPackage?.loan_percentage,
+
+	// 			formData.purpose_of_loan,
+	// 			formData.occupation,
+	// 			guarantors,
+	// 			collecterals
+	// 		);
+
+	// 		if (paymentResult.success === false) {
+	// 			toast.warn(paymentResult.message);
+	// 		} else {
+	// 			// The toast notification should be success, not error
+	// 			toast.success('Payment successfully');
+
+	// 			// Reset form data after successful upload
+	// 			setFormData({
+	// 				amount_intended_to_borrow: '',
+	// 				occupation: '',
+	// 				purpose_of_loan: '',
+	// 			});
+
+	// 			setGuarantors([
+	// 				{
+	// 					name: '',
+	// 					email: '',
+	// 					phone: '',
+	// 					address: '',
+	// 					relationship: '',
+	// 				},
+	// 				{
+	// 					name: '',
+	// 					email: '',
+	// 					phone: '',
+	// 					address: '',
+	// 					relationship: '',
+	// 				},
+	// 			]);
+
+	// 			setCollecterals([
+	// 				{
+	// 					collecteral_name: '',
+	// 					years_of_usage: '',
+	// 					watts: '',
+	// 					price_bought: '',
+	// 					proof_of_ownership: '',
+	// 				},
+	// 			]);
+	// 			setImg(null);
+	// 			setImg1(null);
+	// 			setUploadResponse(null);
+	// 			setUploadResponse1(null);
+	// 		}
+
+	// 		// You can add additional logic based on the payment result, e.g., show a success message
+
+	// 		// Optionally, close the modal or navigate to a success page
+	// 	} catch (error) {
+	// 		// Handle errors, e.g., show an error message
+	// 		toast.error('Error processing payment:');
+	// 		console.error('Error processing payment:', error);
+	// 	} finally {
+	// 		setIsLoading(false);
+	// 	}
+	// };
 
 	return (
 		<div className='px-4 md:px-[5rem] py-10'>
 			<div>
 				{/* form */}
-				<form action='' onSubmit={handleLoanApply}>
+				<form
+					action=''
+					// onSubmit={handleLoanApply}
+				>
 					<div className=' md:w-[40rem]'>
 						{/* payback Method */}
 						<div className=''>
@@ -547,7 +439,7 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 							</div>
 							{showGuarantor1 && (
 								<div className='mt-5'>
-									<Select
+									<Selects
 										size='lg'
 										label='Select Verification Type'
 										selected={(element) => {
@@ -585,7 +477,7 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 										<Option value='Retired' className='flex items-center gap-2'>
 											Retired
 										</Option>
-									</Select>
+									</Selects>
 
 									{/* job */}
 									<div className='mt-2'>
@@ -647,159 +539,53 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 									{/* amount */}
 									<div className='mt-2'>
 										<p className='text-dark font-semibold'>
-											Preferred Finance Prtner
+											Preferred Finance Partner
 										</p>
 										<input
 											type='text'
-											placeholder='e.g 20000...'
-											name='email'
+											value={
+												filteredPackages && filteredPackages[0].provider_name
+											}
+											name=''
 											className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-2'
 										/>
 									</div>
 
-									<Select label='Select duration'>
-										{filteredPackages?.map((pkg: Package) => (
-											<Option key={pkg?.package_token}>
-												{pkg?.plan_digit}Months
-											</Option>
-										))}
-									</Select>
+									<div>
+										<p className='text-dark font-semibold'>Repayment Term</p>
+										<Selects label='Select duration'>
+											{filteredPackages?.map((pkg: Package) => (
+												<Option key={pkg?.package_token}>
+													{pkg?.plan_digit} Months
+												</Option>
+											))}
+										</Selects>
+									</div>
 								</div>
 							)}
 						</div>
 
-						{/* collecteral */}
-						<div className='mt-7 bg-greens/10  py-2 px-4 rounded-lg'>
-							<div
-								className='cursor-pointer flex items-center justify-between'
-								onClick={toggleCollateralForm}>
-								<p className=' text-dark '>Add Collateral</p>
+						<div className=''>
+							<Select
+								closeMenuOnSelect={false}
+								isMulti
+								options={allProducts}
+								isLoading={isLoading}
+								placeholder='Select products'
+								onChange={handleProductChange}
+							/>
 
-								{showCollateralForm ? <HiChevronUp /> : <HiChevronDown />}
+							<div>
+								<label htmlFor='total-purchase-amount'>
+									Total Purchase Amount
+								</label>
+								<input
+									type='number'
+									id='total-purchase-amount'
+									value={totalPurchaseAmount}
+									readOnly
+								/>
 							</div>
-							{showCollateralForm && (
-								<div className='mt-5'>
-									{/* Collateral form */}
-
-									{/* collateral name */}
-									<div className='mt-2'>
-										<p className='text-dark font-semibold'>Collecteral name</p>
-										<input
-											type='text'
-											placeholder='Collateral name...'
-											name='collecteral_name'
-											value={collecterals[0].collecteral_name}
-											onChange={handleCollecteralChange}
-											className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-2'
-										/>
-									</div>
-
-									{/* years of usage */}
-									<div className='mt-2'>
-										<p className='text-dark font-semibold'>Years of usage</p>
-										<input
-											type='text'
-											placeholder='Years of usage...'
-											name='years_of_usage'
-											value={collecterals[0].years_of_usage}
-											onChange={handleCollecteralChange}
-											className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-2'
-										/>
-									</div>
-
-									{/* watts */}
-									<div className='mt-2'>
-										<p className='text-dark font-semibold'>Watts</p>
-										<input
-											type='text'
-											placeholder='Watts of Item...'
-											name='watts'
-											value={collecterals[0].watts}
-											onChange={handleCollecteralChange}
-											className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-2'
-										/>
-									</div>
-
-									{/* price of item */}
-									<div className='mt-2'>
-										<p className='text-dark font-semibold'>Price of items</p>
-										<input
-											type='text'
-											placeholder='Price Bought...'
-											name='price_bought'
-											value={collecterals[0].price_bought}
-											onChange={handleCollecteralChange}
-											className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-2'
-										/>
-									</div>
-
-									{/* image evidence */}
-									<div className='max-w-xl relative z-0 mt-2'>
-										<p>Upload Evidence</p>
-										{uploading1 && <p>Uploading image...</p>}
-										<label
-											// {...getRootProps2()}
-											className='flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none'>
-											<span className='flex items-center space-x-2'>
-												<svg
-													xmlns='http://www.w3.org/2000/svg'
-													className='w-6 h-6 text-gray-600'
-													fill='none'
-													viewBox='0 0 24 24'
-													stroke='currentColor'
-													strokeWidth='2'>
-													<path
-														strokeLinecap='round'
-														strokeLinejoin='round'
-														d='M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12'
-													/>
-												</svg>
-												{img1 ? (
-													<div className='flex items-center'>
-														{/* <img
-														src={URL.createObjectURL(file)}
-														alt={file.name}
-														className='w-8 h-8 object-cover rounded-full'
-													/> */}
-														<span className='font-medium text-gray-600'>
-															{img1.name} is selected.{' '}
-															<span
-																className='text-blue-600 underline cursor-pointer'
-																onClick={() => setImg1(null)}>
-																Remove
-															</span>
-														</span>
-													</div>
-												) : (
-													<span className='font-medium text-gray-600'>
-														Drop files to Attach, or{' '}
-														<span className='text-blue-600 underline'>
-															browse
-														</span>
-													</span>
-												)}
-											</span>
-											<input
-												{...getInputProps2()}
-												type='file'
-												name='file_upload'
-												className='hidden'
-											/>
-										</label>
-
-										{/* Display the uploaded image */}
-										{imageUrl1 && (
-											<div className=' w-[5rem] aspect-square overflow-hidden bg-orange-500 absolute right-5 top-5'>
-												<img
-													src={`https://enicom.iccflifeskills.com.ng/uploads/${imageUrl1}`}
-													alt={imageUrl1}
-													className='w-full h-full object-cover'
-												/>
-											</div>
-										)}
-									</div>
-								</div>
-							)}
 						</div>
 
 						{/* reason */}

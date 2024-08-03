@@ -48,6 +48,9 @@ const LoanFacilityPage = () => {
 	const [selectedProviderToken, setSelectedProviderToken] = useState<
 		string | null
 	>(null);
+	const [selectedProviderName, setSelectedProviderName] = useState<
+		string | null
+	>(null);
 
 	const [renitoken, setRenitoken] = useState('');
 	const [bvn, setBvn] = useState('');
@@ -116,6 +119,8 @@ const LoanFacilityPage = () => {
 		}
 	}, []);
 
+	console.log(selectedProviderName);
+
 	// filteredPackages?.map;
 
 	return (
@@ -141,9 +146,10 @@ const LoanFacilityPage = () => {
 							{providers.map((provider) => (
 								<Option
 									key={provider?.provider_token}
-									onClick={() =>
-										setSelectedProviderToken(provider?.provider_token)
-									}>
+									onClick={() => {
+										setSelectedProviderToken(provider?.provider_token);
+										setSelectedProviderName(provider?.provider_name);
+									}}>
 									{provider?.provider_name}
 								</Option>
 							))}
@@ -167,7 +173,10 @@ const LoanFacilityPage = () => {
 							</p>
 						) : (
 							<div className='grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10'>
-								<LoanForm1 filteredPackages={filteredPackages} />
+								<LoanForm1
+									filteredPackages={filteredPackages}
+									
+								/>
 							</div>
 						)}
 					</div>
