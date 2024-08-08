@@ -97,14 +97,6 @@ const LoanFacilityPage = () => {
 		router.push('/loan-form');
 	};
 
-	// console.log(selectedPackage);
-
-	// Fetch mail from localStorage when the component mounts
-	const usertoken =
-		typeof window !== 'undefined'
-			? localStorage.getItem('usertoken') || ''
-			: '';
-
 	useEffect(() => {
 		// Retrieve the data from local storage
 		const userData = localStorage.getItem('userResponse');
@@ -121,7 +113,6 @@ const LoanFacilityPage = () => {
 
 	console.log(selectedProviderName);
 
-	// filteredPackages?.map;
 
 	return (
 		<React.Fragment>
