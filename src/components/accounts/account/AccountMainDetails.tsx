@@ -1,15 +1,13 @@
 'use client';
 import { getUsersAccount } from '@/api/auth/api';
-import { getUser } from '@/api/products/products';
+import { useFlutterwavePayment } from '../../../hooks/useFlutterwavePayment';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineEyeInvisible, AiOutlineSwap } from 'react-icons/ai';
 import { FiPlus } from 'react-icons/fi';
 import { GiBackwardTime } from 'react-icons/gi';
-import { GoArrowDownLeft, GoArrowDownRight } from 'react-icons/go';
 import { HiOutlineChevronRight } from 'react-icons/hi2';
-import { useFlutterwavePayment } from '../../../hooks/useFlutterwavePayment';
 
 interface Users {
 	fname: string;
@@ -33,87 +31,55 @@ interface Users {
 	accountNumber: string;
 }
 
-interface Account {
-	accountBalance_th: string;
-	accountBalance: string;
-	accountNumber: string;
-	accountDetails: {
-		AvailableBalance: number;
-		AvailableBalance_th: number;
-		LedgerBalance: number;
-		LedgerBalance_th: number;
-		WithdrawableBalance: number;
-		WithdrawableBalance_th: number;
-		accountNumber: string;
-	};
-}
-
 const AccountMainDetails = () => {
 	const [user, setUser] = useState<Users | null>(null);
-	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 	const [loading, setLoading] = useState<boolean>(true);
-	const [loading1, setLoading1] = useState<boolean>(true);
 	const [account, setAccount] = useState('');
 	const [kyc, setKyc] = useState<string>('');
 	const [showBalance, setShowBalance] = useState<boolean>(true);
-	const { initiatePayment } = useFlutterwavePayment();
-	const [amount, setAmount] = useState('');
+	const [amount, setAmount] = useState<string>('');
 
-	// Fetch mail from localStorage when the component mounts
+	const router = useRouter();
+	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
+
 	const usertoken =
 		typeof window !== 'undefined'
 			? localStorage.getItem('usertoken') || ''
 			: '';
-
-	// Check if user is logged in based on your authentication mechanism
-	// useEffect(() => {
-	// 	// Retrieve kyc_status from local storage
-	// 	const storedKycStatus = localStorage.getItem('bvn_status');
-	// 	setKyc(storedKycStatus || '');
-	// }, []);
-
-	const router = useRouter();
 
 	const kycClick = () => {
 		router.push('/kyc');
 	};
 
 	useEffect(() => {
-		// Retrieve the data from local storage
 		const userData = localStorage.getItem('userResponse');
-		console.log('data', userData);
-
 		if (userData) {
-			// Parse the data to convert it into a JavaScript object
 			const userObject = JSON.parse(userData);
-
-			// Access and set the seller status
-			setUser(userObject.is_verified_seller_status);
-			setKyc(`${userObject.kyc_status}`);
+			setUser(userObject);
+			setKyc(userObject.kyc_status ? 'true' : 'false');
 		}
 	}, []);
 
-	// getting user account details
 	const getdetail = async () => {
+		setLoading(true);
 		try {
 			const getdetails = await getUsersAccount(`$${token}`, `${usertoken}`);
-			// console.log(getdetails);
-			setAccount(`${getdetails}`);
+			setAccount(getdetails.balance);
+			setLoading(false);
 		} catch (error) {
-			// console.error('Error fetching cart items:', error);
-			console.log('error');
+			console.error('Error fetching account details:', error);
+			setLoading(false);
+		} finally {
+			setLoading(false);
 		}
 	};
 
-	// Function to toggle showing or hiding the balance
 	const toggleShowBalance = () => {
-		setShowBalance((prevShowBalance) => !prevShowBalance);
-		// Store the state of showBalance in localStorage
+		setShowBalance((prev) => !prev);
 		localStorage.setItem('showBalance', JSON.stringify(!showBalance));
 	};
 
 	useEffect(() => {
-		// Retrieve showBalance state from localStorage and update the state
 		const storedShowBalance = localStorage.getItem('showBalance');
 		if (storedShowBalance !== null) {
 			setShowBalance(JSON.parse(storedShowBalance));
@@ -126,6 +92,15 @@ const AccountMainDetails = () => {
 		}
 	}, [usertoken]);
 
+	const fetchAccountDetails = () => {
+		if (usertoken) {
+			getdetail();
+		}
+	};
+
+	const { initiatePayment, loading: paymentLoading } =
+		useFlutterwavePayment(fetchAccountDetails);
+
 	const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setAmount(e.target.value);
 	};
@@ -137,28 +112,23 @@ const AccountMainDetails = () => {
 		}
 	};
 
+	if (paymentLoading || loading) {
+		return <div>Loading...</div>;
+	}
+
 	return (
 		<div className='w-full h-screen overflow-scroll text-dark no-scrollbar'>
-			<div className='flex flex-col gap-y-7 '>
-				{/* account details */}
+			<div className='flex flex-col gap-y-7'>
 				<div className='bg-white w-full rounded-lg py-5 px-7'>
-					{/* name / edit */}
 					<div className='w-full flex items-center justify-between'>
-						<h1 className='font-semibold '>
+						<h1 className='font-semibold'>
 							{user?.fname} {user?.lname}
 						</h1>
-						{/* <Link href={''} className='underline text-greens'>
-							Edit
-						</Link> */}
 					</div>
-
-					{/* email / address */}
 					<div className='flex flex-col md:flex-row justify-between text-sm mt-4'>
 						<p className='grid gap-y-2'>{user?.mail}</p>
 					</div>
-
 					<div className='flex md:items-center flex-wrap justify-between mb-3'>
-						{/* Balance / transaction history  */}
 						<div>
 							{kyc === 'true' ? (
 								<div className='flex items-center gap-4 md:gap-10'>
@@ -168,7 +138,7 @@ const AccountMainDetails = () => {
 											className='flex items-center gap-1 text-dark'
 											href={''}>
 											<GiBackwardTime size={25} />
-											<span className=' underline'>Transaction History</span>
+											<span className='underline'>Transaction History</span>
 										</Link>
 									</div>
 								</div>
@@ -176,15 +146,12 @@ const AccountMainDetails = () => {
 								<h1 className='text-dark font-medium text-lg'>Verification</h1>
 							)}
 						</div>
-
-						{/* View Details */}
 						<div>
 							<Link href={''} className='underline text-dark'>
 								View Details
 							</Link>
 						</div>
 					</div>
-
 					{/* wallet */}
 					<div>
 						{kyc === 'true' ? (
