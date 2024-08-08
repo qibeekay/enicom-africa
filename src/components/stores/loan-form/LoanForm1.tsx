@@ -12,9 +12,19 @@ import { ToastContainer, toast } from 'react-toastify';
 import { applyLoan } from '@/api/loan/loan';
 import { useTabContext } from '@/components/TabContext';
 import { useLoanPackage } from '@/components/loans/loan-facility/LoanPackageContext';
-import { Option, Select as Selects } from '@material-tailwind/react';
+import {
+	Checkbox,
+	Dialog,
+	DialogBody,
+	DialogFooter,
+	DialogHeader,
+	Option,
+	Select as Selects,
+} from '@material-tailwind/react';
 import Select, { MultiValue } from 'react-select';
 import { getAllProduct } from '@/api/products/products';
+import Datepicker from 'react-tailwindcss-datepicker';
+import { useRouter } from 'next/navigation';
 
 interface UploadResponse {
 	success: boolean;
@@ -61,15 +71,15 @@ interface filter {
 
 interface Product {
 	product_name: string;
-	product_price_th: string;
+	product_price: number;
 	product_image: string;
 	// Add other properties as needed
 }
 
 interface ProductOption {
+	[x: string]: any;
 	value: string;
 	label: string;
-	price: number;
 }
 
 interface Category {
@@ -78,19 +88,29 @@ interface Category {
 }
 
 const LoanForm1 = ({ filteredPackages }: filter) => {
-	const [showCollateralForm, setShowCollateralForm] = useState(false);
-	const [showGuarantor1, setShowGuarantor1] = useState(false);
-	const [showGuarantor2, setShowGuarantor2] = useState(false);
-	const [verificationType, setVerificationType] = useState<string>('');
-	const [img, setImg] = useState<File | null>(null);
-	const [img1, setImg1] = useState<File | null>(null);
-	// State variable to track loading state
-	const [uploading, setUploading] = useState(false);
-	const [uploading1, setUploading1] = useState(false);
+	const [showInfo, setShowInfo] = useState(false);
+	const [showAddress, setShowAddress] = useState(false);
+	const [showEmploy, setShowEmploy] = useState(false);
+	const [showLoan, setShowLoan] = useState(false);
+	const [status, setStatus] = useState<string>('');
+	const [packageToken, setPackageToken] = useState<string>('');
 	const [isLoading, setIsLoading] = useState(false);
 	const [allProducts, setAllProducts] = useState<
 		{ value: string; label: string }[]
 	>([]);
+	const [isTermsChecked, setIsTermsChecked] = useState<boolean>(false);
+	const [isConsentChecked, setIsConsentChecked] = useState<boolean>(false);
+
+	const [value, setValue] = useState({
+		startDate: null,
+		endDate: null,
+	});
+
+	const [open, setOpen] = React.useState(false);
+
+	const handleOpen = () => setOpen(!open);
+
+	const router = useRouter();
 
 	// Access the selectPackage function from the loan package context
 	const { selectedPackage, verifiedLoanData } = useLoanPackage();
@@ -104,44 +124,49 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 			? localStorage.getItem('usertoken') || ''
 			: '';
 
-	const toggleGuarantorForm1 = () => {
-		setShowGuarantor1(!showGuarantor1);
+	const handleHome = () => {
+		router.push('/dashboard');
 	};
 
-	// storing value of guarantors in an array state
-	const [guarantors, setGuarantors] = useState<Guarantor[]>([
-		{
-			name: '',
-			email: '',
-			phone: '',
-			address: '',
-			relationship: '',
-		},
-		{
-			name: '',
-			email: '',
-			phone: '',
-			address: '',
-			relationship: '',
-		},
-	]);
-
-	// storing value of collecterals in an array state
-	const [collecterals, setCollecterals] = useState<Collecteral[]>([
-		{
-			collecteral_name: '',
-			years_of_usage: '',
-			watts: '',
-			price_bought: '',
-			proof_of_ownership: '',
-		},
-	]);
+	const toggleInfoForm = () => {
+		setShowInfo(!showInfo);
+	};
+	const toggleAddressForm = () => {
+		setShowAddress(!showAddress);
+	};
+	const toggleEmployForm = () => {
+		setShowEmploy(!showEmploy);
+	};
+	const toggleLoanForm = () => {
+		setShowLoan(!showLoan);
+	};
 
 	// other form data
 	const [formData, setFormData] = useState({
-		amount_intended_to_borrow: '',
-		occupation: '',
-		purpose_of_loan: '',
+		usertoken: usertoken,
+		type: '',
+		name: '',
+		mail: '',
+		phone: '',
+		address_home: '',
+		address_city: '',
+		address_state: '',
+		address_zip: '',
+		loan_amount: '',
+		loan_quote: '',
+		loan_provider_token: '',
+		loan_package_token: '',
+		dob: '',
+		employ_status: '',
+		employ_title: '',
+		employ_income: '',
+		prod_total_amount: '',
+		products: '',
+		biz_type: '',
+		biz_industry: '',
+		biz_years: '',
+		check_terms: false,
+		check_process: false,
 	});
 
 	/* handling all form change */
@@ -158,35 +183,40 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 		}));
 	};
 
-	const handleVerificationTypeChange = (
-		selectedValue: React.SetStateAction<string>
-	) => {
-		setVerificationType(selectedValue);
+	const handleEmployStatus = (selectedValue: React.SetStateAction<string>) => {
+		setStatus(selectedValue);
 		// Additional logic if needed
 	};
 
-	const [selectedProducts, setSelectedProducts] = useState<
-		MultiValue<ProductOption>
-	>([]);
+	const handlePackage = (selectedValue: React.SetStateAction<string>) => {
+		setPackageToken(selectedValue);
+		// Additional logic if needed
+	};
+
+	const handleValueChange = (newValue: any) => {
+		// console.log('newValue:', newValue);
+		setValue(newValue);
+	};
+
+	const [selectedProducts, setSelectedProducts] = useState<ProductOption[]>([]);
+
 	const [totalPurchaseAmount, setTotalPurchaseAmount] = useState<number>(0);
 
 	const fetchProducts = async () => {
 		try {
 			setIsLoading(true);
 			const fetchedProducts = await getAllProduct(`$${token}`);
-
 			const allProducts = fetchedProducts.reduce(
 				(acc: ProductOption[], category: Category) => {
 					const transformedProducts = category.products.map((product) => ({
 						value: product.product_name,
-						label: `${product.product_name} - ${product.product_price_th}`,
-						price: parseFloat(product.product_price_th), // Include price for calculation
+						label: `${product.product_name} - ${product.product_price}`,
+						price: product.product_price, // Keep as a number
 					}));
 					return [...acc, ...transformedProducts];
 				},
 				[]
 			);
-
 			setAllProducts(allProducts);
 			setIsLoading(false);
 		} catch (error) {
@@ -200,112 +230,81 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 		fetchProducts();
 	}, []);
 
-	const handleProductChange = (
-		selectedOptions: MultiValue<{ value: string; label: string }>
-	) => {
+	const handleProductChange = (selectedOptions: MultiValue<ProductOption>) => {
+		// console.log('Selected options:', selectedOptions);
 		const productOptions = selectedOptions.map((option) => {
-			const [value, label] = option.value.split(' - ');
-			return { value, label, price: parseFloat(value.replace('$', '')) };
+			// console.log('Processing option:', option);
+			return { value: option.value, label: option.label, price: option.price };
 		});
-
 		setSelectedProducts(productOptions);
-
 		const totalAmount = productOptions.reduce(
 			(acc, product) => acc + product.price,
 			0
 		);
+		// console.log('Total amount:', totalAmount);
 		setTotalPurchaseAmount(totalAmount);
 	};
 
-	console.log(totalPurchaseAmount);
+	const handleIndividualSubmit = async (event: FormEvent) => {
+		event.preventDefault();
 
-	// handle loan final applications
-	// const handleLoanApply = async (e: FormEvent) => {
-	// 	e.preventDefault();
-	// 	try {
-	// 		setIsLoading(true);
+		try {
+			setIsLoading(true);
 
-	// 		// Call the CompletePay function
-	// 		const paymentResult = await applyLoan(
-	// 			`$${token}`,
-	// 			`${usertoken}`,
-	// 			selectedPackage?.plan_token,
-	// 			selectedPackage?.provider_token,
-	// 			formData.amount_intended_to_borrow,
-	// 			verifiedLoanData,
-	// 			selectedPackage?.loan_percentage,
+			if (!token) {
+				toast.error('Authentication token is undefined');
+				return;
+			}
 
-	// 			formData.purpose_of_loan,
-	// 			formData.occupation,
-	// 			guarantors,
-	// 			collecterals
-	// 		);
+			const dob = `${value.startDate}` || '';
 
-	// 		if (paymentResult.success === false) {
-	// 			toast.warn(paymentResult.message);
-	// 		} else {
-	// 			// The toast notification should be success, not error
-	// 			toast.success('Payment successfully');
+			const response = await applyLoan(
+				{
+					...formData,
+					loan_amount: parseFloat(formData.loan_amount),
+					prod_total_amount: totalPurchaseAmount,
+					employ_status: status,
+					loan_provider_token:
+						filteredPackages && filteredPackages[0].provider_name,
+					loan_package_token: packageToken,
+					type: 'individual',
+					dob: dob,
+					products: [
+						selectedProducts.map((product) => product.value).join(', '),
+					],
+					check_process: isConsentChecked,
+					check_terms: isTermsChecked,
+				},
+				`$${token}`
+			);
 
-	// 			// Reset form data after successful upload
-	// 			setFormData({
-	// 				amount_intended_to_borrow: '',
-	// 				occupation: '',
-	// 				purpose_of_loan: '',
-	// 			});
+			if (response.success === true || response.status === true) {
+				handleOpen();
+			} else {
+				toast.error('Failed to submit, please refresh and try again...');
+			}
+		} catch (error: any) {
+			toast.error(error.message || 'Please try again');
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
-	// 			setGuarantors([
-	// 				{
-	// 					name: '',
-	// 					email: '',
-	// 					phone: '',
-	// 					address: '',
-	// 					relationship: '',
-	// 				},
-	// 				{
-	// 					name: '',
-	// 					email: '',
-	// 					phone: '',
-	// 					address: '',
-	// 					relationship: '',
-	// 				},
-	// 			]);
+	const handleTermsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setIsTermsChecked(event.target.checked);
+	};
 
-	// 			setCollecterals([
-	// 				{
-	// 					collecteral_name: '',
-	// 					years_of_usage: '',
-	// 					watts: '',
-	// 					price_bought: '',
-	// 					proof_of_ownership: '',
-	// 				},
-	// 			]);
-	// 			setImg(null);
-	// 			setImg1(null);
-	// 			setUploadResponse(null);
-	// 			setUploadResponse1(null);
-	// 		}
+	const handleConsentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setIsConsentChecked(event.target.checked);
+	};
 
-	// 		// You can add additional logic based on the payment result, e.g., show a success message
-
-	// 		// Optionally, close the modal or navigate to a success page
-	// 	} catch (error) {
-	// 		// Handle errors, e.g., show an error message
-	// 		toast.error('Error processing payment:');
-	// 		console.error('Error processing payment:', error);
-	// 	} finally {
-	// 		setIsLoading(false);
-	// 	}
-	// };
+	const isSubmitDisabled = !isTermsChecked || !isConsentChecked;
 
 	return (
 		<div className='px-4 md:px-[5rem] py-10'>
 			<div>
 				{/* form */}
-				<form
-					action=''
-					// onSubmit={handleLoanApply}
-				>
+				<form action='' onSubmit={handleIndividualSubmit}>
 					<div className=' md:w-[40rem]'>
 						{/* payback Method */}
 						<div className=''>
@@ -320,12 +319,12 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 						<div className='mt-7 bg-greens/10  py-2 px-4 rounded-lg'>
 							<div
 								className='cursor-pointer flex items-center justify-between'
-								onClick={toggleGuarantorForm1}>
+								onClick={toggleInfoForm}>
 								<p className=' text-dark '>Personal Information</p>
 
-								{showGuarantor1 ? <HiChevronUp /> : <HiChevronDown />}
+								{showInfo ? <HiChevronUp /> : <HiChevronDown />}
 							</div>
-							{showGuarantor1 && (
+							{showInfo && (
 								<div className='mt-5'>
 									{/* Personal form */}
 
@@ -336,6 +335,8 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 											type='text'
 											placeholder=' name...'
 											name='name'
+											value={formData.name}
+											onChange={handleChange}
 											className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-2'
 										/>
 									</div>
@@ -346,7 +347,9 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 										<input
 											type='email'
 											placeholder='Email...'
-											name='email'
+											name='mail'
+											value={formData.mail}
+											onChange={handleChange}
 											className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-2'
 										/>
 									</div>
@@ -358,6 +361,8 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 											type='text'
 											placeholder='Phone number...'
 											name='phone'
+											value={formData.phone}
+											onChange={handleChange}
 											className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-2'
 										/>
 									</div>
@@ -365,6 +370,18 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 									{/* dob */}
 									<div className='mt-2'>
 										<p className='text-dark font-semibold'>Date of Birth</p>
+
+										<Datepicker
+											useRange={false}
+											asSingle={true}
+											placeholder={'Start Date'}
+											value={value}
+											inputClassName='w-full rounded-md focus:ring-0 font-normal border border-dark px-4 py-2'
+											toggleClassName='absolute bg-greens rounded-r-lg text-white right-0 h-full px-4 py-2 text-gray-400 focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed'
+											onChange={handleValueChange}
+											primaryColor={'green'}
+											showShortcuts={false}
+										/>
 									</div>
 								</div>
 							)}
@@ -374,12 +391,12 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 						<div className='mt-7 bg-greens/10  py-2 px-4 rounded-lg'>
 							<div
 								className='cursor-pointer flex items-center justify-between'
-								onClick={toggleGuarantorForm1}>
+								onClick={toggleAddressForm}>
 								<p className=' text-dark '>Adddress Information</p>
 
-								{showGuarantor1 ? <HiChevronUp /> : <HiChevronDown />}
+								{showAddress ? <HiChevronUp /> : <HiChevronDown />}
 							</div>
-							{showGuarantor1 && (
+							{showAddress && (
 								<div className='mt-5'>
 									{/* address */}
 									<div className='mt-2'>
@@ -387,7 +404,9 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 										<input
 											type='text'
 											placeholder=' address...'
-											name='name'
+											name='address_home'
+											value={formData.address_home}
+											onChange={handleChange}
 											className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-2'
 										/>
 									</div>
@@ -398,7 +417,9 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 										<input
 											type='text'
 											placeholder='ondo...'
-											name='email'
+											name='address_city'
+											value={formData.address_city}
+											onChange={handleChange}
 											className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-2'
 										/>
 									</div>
@@ -409,7 +430,9 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 										<input
 											type='text'
 											placeholder='e.g Lagos...'
-											name='phone'
+											name='address_state'
+											value={formData.address_state}
+											onChange={handleChange}
 											className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-2'
 										/>
 									</div>
@@ -420,7 +443,9 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 										<input
 											type='text'
 											placeholder='e.g 228444...'
-											name='phone'
+											name='address_zip'
+											value={formData.address_zip}
+											onChange={handleChange}
 											className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-2'
 										/>
 									</div>
@@ -432,19 +457,19 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 						<div className='mt-7 bg-greens/10  py-2 px-4 rounded-lg'>
 							<div
 								className='cursor-pointer flex items-center justify-between'
-								onClick={toggleGuarantorForm1}>
+								onClick={toggleEmployForm}>
 								<p className=' text-dark '>Employment Information</p>
 
-								{showGuarantor1 ? <HiChevronUp /> : <HiChevronDown />}
+								{showEmploy ? <HiChevronUp /> : <HiChevronDown />}
 							</div>
-							{showGuarantor1 && (
+							{showEmploy && (
 								<div className='mt-5'>
 									<Selects
 										size='lg'
 										label='Select Verification Type'
 										selected={(element) => {
 											const selectedValue = element?.props.value;
-											handleVerificationTypeChange(selectedValue);
+											handleEmployStatus(selectedValue);
 											return (
 												element &&
 												React.cloneElement(element, {
@@ -485,7 +510,9 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 										<input
 											type='text'
 											placeholder='e.g Doctor...'
-											name='email'
+											name='employ_title'
+											value={formData.employ_title}
+											onChange={handleChange}
 											className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-2'
 										/>
 									</div>
@@ -496,7 +523,9 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 										<input
 											type='text'
 											placeholder='e.g 400000...'
-											name='phone'
+											name='employ_income'
+											value={formData.employ_income}
+											onChange={handleChange}
 											className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-2'
 										/>
 									</div>
@@ -508,12 +537,12 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 						<div className='mt-7 bg-greens/10  py-2 px-4 rounded-lg'>
 							<div
 								className='cursor-pointer flex items-center justify-between'
-								onClick={toggleGuarantorForm1}>
+								onClick={toggleLoanForm}>
 								<p className=' text-dark '>Loan Details</p>
 
-								{showGuarantor1 ? <HiChevronUp /> : <HiChevronDown />}
+								{showLoan ? <HiChevronUp /> : <HiChevronDown />}
 							</div>
-							{showGuarantor1 && (
+							{showLoan && (
 								<div className='mt-5'>
 									{/* amount */}
 									<div className='mt-2'>
@@ -521,7 +550,9 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 										<input
 											type='text'
 											placeholder='e.g 20000...'
-											name='email'
+											name='loan_amount'
+											value={formData.loan_amount}
+											onChange={handleChange}
 											className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-2'
 										/>
 									</div>
@@ -531,6 +562,9 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 										<p className='text-dark font-semibold'>Upload quote</p>
 										<input
 											type='file'
+											name='loan_quote'
+											value={formData.loan_quote}
+											onChange={handleChange}
 											placeholder='e.g 400000...'
 											className='mt-2'
 										/>
@@ -552,10 +586,27 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 									</div>
 
 									<div>
-										<p className='text-dark font-semibold'>Repayment Term</p>
-										<Selects label='Select duration'>
+										<p className='text-dark font-semibold py-2'>
+											Repayment Term
+										</p>
+										<Selects
+											selected={(element) => {
+												const selectedValue = element?.props.value;
+												handlePackage(selectedValue);
+												return (
+													element &&
+													React.cloneElement(element, {
+														disabled: true,
+														className:
+															'flex items-center opacity-100 px-0 gap-2 pointer-events-none',
+													})
+												);
+											}}
+											label='Select duration'>
 											{filteredPackages?.map((pkg: Package) => (
-												<Option key={pkg?.package_token}>
+												<Option
+													key={pkg?.package_token}
+													value={pkg?.package_token}>
 													{pkg?.plan_digit} Months
 												</Option>
 											))}
@@ -565,7 +616,7 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 							)}
 						</div>
 
-						<div className=''>
+						<div className=' mt-7'>
 							<Select
 								closeMenuOnSelect={false}
 								isMulti
@@ -575,7 +626,7 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 								onChange={handleProductChange}
 							/>
 
-							<div>
+							<div className='mt-2'>
 								<label htmlFor='total-purchase-amount'>
 									Total Purchase Amount
 								</label>
@@ -584,37 +635,70 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 									id='total-purchase-amount'
 									value={totalPurchaseAmount}
 									readOnly
+									className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-2'
 								/>
 							</div>
 						</div>
 
-						{/* reason */}
-						<div className='mt-7'>
-							<p>
-								Reason for Loan{' '}
-								<span>(in 100 words, highlight reasons for loan)</span>
-							</p>
+						<Checkbox
+							name='check_terms'
+							checked={isTermsChecked}
+							onChange={handleTermsChange}
+							crossOrigin={undefined}
+							color='green'
+							label={
+								<p className='text-xs'>
+									I agree to the terms and conditions set by the selected
+									financial institution.
+								</p>
+							}
+						/>
 
-							<textarea
-								placeholder='Write here... '
-								name='purpose_of_loan'
-								value={formData.purpose_of_loan}
-								onChange={handleChange}
-								className='w-full bg-greens/10 py-1.5 px-4 rounded-lg placeholder:text-dark/90 mt-3 h-[8rem]'></textarea>
-						</div>
+						<Checkbox
+							name='check_process'
+							checked={isConsentChecked}
+							onChange={handleConsentChange}
+							color='green'
+							crossOrigin={undefined}
+							label={
+								<p className='text-xs'>
+									I consent to the processing of my personal data in accordance
+									with ENICOM’s privacy policy.
+								</p>
+							}
+						/>
 					</div>
 					{/* button */}
-					<div className='grid justify-end mt-20'>
+					<div className='mt-10'>
 						{/* submit */}
 						<button
 							type='submit'
+							disabled={isSubmitDisabled}
 							className='bg-greens text-white py-2 px-10 rounded-lg w-[10rem]'>
-							Next
+							{isLoading ? 'Submitting...' : 'Submit'}
 						</button>
 					</div>
 				</form>
-				<ToastContainer />
+				<ToastContainer autoClose={1000} />
 			</div>
+			<Dialog open={open} handler={handleOpen}>
+				<DialogHeader>
+					Thank you! Your application has been successfully submitted.
+				</DialogHeader>
+				<DialogBody>
+					<p>
+						You will receive an email or phone call from us within the next 3
+						business days on the status of your application.
+					</p>
+				</DialogBody>
+				<DialogFooter>
+					<button
+						className='bg-greens w-fit py-2 px-5 rounded-lg text-white'
+						onClick={handleHome}>
+						<span>Go Home</span>
+					</button>
+				</DialogFooter>
+			</Dialog>
 		</div>
 	);
 };

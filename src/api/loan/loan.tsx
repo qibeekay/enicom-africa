@@ -200,36 +200,39 @@ export const verifyLoanKyc = async (
 
 // apply for loan
 export const applyLoan = async (
-	bearerToken: string,
-	userToken: string | null,
-	planToken: string | null,
-	providerToken: string | null,
-	amountBorrow: string,
-	idNumber: string,
-	providerRate: string,
-	passport: string,
-	purpose: string,
-	occupation: string,
-	guarantor: Array<any>,
-	collecteral: Array<any>
+	userdata: {
+		usertoken: string;
+		type: string;
+		name: string;
+		mail: string;
+		phone: string;
+		address_home: string;
+		address_city: string;
+		address_state: string;
+		address_zip: string;
+		loan_amount: number;
+		loan_quote: string;
+		loan_provider_token: string;
+		loan_package_token: string;
+		dob: string;
+		employ_status: string;
+		employ_title: string;
+		employ_income: string;
+		biz_type: string;
+		biz_industry: string;
+		biz_years: string;
+		prod_total_amount: number;
+		products: [string];
+		check_terms: boolean;
+		check_process: boolean;
+	},
+	bearerToken: string
 ) => {
 	try {
 		const response = await axios.post(
-			`${API_URL}/loan/request-loan
+			`${API_URL}/loan/apply
 			`,
-			{
-				usertoken: userToken,
-				plan_token: planToken,
-				provider_token: providerToken,
-				amount_intended_to_borrow: amountBorrow,
-				identity_number: idNumber,
-				provider_rate: providerRate,
-				passport: passport,
-				purpose_of_loan: purpose,
-				occupation: occupation,
-				guarantor: guarantor,
-				collecteral: collecteral,
-			},
+			userdata,
 			{
 				headers: {
 					Authorization: `Bearer ${bearerToken}`,

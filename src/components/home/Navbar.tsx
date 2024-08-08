@@ -75,21 +75,21 @@ const Navbar = () => {
 							<MenuList>
 								<MenuItem>
 									<Link
-										href={'/installers'}
+										href={'/become-partner/installer'}
 										className=' font-semibold text-greens '>
 										Installers
 									</Link>
 								</MenuItem>
 								<MenuItem>
 									<Link
-										href={'/Sellers'}
+										href={'/become-partner/seller'}
 										className=' font-semibold text-greens '>
 										Sellers
 									</Link>
 								</MenuItem>
 								<MenuItem>
 									<Link
-										href={'/finance'}
+										href={'/become-partner/finance'}
 										className='font-semibold text-greens '>
 										Finance
 									</Link>
@@ -97,7 +97,7 @@ const Navbar = () => {
 							</MenuList>
 						</Menu>
 						<li>
-							<Link href={''}>Contact Us</Link>
+							<Link href={'/contact-us'}>Contact Us</Link>
 						</li>
 					</ul>
 				</div>
@@ -177,21 +177,21 @@ const Navbar = () => {
 								<MenuList>
 									<MenuItem>
 										<Link
-											href={'/installers'}
+											href={'/become-partner/installer'}
 											className=' font-semibold text-greens '>
 											Installers
 										</Link>
 									</MenuItem>
 									<MenuItem>
 										<Link
-											href={'/Sellers'}
+											href={'/become-partner/seller'}
 											className=' font-semibold text-greens '>
 											Sellers
 										</Link>
 									</MenuItem>
 									<MenuItem>
 										<Link
-											href={'/finance'}
+											href={'/become-partner/finance'}
 											className='font-semibold text-greens '>
 											Finance
 										</Link>
@@ -199,7 +199,7 @@ const Navbar = () => {
 								</MenuList>
 							</Menu>
 							<li>
-								<Link href={''}>Contact Us</Link>
+								<Link href={'/contact-us'}>Contact Us</Link>
 							</li>
 						</ul>
 					</div>
