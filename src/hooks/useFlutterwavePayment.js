@@ -1,9 +1,9 @@
+/* eslint-disable */
 import { useFlutterwave, closePaymentModal } from 'flutterwave-react-v3';
 import { useEffect, useState } from 'react';
 
 const API_URL = process.env.NEXT_PUBLIC_ENV_VARIABLE;
 const key = process.env.NEXT_PUBLIC_FLUT_KEY;
-const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
 export const useFlutterwavePayment = (onSuccess) => {
 	const [loading, setLoading] = useState(false);
@@ -11,6 +11,7 @@ export const useFlutterwavePayment = (onSuccess) => {
 	const [mail, setMail] = useState('');
 	const [lname, setLname] = useState('');
 	const [usertoken, setUsertoken] = useState('');
+	const token = process.env.NEXT_PUBLIC_AUTH_BEARER;
 
 	useEffect(() => {
 		const userData = localStorage.getItem('userResponse');
@@ -44,31 +45,25 @@ export const useFlutterwavePayment = (onSuccess) => {
 		const handleFlutterPayment = useFlutterwave(config(amount));
 		handleFlutterPayment({
 			callback: async (response) => {
+				setLoading(true);
 				if (response.status === 'successful') {
-					setLoading(true);
-					try {
-						const res = await fetch(`${API_URL}/wallet/fund`, {
-							method: 'POST',
-							headers: {
-								'Content-Type': 'application/json',
-								Authorization: `Bearer ${token}`,
-							},
-							body: JSON.stringify({
-								usertoken,
-								amount: response.amount,
-								trx_ref: response.tx_ref,
-							}),
-						});
-						const data = await res.json();
-						console.log(data);
-						if (onSuccess) {
-							onSuccess();
-						}
-					} catch (error) {
-						console.error(error);
-					} finally {
-						setLoading(false);
-					}
+					// Make a POST request to the /wallet/fund endpoint
+					fetch(`${API_URL}/wallet/fund`, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json',
+							Authorization: `Bearer $${token}`,
+						},
+						body: JSON.stringify({
+							usertoken: usertoken,
+							amount: response.amount,
+							trx_ref: response.tx_ref,
+						}),
+					})
+						.then((response) => response.json())
+						.then((data) => console.log(data))
+						.catch((error) => console.error(error))
+						.finally(() => setLoading(false));
 				}
 				closePaymentModal();
 			},
