@@ -1,5 +1,6 @@
 'use client';
 import { updateKyc } from '@/api/kyc/kyc';
+import { Spinner } from '@material-tailwind/react';
 import Link from 'next/link';
 import React, { FormEvent, useRef, useState } from 'react';
 import { IoCloudUpload } from 'react-icons/io5';
@@ -258,7 +259,7 @@ const Kyc1 = () => {
 										<button
 											type='submit'
 											className='bg-greens text-white py-2 px-10 rounded-lg w-[10rem]'>
-											{isLoading ? 'Loading...' : 'Submit'}
+											{isLoading ? <Spinner className='h-4 w-4' /> : 'Submit'}
 										</button>
 									</div>
 								</div>

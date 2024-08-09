@@ -1,5 +1,6 @@
 'use client';
 import { getProductReview, reviewProduct } from '@/api/products/products';
+import { Spinner } from '@material-tailwind/react';
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { HiChevronLeft, HiOutlineStar, HiStar } from 'react-icons/hi2';
 import { ToastContainer, toast } from 'react-toastify';
@@ -104,7 +105,7 @@ const RateModal: React.FC<CartDetailsProps> = ({
 					<button
 						className='bg-greens text-white px-4 py-2 mt-4 rounded-md w-[10rem]'
 						onClick={createReview}>
-						{loading ? 'Loading...' : 'Review'}
+						{loading ? <Spinner className='h-4 w-4' /> : 'Review'}
 					</button>
 				</div>
 			</div>

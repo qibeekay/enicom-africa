@@ -1,6 +1,12 @@
 'use client';
 import { deleteLoanPackage, getLoanPackages } from '@/api/loan/loan';
-import { Avatar, Button, Chip, Typography } from '@material-tailwind/react';
+import {
+	Avatar,
+	Button,
+	Chip,
+	Spinner,
+	Typography,
+} from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 
@@ -89,7 +95,9 @@ const OverviewTab2 = () => {
 					</tr>
 				</thead>
 				{pLoading ? (
-					<div className='px-4 mt-7'>Loading...</div>
+					<div className='px-4 mt-7'>
+						<Spinner className='h-4 w-4' />
+					</div>
 				) : packages.length === 0 ? (
 					<div className='px-4 mt-7'>No record available.</div>
 				) : (

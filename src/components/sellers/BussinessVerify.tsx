@@ -1,6 +1,6 @@
 'use client';
 import { verifyBusiness, verifyIndividual } from '@/api/kyc/kyc';
-import { Option, Select } from '@material-tailwind/react';
+import { Option, Select, Spinner } from '@material-tailwind/react';
 import React, { FormEvent, useCallback, useEffect, useState } from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import { HiChevronDown } from 'react-icons/hi2';
@@ -492,7 +492,11 @@ const BussinessVerify = () => {
 								</div>
 							)}
 
-							{uploading && <p>Uploading image...</p>}
+							{uploading && (
+								<p>
+									Uploading image... <Spinner className='h-4 w-4' />
+								</p>
+							)}
 						</div>
 
 						{/* Verification type */}
@@ -625,7 +629,11 @@ const BussinessVerify = () => {
 								</div>
 							)}
 
-							{uploading1 && <p>Uploading image...</p>}
+							{uploading1 && (
+								<p>
+									Uploading image... <Spinner className='h-4 w-4' />
+								</p>
+							)}
 						</div>
 
 						{/* production capacity */}
@@ -768,7 +776,11 @@ const BussinessVerify = () => {
 								</div>
 							)}
 
-							{uploading2 && <p>Uploading image...</p>}
+							{uploading2 && (
+								<p>
+									Uploading image... <Spinner className='h-4 w-4' />
+								</p>
+							)}
 						</div>
 
 						{/* button */}
@@ -776,7 +788,7 @@ const BussinessVerify = () => {
 							<button
 								className='bg-greens px-14 py-2 rounded-lg text-white w-fit'
 								onClick={handleUpload}>
-								{isLoading ? 'Loading...' : 'Verify'}
+								{isLoading ? <Spinner className='h-4 w-4' /> : 'Verify'}
 							</button>
 						</div>
 					</div>

@@ -14,6 +14,7 @@ import {
 	DialogHeader,
 	Option,
 	Select,
+	Spinner,
 } from '@material-tailwind/react';
 import { FinanceSellers } from '@/api/finance/finance';
 
@@ -330,7 +331,7 @@ const FinanceSeller = () => {
 
 									<div className='w-full xs:w-[70%] mx-auto mt-5'>
 										<button className=' bg-greens w-full py-2 px-5 rounded-lg text-white'>
-											{isLoading ? 'Submitting...' : 'Submit'}
+											{isLoading ? <Spinner className='h-4 w-4' /> : 'Submit'}
 										</button>
 									</div>
 								</form>

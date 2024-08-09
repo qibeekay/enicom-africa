@@ -7,7 +7,7 @@ import React, {
 	useState,
 } from 'react';
 import { SearchNav } from '@/components';
-import { Button, Typography } from '@material-tailwind/react';
+import { Button, Spinner, Typography } from '@material-tailwind/react';
 import { Combobox, Transition } from '@headlessui/react';
 import { FaCheck, FaChevronDown } from 'react-icons/fa';
 import {
@@ -629,7 +629,7 @@ const PlanMain = () => {
 								<button
 									className='bg-greens px-14 py-2 rounded-lg text-white w-fit'
 									onClick={handleLoanPackage}>
-									{isLoading ? 'Loading...' : 'Upload'}
+									{isLoading ? <Spinner className='h-4 w-4' /> : 'Upload'}
 								</button>
 							</div>
 						</div>

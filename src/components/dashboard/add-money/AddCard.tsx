@@ -1,6 +1,7 @@
 'use client';
 import { getUsersAccount } from '@/api/auth/api';
 import { getUser } from '@/api/products/products';
+import { Spinner } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react';
 import { IoIosCopy } from 'react-icons/io';
 import { ToastContainer, toast } from 'react-toastify';
@@ -122,7 +123,13 @@ const AddCard = () => {
 							Account Number
 						</label>
 						<div className='mt-2 font-medium bg-greens/10 text-greens outline-none py-2 px-5 rounded-lg w-full'>
-							<p>{loading ? 'Loading...' : account?.accountNumber}</p>
+							<p>
+								{loading ? (
+									<Spinner className='h-4 w-4' />
+								) : (
+									account?.accountNumber
+								)}
+							</p>
 						</div>
 						<label htmlFor='account' className='font-medium mt-4'>
 							Bank Name

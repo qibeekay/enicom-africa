@@ -1,6 +1,6 @@
 'use client';
 import { getAllProductAdmin } from '@/api/products/products';
-import { Dialog } from '@material-tailwind/react';
+import { Dialog, Spinner } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import OverviewModal from './OverviewModal';
@@ -51,7 +51,9 @@ const OverviewTab3 = () => {
 		<div>
 			<div className='w-full overflow-scroll'>
 				{isLoading ? (
-					<div className='px-4 mt-7'>Loading...</div>
+					<div className='px-4 mt-7'>
+						<Spinner className='h-4 w-4' />
+					</div>
 				) : products?.length === 0 || !products ? (
 					<div className='px-4 mt-7'>No record available.</div>
 				) : (

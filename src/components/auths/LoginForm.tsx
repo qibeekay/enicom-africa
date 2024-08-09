@@ -8,6 +8,7 @@ import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi';
 import Image from 'next/image';
 import 'react-toastify/dist/ReactToastify.css';
 import { Login } from '@/api/auth/api';
+import { Spinner } from '@material-tailwind/react';
 
 const LoginForm = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -141,7 +142,7 @@ const LoginForm = () => {
 
 							<div className='w-full xs:w-[70%] mx-auto mt-7'>
 								<button className=' bg-greens w-full py-2 px-5 rounded-lg text-white'>
-									{isLoading ? 'Loading...' : 'Login'}
+									{isLoading ? <Spinner className='h-4 w-4' /> : 'Login'}
 								</button>
 							</div>
 						</form>

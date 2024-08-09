@@ -9,6 +9,7 @@ import {
 	Input,
 	Typography,
 	Dialog,
+	Spinner,
 } from '@material-tailwind/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { getProductByToken, getProductReview } from '@/api/products/products';
@@ -214,7 +215,9 @@ const DetailsItems = () => {
 				{/* feedbacks */}
 				<div className='flex flex-col lg:flex-row gap-10 mt-6'>
 					{loading ? (
-						<div className='px-4'>Loading...</div>
+						<div className='px-4'>
+							<Spinner className='h-4 w-4' />
+						</div>
 					) : reviews?.length === 0 ? (
 						<div className='px-4 mt-7'>
 							No reviews available for the product currently.

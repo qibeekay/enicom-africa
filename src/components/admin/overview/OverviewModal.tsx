@@ -4,6 +4,7 @@ import {
 	disapproveProduct,
 	getAdminProductByToken,
 } from '@/api/products/products';
+import { Spinner } from '@material-tailwind/react';
 import Link from 'next/link';
 import React, { FormEvent, useEffect, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -141,7 +142,11 @@ const OverviewModal: React.FC<OverviewModalProps> = ({
 								<button
 									className='py-2 bg-greens w-full text-white rounded-md'
 									onClick={approve}>
-									{isLoading ? 'Loading...' : 'Approve Product'}
+									{isLoading ? (
+										<Spinner className='h-4 w-4' />
+									) : (
+										'Approve Product'
+									)}
 								</button>
 							</div>
 
@@ -171,7 +176,11 @@ const OverviewModal: React.FC<OverviewModalProps> = ({
 										<button
 											type='submit'
 											className='bg-greens rounded-lg text-white py-2 px-4 cursor-pointer'>
-											{isDisLoading ? 'Loading...' : 'Submit'}
+											{isDisLoading ? (
+												<Spinner className='h-4 w-4' />
+											) : (
+												'Submit'
+											)}
 										</button>
 									</form>
 								</div>

@@ -1,6 +1,12 @@
 'use client';
 import { getBids, hireInstaller, userGetBid } from '@/api/installer/installer';
-import { Button, Chip, Dialog, Typography } from '@material-tailwind/react';
+import {
+	Button,
+	Chip,
+	Dialog,
+	Spinner,
+	Typography,
+} from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react';
 
 interface Request {
@@ -208,7 +214,7 @@ const GetAllBidsDetails = () => {
 								currentBuyerToken === request.request_bidding_token && (
 									<div className='mt-4'>
 										{loading ? (
-											<p>Loading...</p>
+											<Spinner className='h-4 w-4' />
 										) : bids?.length === 0 ? (
 											<p>No Bid placed yet</p>
 										) : (
@@ -243,9 +249,11 @@ const GetAllBidsDetails = () => {
 																				bid.agent_token
 																			)
 																		}>
-																		{isLoading
-																			? 'Loading...'
-																			: 'Hire Installer'}
+																		{isLoading ? (
+																			<Spinner className='h-4 w-4' />
+																		) : (
+																			'Hire Installer'
+																		)}
 																	</Button>
 																)}
 															</div>

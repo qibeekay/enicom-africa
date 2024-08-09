@@ -2,7 +2,7 @@
 
 import { DasboardNav, MenuDrawer } from '@/components';
 import { verifyAgent } from '@/api/kyc/kyc';
-import { Option, Select } from '@material-tailwind/react';
+import { Option, Select, Spinner } from '@material-tailwind/react';
 import React, { FormEvent, useCallback, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 
@@ -604,7 +604,7 @@ const AgentsPage = () => {
 								<button
 									className='bg-greens px-14 py-2 rounded-lg text-white w-fit'
 									onClick={handleUpload}>
-									{isLoading ? 'Loading...' : 'Verify'}
+									{isLoading ? <Spinner className='h-4 w-4' /> : 'Verify'}
 								</button>
 							</div>
 						</div>

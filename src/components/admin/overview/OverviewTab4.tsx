@@ -10,6 +10,7 @@ import {
 	MenuHandler,
 	MenuItem,
 	MenuList,
+	Spinner,
 	Typography,
 } from '@material-tailwind/react';
 import React, { useEffect, useState } from 'react';
@@ -92,7 +93,9 @@ const OverviewTab4 = () => {
 				</div>
 
 				{isLoading ? (
-					<div className='px-4 mt-7'>Loading...</div>
+					<div className='px-4 mt-7'>
+						<Spinner className='h-4 w-4' />
+					</div>
 				) : sellers?.length === 0 ? (
 					<div className='px-4 mt-7'>No record available.</div>
 				) : (

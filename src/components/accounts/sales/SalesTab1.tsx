@@ -1,5 +1,6 @@
 'use client';
 import { getAllApprovedProduct } from '@/api/products/products';
+import { Spinner } from '@material-tailwind/react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -57,7 +58,7 @@ const SalesTab1 = () => {
 				<div className='w-full flex justify-between'>
 					<p className='text-lg font-semibold'>Approved Products</p>
 				</div>
-				{loading && <p>Loading...</p>}
+				{loading && <Spinner className='h-4 w-4' />}
 				<div className='mt-2 flex flex-col gap-7'>
 					{products.map((product, index) => (
 						<div

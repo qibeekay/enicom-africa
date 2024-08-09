@@ -8,6 +8,7 @@ import { AiOutlineEyeInvisible, AiOutlineSwap } from 'react-icons/ai';
 import { FiPlus } from 'react-icons/fi';
 import { GiBackwardTime } from 'react-icons/gi';
 import { HiOutlineChevronRight } from 'react-icons/hi2';
+import { Spinner } from '@material-tailwind/react';
 
 interface Users {
 	fname: string;
@@ -112,9 +113,9 @@ const AccountMainDetails = () => {
 		}
 	};
 
-	if (paymentLoading || loading) {
-		return <div>Loading...</div>;
-	}
+	// if (paymentLoading || loading) {
+	// 	return <div>Loading...</div>;
+	// }
 
 	return (
 		<div className='w-full h-screen overflow-scroll text-dark no-scrollbar'>
@@ -124,6 +125,10 @@ const AccountMainDetails = () => {
 						<h1 className='font-semibold'>
 							{user?.fname} {user?.lname}
 						</h1>
+
+						<button className='' onClick={fetchAccountDetails}>
+							Refresh
+						</button>
 					</div>
 					<div className='flex flex-col md:flex-row justify-between text-sm mt-4'>
 						<p className='grid gap-y-2'>{user?.mail}</p>
@@ -170,13 +175,19 @@ const AccountMainDetails = () => {
 
 										{/* amount */}
 										<div>
-											<h1 className='font-semibold text-2xl'>
-												{showBalance ? ( // Conditionally render balance or asterisks based on showBalance state
-													<>N {account || '0.00'}</>
-												) : (
-													<>******</>
-												)}
-											</h1>
+											{loading ? (
+												<div className=''>
+													<Spinner className='h-4 w-4' />
+												</div>
+											) : (
+												<h1 className='font-semibold text-2xl'>
+													{showBalance ? ( // Conditionally render balance or asterisks based on showBalance state
+														<>N {account || '0.00'}</>
+													) : (
+														<>******</>
+													)}
+												</h1>
+											)}
 										</div>
 
 										{/* bottom */}

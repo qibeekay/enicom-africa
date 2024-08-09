@@ -4,7 +4,7 @@ import {
 	changeSellersStatus,
 	getAgentsByToken,
 } from '@/api/kyc/kyc';
-import { Button } from '@material-tailwind/react';
+import { Button, Spinner } from '@material-tailwind/react';
 import React, { FormEvent, useEffect, useState } from 'react';
 import { HiChevronLeft } from 'react-icons/hi';
 import { ToastContainer, toast } from 'react-toastify';
@@ -238,7 +238,7 @@ const AgentsModal: React.FC<OverviewModalProps> = ({
 							</Button>
 							<div className='w-full flex items-center gap-4 justify-end'>
 								<Button color='green' onClick={approve}>
-									{isLoading ? 'Loading...' : 'Approve'}
+									{isLoading ? <Spinner className='h-4 w-4' /> : 'Approve'}
 								</Button>
 								<Button variant='outlined' color='red' onClick={disapprove}>
 									Decline
@@ -260,7 +260,11 @@ const AgentsModal: React.FC<OverviewModalProps> = ({
 											<button
 												type='submit'
 												className='bg-greens rounded-lg text-white py-2 px-4 cursor-pointer'>
-												{isDisLoading ? 'Loading...' : 'Submit'}
+												{isDisLoading ? (
+													<Spinner className='h-4 w-4' />
+												) : (
+													'Submit'
+												)}
 											</button>
 										</form>
 									</div>

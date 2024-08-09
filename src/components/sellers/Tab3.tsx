@@ -12,6 +12,7 @@ import {
 	DialogHeader,
 	Option,
 	Select,
+	Spinner,
 	Typography,
 } from '@material-tailwind/react';
 import React, {
@@ -625,7 +626,11 @@ const Tab3 = () => {
 										</div>
 									)}
 
-									{uploading && <p>Uploading image...</p>}
+									{uploading && (
+										<p>
+											Uploading image... <Spinner className='h-4 w-4' />
+										</p>
+									)}
 								</div>
 
 								{/* product description */}
@@ -643,7 +648,7 @@ const Tab3 = () => {
 								{/* button */}
 								<div className='mt-5'>
 									<button className='bg-greens px-14 py-2 rounded-lg text-white w-fit'>
-										{isLoading ? 'Loading...' : 'Upload'}
+										{isLoading ? <Spinner className='h-4 w-4' /> : 'Upload'}
 									</button>
 								</div>
 							</div>

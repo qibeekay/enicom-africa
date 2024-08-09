@@ -1,6 +1,6 @@
 'use client';
 import { verifyIndividual } from '@/api/kyc/kyc';
-import { Option, Select } from '@material-tailwind/react';
+import { Option, Select, Spinner } from '@material-tailwind/react';
 import React, { FormEvent, useCallback, useEffect, useState } from 'react';
 import { FileRejection, useDropzone } from 'react-dropzone';
 import { HiChevronDown } from 'react-icons/hi2';
@@ -362,7 +362,11 @@ const Tab1 = () => {
 									{/* image upload */}
 									<div className='max-w-xl relative z-0'>
 										<p>Upload your Picture</p>
-										{uploading && <p>Uploading image...</p>}
+										{uploading && (
+											<p>
+												Uploading image... <Spinner className='h-4 w-4' />
+											</p>
+										)}
 										<label
 											// {...getRootProps()}
 											className='flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none'>
@@ -546,7 +550,11 @@ const Tab1 = () => {
 									{/* upload product catalogue*/}
 									<div className='max-w-xl relative z-0'>
 										<p>Upload your Product Catalogue</p>
-										{uploading1 && <p>Uploading image...</p>}
+										{uploading1 && (
+											<p>
+												Uploading image... <Spinner className='h-4 w-4' />
+											</p>
+										)}
 										<label
 											// {...getRootProps()}
 											className='flex justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none'>
@@ -614,7 +622,7 @@ const Tab1 = () => {
 										<button
 											className='bg-greens px-14 py-2 rounded-lg text-white w-fit'
 											onClick={handleUpload}>
-											{isLoading ? 'Loading...' : 'Verify'}
+											{isLoading ? <Spinner className='h-4 w-4' /> : 'Verify'}
 										</button>
 									</div>
 								</div>

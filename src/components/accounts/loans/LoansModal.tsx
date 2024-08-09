@@ -5,7 +5,7 @@ import {
 	disapproveProduct,
 	getAdminProductByToken,
 } from '@/api/products/products';
-import { Chip } from '@material-tailwind/react';
+import { Chip, Spinner } from '@material-tailwind/react';
 import Link from 'next/link';
 import React, { FormEvent, useEffect, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
@@ -117,7 +117,7 @@ const LoansModal: React.FC<OverviewModalProps> = ({
 
 				{isLoading ? (
 					<div className='grid items-center justify-center font-semibold text-lg h-full'>
-						Loading...
+						<Spinner className='h-4 w-4' />
 					</div>
 				) : (
 					<div className='bg-white p-4 w-full'>

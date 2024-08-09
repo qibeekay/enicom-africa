@@ -20,6 +20,7 @@ import {
 	DialogHeader,
 	Option,
 	Select as Selects,
+	Spinner,
 } from '@material-tailwind/react';
 import Select, { MultiValue } from 'react-select';
 import { getAllProduct } from '@/api/products/products';
@@ -675,7 +676,7 @@ const LoanForm1 = ({ filteredPackages }: filter) => {
 							type='submit'
 							disabled={isSubmitDisabled}
 							className='bg-greens text-white py-2 px-10 rounded-lg w-[10rem]'>
-							{isLoading ? 'Submitting...' : 'Submit'}
+							{isLoading ? <Spinner className='h-4 w-4' /> : 'Submit'}
 						</button>
 					</div>
 				</form>

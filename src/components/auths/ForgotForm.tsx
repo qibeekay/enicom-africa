@@ -9,6 +9,7 @@ import Image from 'next/image';
 import 'react-toastify/dist/ReactToastify.css';
 import { FormProps } from '..';
 import { Forgot, Update } from '@/api/auth/api';
+import { Spinner } from '@material-tailwind/react';
 
 const ForgotForm = () => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -165,7 +166,7 @@ const ForgotForm = () => {
 									<button
 										className=' bg-greens w-full py-2 px-5 rounded-lg text-white'
 										disabled={isLoading}>
-										{isLoading ? 'Loading...' : 'Continue'}
+										{isLoading ? <Spinner className='h-4 w-4' /> : 'Continue'}
 									</button>
 								</div>
 							</form>
@@ -207,7 +208,7 @@ const ForgotForm = () => {
 										<button
 											className=' bg-greens w-full py-2 px-5 rounded-lg text-white'
 											disabled={isLoading}>
-											{isLoading ? 'Loading...' : 'Submit'}
+											{isLoading ? <Spinner className='h-4 w-4' /> : 'Submit'}
 										</button>
 									</div>
 								</form>

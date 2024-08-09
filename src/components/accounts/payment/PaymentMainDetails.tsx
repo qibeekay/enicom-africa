@@ -1,5 +1,6 @@
 'use client';
 import { getUser } from '@/api/products/products';
+import { Spinner } from '@material-tailwind/react';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { FiPlusCircle } from 'react-icons/fi';
@@ -56,7 +57,11 @@ const PaymentMainDetails = () => {
 	// }, []);
 
 	if (loading) {
-		return <div>Loading...</div>; // Render loading indicator if data is still fetching
+		return (
+			<div>
+				<Spinner className='h-4 w-4' />
+			</div>
+		); // Render loading indicator if data is still fetching
 	}
 	return (
 		<div className='w-full text-dark font-poppins'>
