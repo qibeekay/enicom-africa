@@ -7,7 +7,6 @@ import {
 	DecreaseCartItems,
 	DeleteCartItems,
 	IncreaseCartItems,
-	IntializePay,
 } from '@/api/cart/cart';
 import { ToastContainer, toast } from 'react-toastify';
 import { useCart } from '@/components/CartContext';
