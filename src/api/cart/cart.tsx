@@ -138,57 +138,51 @@ export const DeleteCartItems = async (
 };
 
 // initialise full payment
-export const IntializePay = async (
-	bearerToken: string,
-	totalPrice: string,
-	userToken: string | null
-) => {
-	try {
-		const response = await axios.post(
-			`${API_URL}/payment/initialize-payment`,
-			{
-				total_price: totalPrice,
-				usertoken: userToken,
-			},
-			{
-				headers: {
-					Authorization: `Bearer ${bearerToken}`,
-				},
-			}
-		);
-		return response.data;
-	} catch (error) {
-		toast.error('Error initializing payment');
-		console.error('Error initializing payment:', error);
-		return [];
-	}
-};
+// export const IntializePay = async (
+// 	bearerToken: string,
+// 	totalPrice: string,
+// 	userToken: string | null
+// ) => {
+// 	try {
+// 		const response = await axios.post(
+// 			`${API_URL}/payment/initialize-payment`,
+// 			{
+// 				total_price: totalPrice,
+// 				usertoken: userToken,
+// 			},
+// 			{
+// 				headers: {
+// 					Authorization: `Bearer ${bearerToken}`,
+// 				},
+// 			}
+// 		);
+// 		return response.data;
+// 	} catch (error) {
+// 		toast.error('Error initializing payment');
+// 		console.error('Error initializing payment:', error);
+// 		return [];
+// 	}
+// };
 
 // complete payment
 export const CompletePay = async (
 	bearerToken: string,
 	userToken: string | null,
-	otp: string,
-	products: Array<any>,
-	engineerId: { engineer_id: number },
-	address: {
-		state: string;
-		local_govt: string;
-		address: string;
-	},
-	total_price: number
+	cart: Array<any>,
+	state: string,
+	city: string,
+	address: string
 ) => {
 	try {
 		const response = await axios.post(
-			`${API_URL}/payment/confirm-user-payment
+			`${API_URL}/wallet/pay.cart
 			`,
 			{
 				usertoken: userToken,
-				otp: otp,
-				products: products,
-				engineer_id: engineerId,
+				city: city,
+				cart: cart,
+				state: state,
 				address: address,
-				total_price: total_price,
 			},
 			{
 				headers: {

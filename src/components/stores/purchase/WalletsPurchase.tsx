@@ -39,55 +39,55 @@ const WalletsPurchase = () => {
 			: '';
 
 	// Function to handle the payment process
-	const handlePayment = async () => {
-		try {
-			setIsLoading(true);
-			const cartItemsWithFormData = cartItems.map((item) => ({
-				product_token: item.product_token,
-				product_quantity: item.product_quantity,
-				product_price: item.product_price,
-				product_owner: item.product_owner,
-				product_name: item.product_name,
-				product_image: item.product_image,
-				product_type: item.product_type,
-			}));
+	// const handlePayment = async () => {
+	// 	try {
+	// 		setIsLoading(true);
+	// 		const cartItemsWithFormData = cartItems.map((item) => ({
+	// 			product_token: item.product_token,
+	// 			product_quantity: item.product_quantity,
+	// 			product_price: item.product_price,
+	// 			product_owner: item.product_owner,
+	// 			product_name: item.product_name,
+	// 			product_image: item.product_image,
+	// 			product_type: item.product_type,
+	// 		}));
 
-			const products = cartItemsWithFormData || [];
+	// 		const products = cartItemsWithFormData || [];
 
-			const engineerId = { engineer_id: 0 };
-			const address = formData;
-			const totalPrice = total_price || 0;
+	// 		const engineerId = { engineer_id: 0 };
+	// 		const address = formData;
+	// 		const totalPrice = total_price || 0;
 
-			// Call the CompletePay function
-			const paymentResult = await CompletePay(
-				`$${token}`,
-				`${usertoken}`,
-				otpData.otp,
-				products,
-				engineerId,
-				address,
-				totalPrice
-			);
+	// 		// Call the CompletePay function
+	// 		const paymentResult = await CompletePay(
+	// 			`$${token}`,
+	// 			`${usertoken}`,
+	// 			otpData.otp,
+	// 			products,
+	// 			engineerId,
+	// 			address,
+	// 			totalPrice
+	// 		);
 
-			if (paymentResult.success === false) {
-				toast.warn(paymentResult.message);
-			} else {
-				// The toast notification should be success, not error
-				toast.success('Payment successfully');
-				setTab('3');
-			}
+	// 		if (paymentResult.success === false) {
+	// 			toast.warn(paymentResult.message);
+	// 		} else {
+	// 			// The toast notification should be success, not error
+	// 			toast.success('Payment successfully');
+	// 			setTab('3');
+	// 		}
 
-			// You can add additional logic based on the payment result, e.g., show a success message
+	// 		// You can add additional logic based on the payment result, e.g., show a success message
 
-			// Optionally, close the modal or navigate to a success page
-		} catch (error) {
-			// Handle errors, e.g., show an error message
-			toast.error('Error processing payment:');
-			console.error('Error processing payment:', error);
-		} finally {
-			setIsLoading(false);
-		}
-	};
+	// 		// Optionally, close the modal or navigate to a success page
+	// 	} catch (error) {
+	// 		// Handle errors, e.g., show an error message
+	// 		toast.error('Error processing payment:');
+	// 		console.error('Error processing payment:', error);
+	// 	} finally {
+	// 		setIsLoading(false);
+	// 	}
+	// };
 
 	console.log(cartItems);
 
@@ -118,7 +118,7 @@ const WalletsPurchase = () => {
 						<div className='mt-10 grid items-center justify-center'>
 							<button
 								className='bg-greens px-14 py-2 rounded-lg text-white'
-								onClick={handlePayment}
+								// onClick={handlePayment}
 								type='button'>
 								{isLoading ? 'Verifying...' : 'Complete Verification'}
 							</button>

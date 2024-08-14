@@ -12,7 +12,6 @@ import { HiMiniStar } from 'react-icons/hi2';
 import PurchaseModal from './PurchaseModal';
 import { useCart } from '@/components/CartContext';
 import { useRouter } from 'next/navigation';
-import { CompletePay, IntializePay } from '@/api/cart/cart';
 import { ToastContainer, toast } from 'react-toastify';
 import { useFormData } from './FormDataContext';
 
@@ -36,8 +35,6 @@ const Purchase1 = ({ setIsTab1Complete }: props) => {
 			[name]: value,
 		});
 	};
-
-	console.log(total_price);
 
 	return (
 		<div className='font-poppins my-10'>
@@ -78,40 +75,6 @@ const Purchase1 = ({ setIsTab1Complete }: props) => {
 									</div>
 								))}
 							</div>
-
-							{/* engineer */}
-							{/* <div className='flex items-center justify-between my-7'> */}
-							{/* details */}
-							{/* <div className='flex items-center gap-4'> */}
-							{/* image */}
-							{/* <div className=' w-[2rem] aspect-square overflow-hidden rounded-full'>
-										<img
-											className='w-full h-full object-cover object-center'
-											src='/img.png'
-											alt=''
-										/>
-									</div>
-
-									<div>
-										<p>Senator agbadfd</p>
-										<p className='text-sm'>Installer</p>
-									</div>
-								</div> */}
-
-							{/* rating / price */}
-							{/* <div>
-									<p className='text-greens font-medium text-right'>N50,000</p>
-									<div className='flex gap-1 text-[#D49901] py-1'>
-										<HiMiniStar />
-										<HiMiniStar />
-										<HiMiniStar />
-										<HiMiniStar />
-										<HiMiniStar />
-									</div>
-								</div> */}
-							{/* </div> */}
-
-							{/* total */}
 							<div className='flex justify-between items-center font-medium mt-10'>
 								<p>Total:</p>
 								<p className='text-greens'>N{total_price_th}</p>
@@ -148,17 +111,15 @@ const Purchase1 = ({ setIsTab1Complete }: props) => {
 									/>
 								</div>
 								<div className='w-full'>
-									<Typography className='mb-1 text-dark'>
-										Local Government
-									</Typography>
+									<Typography className='mb-1 text-dark'>City</Typography>
 									<Input
 										size='lg'
 										className=' !border-t-blue-gray-200 focus:!border-t-gray-900'
 										labelProps={{
 											className: 'before:content-none after:content-none',
 										}}
-										name='local_govt'
-										value={formData.local_govt}
+										name='city'
+										value={formData.city}
 										onChange={handleInputChange}
 										crossOrigin={undefined}
 									/>

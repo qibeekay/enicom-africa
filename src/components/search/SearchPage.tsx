@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { searchProducts } from '@/api/products/products';
 import { DasboardNav, MenuDrawer } from '@/components';
+import { Spinner } from '@material-tailwind/react';
 
 interface Product {
 	// Define the structure of your product data
@@ -60,7 +61,7 @@ const SearchPage = () => {
 			<div className='relative py-10'>
 				<div className='px-[4rem]'>
 					<h1 className='pb-5 text-lg font-bold'>Search Results</h1>
-					{loading && <p>Loading...</p>}
+					{loading && <Spinner className='h-4 w-4' />}
 					{!loading && searchResults.length === 0 && <p>No results found.</p>}
 					{!loading && searchResults.length > 0 && (
 						<div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 justify-center'>

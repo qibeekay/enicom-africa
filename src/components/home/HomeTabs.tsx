@@ -28,7 +28,7 @@ const HomeTabs = () => {
 								<IoStorefrontOutline size={25} />
 							</div>
 							<p className='text-center py-2'>Marketplace</p>
-							<p className='text-center'>
+							<p className='text-left'>
 								Discover a diverse range of solar products and services tailored
 								to your needs. Whether you are looking to buy high-quality solar
 								panels or seeking professional installation services, our
@@ -57,7 +57,7 @@ const HomeTabs = () => {
 								<IoStorefrontOutline size={25} />
 							</div>
 							<p className='text-center py-2'>Become a Partner</p>
-							<p className='text-center'>
+							<p className='text-left'>
 								Leverage our platform to expand your reach, enhance your
 								business, and drive the adoption of clean energy. Join our
 								network of financial partners, Sellers and Agents to advance
@@ -85,7 +85,7 @@ const HomeTabs = () => {
 								<IoStorefrontOutline size={25} />
 							</div>
 							<p className='text-center py-2'>Solar Finacing options</p>
-							<p className='text-center'>
+							<p className='text-left'>
 								Through our partnerships with leading finance institutions, we
 								offer financing solutions to make your transition to solar
 								energy seamless and affordable. Our Options are flexible, making
