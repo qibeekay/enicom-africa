@@ -33,7 +33,7 @@ const HeroPage = () => {
 						{/* image */}
 						<div className=' grid items-center justify-center '>
 							<div className='w-[15rem]'>
-								<img className='w-full h-full' src='/l.png' alt='' />
+								<img className='w-full h-full' src='/logo2.png' alt='' />
 							</div>
 						</div>
 

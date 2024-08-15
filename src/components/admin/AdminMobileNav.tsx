@@ -21,7 +21,7 @@ const AdminMobileNav: React.FC<CloseProps> = ({ close }) => {
 				{/*image  */}
 				<div className='flex items-center justify-between px-4 py-5'>
 					<div className='grid items-center cursor-pointer'>
-						<Image src={'/logo.png'} width={150} height={150} alt='logo' />
+						<Image src={'/logo2.png'} width={70} height={70} alt='logo' />
 					</div>
 
 					<div className='cursor-pointer' onClick={close}>

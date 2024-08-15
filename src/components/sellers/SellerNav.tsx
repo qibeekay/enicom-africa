@@ -48,7 +48,7 @@ const SellerNav = () => {
 					<div
 						className='grid items-center cursor-pointer'
 						onClick={handleHome}>
-						<Image src={'/logo.png'} width={150} height={150} alt='logo' />
+						<Image src={'/logo2.png'} width={70} height={70} alt='logo' />
 					</div>
 
 					{/* menu */}

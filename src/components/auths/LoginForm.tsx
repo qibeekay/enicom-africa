@@ -79,16 +79,13 @@ const LoginForm = () => {
 				{/* form-container */}
 				<div>
 					{/* header */}
-					<div className='flex justify-between'>
+					<div className='flex items-center justify-between'>
 						{/* logo */}
-						{/* logo */}
-						<div
-							className=' h-5 w-20 xs:h-6 xs:w-25 sm:w-28 cursor-pointer'
-							onClick={handleHome}>
+						<div className=' cursor-pointer' onClick={handleHome}>
 							<Image
-								src={'/logo.png'}
-								width={100}
-								height={100}
+								src={'/logo2.png'}
+								width={70}
+								height={70}
 								className='h-full w-full'
 								alt='logo'
 							/>

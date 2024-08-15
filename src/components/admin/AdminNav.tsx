@@ -17,7 +17,7 @@ const AdminNav = () => {
 			<div>
 				{/*image  */}
 				<div className='grid items-center cursor-pointer px-10 py-8'>
-					<Image src={'/logo.png'} width={150} height={150} alt='logo' />
+					<Image src={'/logo2.png'} width={70} height={70} alt='logo' />
 				</div>
 
 				{/* links */}

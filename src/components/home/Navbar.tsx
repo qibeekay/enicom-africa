@@ -41,7 +41,7 @@ const Navbar = () => {
 			<div className='flex items-center justify-between w-full bg-bgGreen px-4 lg:px-[4rem] py-4'>
 				{/*image  */}
 				<div className='grid items-center cursor-pointer' onClick={handleHome}>
-					<Image src={'/logo.png'} width={150} height={150} alt='logo' />
+					<Image src={'/logo2.png'} width={70} height={70} alt='logo' />
 				</div>
 
 				{/* links */}
@@ -139,7 +139,7 @@ const Navbar = () => {
 						<div
 							className='grid items-center cursor-pointer'
 							onClick={handleHome}>
-							<Image src={'/logo.png'} width={150} height={150} alt='logo' />
+							<Image src={'/logo2.png'} width={70} height={70} alt='logo' />
 						</div>
 						<div className='cursor-pointer' onClick={() => setNav(false)}>
 							<HiX size={30} />
